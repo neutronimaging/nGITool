@@ -1,0 +1,453 @@
+\documentclass[a4paper,11pt]{scrreprt}
+\usepackage[utf8x]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{geometry}
+\usepackage{times}
+
+\geometry{hmargin=2.5cm,vmargin=2.5cm}
+
+% Title Page
+\title{Quantitative neutron imaging for modelling of root water uptake in soil}
+\author{A. Kaestner and A. Carminati}
+
+\begin{document}
+\maketitle
+
+\chapter{Summary}
+Some more blah, blah about the roots.
+
+The project is a multi-disiplinary collaboration between the research topics soil hydrology 
+and neutron imaging. The aim of the project is to better understand the root water uptake process.
+Earlier work has shown that neutron imaging is the most suited method to monitor the water movements 
+in soil in two or three dimensions. 
+
+The proposed project is divided into two subtasks which is are assigned one PhD student each. 
+One student stationed at the department of Agriculture at the university of G\"{o}ttingen, Germany, 
+will focus on the modelling of soil--root interation and the verification using traditional method. 
+The second student stationed at Paul Scherrer Institut, Switzerland, will focus on refinements of the
+neutron imaging and image processing procedures required for the imaging based verification of the 
+water uptake models.
+
+\chapter{Research plan}
+\section{State of the art in the field}
+\subsection{Root-soil interactions}
+\subsubsection{Root water uptake}
+\begin{itemize}
+\item Importance and exsiting concepts of water flow from soil to roots.
+\item Mechanical properties and behavior of roots growing in soil
+\end{itemize}
+\subsubsection{Rhizospere}
+\begin{itemize}
+\item Importance of the root-soil interface. 
+\item The role/importance of mucilage. 
+\item Existing open questions. 
+\item Gaps between soil and roots.
+\item Cluster roots visible and roots hairs too small.
+\end{itemize}
+\subsection{Imaging of root systems}
+Introduction: Existing methods to observe roots in soil.
+The 
+\subsubsection{X-ray imaging}
+Mirco CT tomcat
+
+\subsubsection{MRI}
+
+\subsubsection{Neutron imaging}
+Neutron imaging is a method complementary to X-ray imaging. In first approximation it is 
+based on the universal attenuation law similar to X-ray imaging. The mechanism for attenuation differs
+however, since neutrons interact with the nucleus of the atom. Often the intensity is reduced
+in the sample by scattering or a mix of scattering and absorption.
+
+Methodologically, there are three main fields investigated in neutron imaging; 1
+-- neutron-matter interaction in the spatial domain, 2 -- the wave properties of 
+the neutron beam,  and 3 -- refinement of the beamline instrumentation.
+
+Computed tomography is a well-known imaging method and the development has
+mainly be driven by the medical imaging community using X-ray based systems. The principle
+of neutron tomography has much in common with X-ray tomography since the general
+attenuation law applies to neutron imaging too. Therefore, neutron CT has also 
+become a standard acquisition method at all advanced neutron imaging facilities 
+world-wide. For many applications the collimation ratio is sufficiently large to assume
+parallel beam geometry for the tomographic reconstruction. There are however
+exceptions when large samples are acquired with high resolution detectors. In
+these cases it has proven to be beneficial to use reconstruction methods for
+cone beam geometry instead of parallel geometry \cite{kaestner2012_wcndt}. 
+
+The restrictions can be caused by the sample dimensions or
+the sample infrastructure. The shape of the sample container is restricted by the root 
+physiology as well the neutron transmission through the sample. The roots must be allowed 
+grow freely in at least two directions while the sample thickness in the beam direction 
+must be kept small to allow the neutrons to penetrate the sample. These constraints result in 
+thin and wide sample container. A full CT scan of such a container would require that the sample
+is to remotely placed from the detector to provide the resolution required for root studies. Here, 
+the resolution is limited by the geometric unsharpness. The mathematics of computed 
+tomography has evolved the last decades. This development has lead to reconstruction 
+methods that produce good result even though the projection data set is incomplete in some sense. A case that is
+of special interest for neutron imaging of root soil samples is limited angle tomography. 
+This case occurs when samples are hindered to perform a rotation that provides the
+complete data set. Another example where limited angle CT is relevant is for fuel cell research where 
+the rotation is constrained by cabeling and tubing \cite{lange2011_directt_fuelcell}. 
+
+The limited view problem is severely ill-posed and the number of singular values are proportional
+to the size of the missing angular range. It is even exponential if the range of projections is 
+very small \cite{natterer2001}. In general, the development of reconstruction methods for 
+the limited angle problem has favored iterative reconstruction methods. When methods based on a 
+filtered back projection approach the missing data is extrapolated from the existing projection 
+data \cite{Ramm1991_limitedangle,ramm1992d}. A review of methods to reconstruct incomplete data is 
+given by \cite{clackdoyle2010_incompletedatact}. They propose to perform the filtering step using the
+Hilbert transform instead of the ramp filter to handle the instability caused by the missing data.
+
+\subsubsection{Motivation to use neutrons}
+Neutron imaging is choosen since the water has a very high contrast to the soil matrix. This can 
+also be achieved using NMR but the spatial resolution is less good. Neutron imaging also has the 
+advantage that D$_{mathrm{2}}$O delivers a strong contrast against the normal water. The mixing 
+takes place without changing the volume of the mixture \cite{longsworth1937_h2o_d2o}. The hydralic properties of the mixture
+changes less than when a tracer based on a iodine salt is used. 
+
+\subsection{Image processing of root images}
+\begin{itemize}
+\item 2D images
+\item Time series of 2D images
+\item 3D images
+\end{itemize}
+
+Roots are imaged booth in two and three dimensions. In many cases root investigations the roots 
+are extracted from the soil and placed on a flatbed scanner. The resulting images are the analyzed
+using the commercial software WinRhizo (Regent Instruments Inc.). This tool can extract many parameters 
+about the root morphology. This does however require high contrast and uniform illumination 
+for the segmentation. These conditions cannot be fulfilled by image orginating from a neutron 
+imaging experiment. 
+
+
+\subsection{Applications of root images}
+The interface bringing the the information back to the root related questions.
+
+X-rays: Root distribution, roots soil contact, roots water uptake derived from changing water content.
+
+NMR: Root distribution, water content, indirect uptake, tracers, resolution bad.
+
+Neutrons: Root distribution, water content, indirect root water uptake, water fluxes
+
+\cite{matsushima2009_plant}
+
+\section{Current state of own research}
+
+\subsection{Root--soil interactions}
+\begin{itemize}
+\item Gaps and mucilage (4-6 papers)
+\item Heavy water (1 Submitted) figures from Mohsen showing feasibility and model and results. Need for further investigation.
+\end{itemize}
+
+\subsection{Imaging}
+\subsubsection{Beamlines}
+At Paul Scherrer Institut there are two beamlines for neutron imaging. The main
+proposer is responsible for the cold neutron imaging beam line ICON. The current
+status of this beamline is described in \cite{kaestner2011_ICON}. The beamline provides equipment 
+to handle fields of view from 30$\times$30~mm\textsuperscript{2} to 250$\times$250~mm\textsuperscript{2} 
+with resolutions up to 26~lp/mm. This is sufficient for most applications with root soil interaction. 
+Currently, an initiative with the aim to increase the resolution by a factor 3--6 is in the concept phase.
+With this optics it will be possible to study water exchange near the root in closer detail. 
+
+\subsubsection{Computed tomography}
+A basic requirement for the investigations is the access to the source code of a
+reconstruction software. This has been developed by the main proposer \cite{kaestner2011_muhrec}. 
+The CT reconstruction tool has a flexible design that allows exchanging preprossessing 
+steps and also to replace the back-projector. The current work has mainly been focussed 
+on alternative reconstruction modes for large samples, and the reconstruction of 
+spatio-temporal data, and correction methods for the projection data to reduce noise 
+and artifacts. In this framework a basic approach to the local tomography problem was 
+implemented using tapering of the cropped edges to zero. Normally, when the sample boundary 
+is cropped for some interval of observation angles it is to be expected that the
+solution shows truncation artifacts and the solution is biased. 
+
+The acquisition times for an nCT are often very long especially for the micro CT. 
+The long scan times are a problem if the sample is not at rest since this will 
+cause motion artifacts. Our solution to avoid for CT acquisitions of samples 
+with an inherent dynamic component with time constants shorter than the scan time
+is to use long irregular angluar steps. In this way two projections with adjacent 
+angles are separated by a time much longer than the time between two projections. In
+\cite{kaestner2011_golden}, two different acquisition protocols and the related
+reconstruction procedures are described. An additional important feature of the described
+schemes is that subsets of the projection data fullfill the criteria that the
+projection data must be well distributed over the whole interval of [0,$\pi$) to be
+reconstructed without artifacts. This makes it possible to reconstruct
+time-series of volume data with an arbitrary number of time frames, the cost of
+higher temporal resolution is lower spatial resolution. The most flexible and
+promising strategy is based on acquisition with angle increments based on the Golden
+ratio ($\phi=\frac{1+\sqrt{5}}{2}$). Initial experiments using this acquisition 
+pattern have already shown good results.
+
+\subsection{Image processing to detect roots in images}
+The neutron radiographies of the root samples rarely have homogeneuous intensity
+distribution across the sample. These variations are caused by varying material
+thickness and composition as well as inhomogeneous distribution of  the moisture content at
+different locations in the sample. The local variations renders global thresholding
+methods useless. To overcome this, a local thresholding method inspired by \cite{hoover00} using
+a mixture image from matched orientation filters has been developed  by the main proposer. 
+This method was developed for the analysis carreid out in \cite{menon2007_NetronRoots}. 
+Since then, this work this has been the main tool for root segmentation off root sample 
+radiographies by users are neutron imaging beam of Paul Scherrer Institut 
+(citations to users of root tracker 2D). Currently, this method is very sensitive 
+to variations in the sample constitution. 
+
+Three dimensional root structures have different boundary conditions than the
+two dimensional image. In \cite{kaestner06a} a method for root segmentation from
+X-ray CT images is described. This method is not directly applicable for neutron
+images since contrast relations are different. In \cite{kaestner06a} the root
+was identified as a connected structure with attenuation coefficients similar to
+the pore space of the sample. The root structure in a neutron image is likely to
+have a distribution of attenuation coeficients that partly is similar to the moist 
+soil matrix. Hence, a global thresholding approach will most likely fail when applied
+to a neutron image. 
+
+\section{Detailed research plan}
+\subsection{PhD I : Root-soil interaction}
+\subsubsection{Work package Ia: xyz}
+\subsection{PhD II: Imaging and Image processing}
+
+\subsubsection{Work package IIa: Propose and evaluate root segmentation methods}
+Find a segmentation method that is insensitive to the large variations of the image data. 
+The variations are represented by both sample composition, type and morphology of 
+the root and by local background intensity variations due to the local water content. 
+These challenges are posed by both two- and three dimensional image. 
+
+The student will investigate the feasibility of existing methods that a proposed 
+in the soil and plant literature and mainly in the medical imaging literature. The 
+problem of finding a root in soil in very similar to the problem of finding blood 
+vessels in the human body. The currently proposed methods are based on tracking or 
+deformable models. The student is supposed to find a method that identifies the 
+root structure under conditions with low contrast and high noise levels.
+
+In the project both two and three dimensional data will appear. Therefore, methods 
+that can handle both cases must be found. If the proposed method is multi-dimensional 
+and capable of handling both two- and three-dimensional data, it would be the most 
+elegant solution. Though, multi-dimensionality is not a primary goal of the work package.  
+
+The evalutation of the proposed processing methods shall be done both on synthezied 
+numerical images and  on experimental data from previous experiments. The numerical 
+models makes it possible to make simulations to find the break-down conditions of 
+the proposed method. The experimental data allows to verify how well the numerical 
+results relates to an experimental situation. The combination of the results from the 
+method evaluation shall make it possible minimize exposure times in the time series 
+experiments. 
+  
+\subsubsection{Work package IIb: Tomo-synthesis}
+The most used sample geometry is a thin slab with a rectangular cross section. 
+This sample geometry has proven to be ideal for both radiography imaging and roots. 
+The thin cross section gives a short line integral through the sample which is good 
+for the transmission even at relatively high water contents. The sample can also be 
+positioned very close to the detector which reduces the effect of geometrical unsharpness 
+in the images. The roots are only constrained in one direction which allows them grow 
+relatively naturally in the other two directions. For CT this sample shape is less ideal 
+since the rather wide sample requires that the must be positioned so far away from the 
+detector that the geometric blurring becomes a problem. The ideal sample shape for CT 
+would be a cylinder, but that would possibly lead to detector starvation for wet samples. 
+In a cylinder the roots would only be allowed to grow naturally in the vertical direction, 
+while they would be constrained in the horizontal direction. The consequence is a unnatural 
+growth pattern. 
+
+An additional issue with CT acquistions of the samples is the time needed to complete the scan. 
+This too long to be usefull in a dynamic experiment. To meet the experimental boundary conditions 
+we propose that the student shall identify and evaluate a suitable reconstruction method for 
+tomo-synthesis.  The choice shall be made with the two following work packages in mind. 
+The performance in terms of fidelity to a ground truth, singnal to noise ratio, and resolution 
+shall be evaluated.   
+
+Water in roots is a dynamic process that mostly is faster than the time needed to acquire a 
+CT data set. In this work package the student shall investigate the feasibility of the Golden 
+ratio acquisition scheme to acquire first images with less motion artifacts. If this is 
+feasible the next step is to use the spatio-temporal feature 
+of this acquisition scheme. 
+
+\subsubsection{Work package IIc: Quantitative neutron imaging }
+One goal of this proposal is to quantify the water content in the sample. 
+One important factor to consider for the water content estimation is eliminate
+the effect scattered neutrons. Hydrogen has a large scattering cross-section 
+which wil contribute to a biased estimate of the water content. The student 
+shall investigate to which extent the scattered neutrons contribute to a 
+bias for the relevant sample geometries. In general, a cupped intensity profile 
+is expected in the reconstructed images of a scattering sample. R. Hassanein 
+developed a method for quantitative neutron imaging in his PhD thesis \cite{hassanein2006diss}. 
+The method was develeped for a thermal neutron spectrum and it is needed 
+to verify and modify the correction procedure for cold neutrons. 
+
+In addition to the bias caused by the scattering, a bias is expected due to the tomo-synthesis 
+reconstruction. This approach works with incomplete data which will introduce an error in the 
+reconstructed attenuation coefficients. The student shall investigate the 
+impact incomplete projection data has on the accuracy of the reconstructed 
+attenuation coefficients. The student shall make both a numerical study and 
+demonstrate the performance on experimental data using samples with low scattering cross-section 
+as well as wet samples where the water content in the samples is known by gravimetric measurements. 
+
+\subsubsection{Work package IId: Compare perfomance of X-ray vs. Neutron imaging}
+Most of the published methods on the topic root-soil imaging work with X-ray based imaging setups. 
+As a complement to the main line of this proposal the student shall make study to show how X-ray 
+imaging performs under similar conditions. The student shall also investigate the opportunities 
+of mixing the two image types. Which additional information can be gained from a mixed apporach. 
+
+The NEUTRA beamline provides the option to use an X-ray source in the same beamline as 
+the neutrons. This feature allows pixelwise comparisons between the two imaging modalities. 
+
+The image processing method propsed in work package IIa shall also be applied on the 
+X-ray data as an additional stability test of the method.
+
+
+\subsection{Collaborations PhD I and PhD II}
+\subsubsection{Work package I+IIa: Specify experimental boundary conditions}
+\subsubsection{Work package I+IIb: Experiments with plants}
+\subsubsection{Work package I+IIc: Data evaluation}
+
+\subsection{Visiting student exchange}
+Each student should visit the partner laboratory for a short period of time to exchange 
+experiences and knowledge.  
+
+
+\section{Schedule and milestones}
+The project is outline in table \ref{tab_milestones}. 
+\begin{table}[ht!]
+\centering
+ \begin{tabular}{|c|c|}
+  \hline
+  1st year Phase I & \begin{tabular}{c|l} 3 months & General literature study +
+intro to NI\\ 9 month & Define numerical and physical phantoms \\ & First
+prototype of reconstructor \\ & Experiments planning, first experiments
+\end{tabular}\\
+\hline
+  2nd year Phase II & \begin{tabular}{c|l} 3 months & Literature study
+incomplete data\\ & Refinement of prototype \\ 9 months & Filter implementation
+and experiments\\ & Joint experiments \end{tabular}\\
+\hline
+  3nd year Phase II \& III & \begin{tabular}{c|l}6 months & Refining the
+algorithms\\ & Joint experiments\\6 months & Write thesis\end{tabular}\\
+\hline
+ \end{tabular}
+\caption{Milestones of the PhD project.}\label{tab_milestones}
+\end{table}
+
+\section{Importance and impact}
+In general, applications of neutron imaging will gain from the increased quantitative accuracy 
+for cold neutron spectra. Quantitative neutron imaging in three dimensions is a topic of great 
+interest especially for samples with high hydrogen content. The practical impact of the work of 
+PhD II is an improved platform for the root-soil user community visiting the neutron imaging 
+beamlines at Paul Scherrer Institut. This will further strengthen Paul Scherrer Institut as a 
+world-leading site for neutron imaging. The student will gain knowledge of methods that can be 
+applied with X-ray imaging in medical applications.
+
+The applications where the improved imaging setup will have an impact are for imaging studies of
+electrochemical processes like fuel cells and lithium-ion batteries. Water transport in soil 
+and geology systems in a wider sense than outlined in the proposal. Quantitative imaging 
+for applications in nuclear engineering. Examples are samples of hydritized zirconium alloys 
+and steady state flow in cooling subchannel systems. 
+
+\bibliographystyle{unsrt}
+\bibliography{../references}
+\end{document}
+
+
+
+\subsection{Investigating the spatio-temporal CT}
+Important questions are:
+\begin{itemize}
+ \item Dose vs Noise for small data sets.
+ \item Solution smoothness.
+ \item Sensitivity to motion in the sample.
+ \item Overlapping subset, redundancy.
+ \item Interpretation of the gradients in the motion regions.
+\end{itemize}
+
+\section{Old Material}
+\subsection{Computed tomography of root samples}
+Container 
+\subsubsection{Computed tomography with incomplete data}
+The sample containers used for 
+The sample containers for root system studies are optim 
+Clackdoyle and Defrise gives an overview of the latest developments in the
+handling of incomplete projection data
+sets\cite{clackdoyle2010_incompletedatact}.
+\begin{figure}
+\caption{General incomplete data illustration.}\label{fig_incomplete}
+\end{figure}
+
+In general, the handling of incomplete projection data is solved by filtering
+the data using the Hilbert transform instead of the Fourier transform.
+
+
+\subsubsection{The limited angle tomography}
+In some cases it is not possible to rotate the sample the 180$^{\circ}$ that the
+required to fulfill data support criterion.
+This means that the projection data can not be reconstructed by traditional
+means. In medical imaging this is often referred
+to tomo-synthesis. When only a fraction of the scan orbit is used it is not
+possible to reconstruct the
+
+This is by nature an ill-posed problem and as such the solutions are not unique.
+In this project a method to reconstruct limited angle data shall be implemented and verified against
+numerical and physical phantoms. The aim is to provide reconstructed vertical slabs of the scanned sample where
+the attenuation coefficients are quantifiable. 
+\begin{figure}
+\caption{Illustration of tomo-synthesis.}\label{fig_tomosynthesis}
+\end{figure}
+
+The task is to provide a reconstruction method that can handle the limited angle
+problem that is 
+optimized for the conditions provided by neutron imaging. The performance of
+the 
+method shall be verified on both numerical and experimental data. The
+verification 
+involves image quality in terms of SNR and fidelity to the original data. The
+boundaries 
+for the reconstructed ROI as a function of the scan angle interval.
+
+
+\subsection{Samples with inherent dynamics}
+Many samples have a dynamic component with time constant shorter than the
+acquisition time. 
+This will induce motion artifacts in the reconstructed data. The Golden ratio
+acquisition scheme
+presented in \cite{kaestner2011_golden} has proven successful for
+complete data set. 
+The student should verify if the method also apropriate for incomplete data
+sets. The verification
+should be done with main focus on the limited angle tomography since this method
+has most 
+applications where the sample dynamics may play a role.
+
+\subsection{Experiments with neutrons}
+Much of the verification and comparison work of the methods can done on
+numerical phantoms. It is still important to verify the methods under actual conditions at several
+imagin beamlines. ach beamline has individual charateristics in terms of spectral distribution,
+intensity, and instrument hardware. These are factors that needs to be considered in the optimization of the
+reconstruction methods. In addition to the instrument conditions, also the applications of the methods
+may have an impact on the boundary conditions, e.g. minimum contrast and/or sample geometry. The
+initial experiments will be based on scans using test bodies with known geometry and material
+composistion. These test bodies shall also be modelled numerically to allow the generation of
+pure synthetic data sets for comparison purposes. This will be used to demonstrate and verify
+that the. The student will collaborate with people working with the applications of the
+newly 
+develeped reconstruction methods. There will be two main applications in the
+initial phase 
+they are soil science in collaboration with professor Andrea Carminati,
+University G\"{o}ttingen, Germany,
+and fuel cell research with Dr. Pierre Boillat, Paul Scherrer Institut,
+Switzerland. 
+
+\begin{itemize}
+\item Tomo synthesis -- a review is required
+\end{itemize}
+Quotes from Natterer\cite{natterer2001}:
+\begin{itemize}
+\item[Page 145] Thus the number of small singular values of R is proportional to the
+size of the missing angular range.
+\item[Page 146] On the other hand, if the missing range is large, i.e., $\phi$ close to 0, then
+Now the decay is truly exponential, and hence the problem is severely ill-posed. Practical
+experience shows that it is quite difficult to get decent reconstructions for 0 $<$ $\pi$/3, i.e.,
+from an angular range of less than 120°
+\item[Page 147] A general approach to incomplete data problems is data completion. One simply
+estimates the data in the missing range, either from information about the object (such as its
+boundary) or by mathematical extrapolation into the missing range.
+\item[Page 148] Iterative methods can be applied to incomplete data without any preprocessing of the
+data. This does not mean that the results are always satisfactory. An important feature of
+iterative methods is the possibility to incorporate a priori knowledge about the object to be
+reconstructed.
+\end{itemize}
+
