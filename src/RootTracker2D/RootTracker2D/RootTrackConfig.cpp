@@ -293,6 +293,7 @@ std::string RootTrackConfig::cProcessingSettings::WriteXML(size_t indent)
     str<<setw(indent+4)<<" "<<"<small_item>"<<m_nSmallItem<<"</small_item>"<<endl;
     str<<setw(indent+4)<<" "<<"<thres_quantile>"<<thres_quantile<<"</thres_quantile>"<<endl;
     str<<setw(indent+4)<<" "<<"<thres_low>"<<thres_low<<"</thres_low>"<<endl;
+    str<<setw(indent+4)<<" "<<"<thres_clean>"<<thres_clean<<"</thres_clean>"<<endl;
     str<<setw(indent+4)<<" "<<"<hist_size>"<<m_nHistogramSize<<"</hist_size>"<<endl;
     str<<setw(indent+4)<<" "<<"<mfr_sigma>"<<mfr_sigma<<"</mfr_sigma>"<<endl;
     str<<setw(indent+4)<<" "<<"<mfr_dirs>"<<mfr_dirs<<"</mfr_dirs>"<<endl;
@@ -350,6 +351,10 @@ void RootTrackConfig::cProcessingSettings::ParseXML(xmlTextReaderPtr reader)
 
             if (sName=="thres_low") {
                 thres_low = atof(sValue.c_str());
+            }
+
+            if (sName=="thres_clean") {
+                thres_clean = atoi(sValue.c_str());
             }
 
             if (sName=="hist_size") {

@@ -28,7 +28,6 @@ using namespace kipl::base;
 using namespace kipl::filters;
 using namespace kipl::io;
 using namespace kipl::morphology;
-//using namespace ImageThreshold;
 using namespace kipl::visualization;
 
 
@@ -134,82 +133,95 @@ int RootFinder::Process(TImage<float,2> &img, TImage<float,2> &res, RootTrackCon
 		}
 
         m_ImageList["04 Skeleton"]=m_ImgSkel;
+        m_ImageList["04 Skeleton"].Clone();
+
 		deque<int> lines, crossings,endpoints;
 
-//        logger(kipl::logging::Logger::LogMessage,"Removing crossings: Skeleton analysis");
-//        kipl::morphology::SkeletonAnalysis(res,skel, lines, crossings, endpoints);
+        logger(kipl::logging::Logger::LogMessage,"Removing crossings: Skeleton analysis");
+        kipl::morphology::SkeletonAnalysis(m_ImgSkel,skel, lines, crossings, endpoints);
 
-//        logger(kipl::logging::Logger::LogMessage,"Eroding crossings from skeleton");
-//		CNeighborhood ng(dims,2,conn4);
-//		int pos,p;
-//		while (!crossings.empty()) {
-//			pos=crossings.front();
-//			crossings.pop_front();
-//			for (size_t i=0; i<ng.N(); i++)
-//				if ((p=ng.neighbor(pos,i))!=-1)
-//					res[p]=0;
-//		}
+        msg.str("");
+        msg<<"Eroding "<< crossings.size()<<" crossings from skeleton";
+        logger(kipl::logging::Logger::LogMessage,msg.str());
 
-//        logger(kipl::logging::Logger::LogMessage,"Removing small segments: Labeling");
-//		TImage<int,2> labels;
-//        int cnt=kipl::morphology::LabelImage(res, labels,conn8);
+        CNeighborhood ng(dims,2,conn8);
+        int pos,p;
+        while (!crossings.empty()) {
+            pos=crossings.front();
+            crossings.pop_front();
+            for (size_t i=0; i<ng.N(); i++)
+                if ((p=ng.neighbor(pos,i))!=-1)
+                    m_ImgSkel[p]=0;
+        }
 
-//        vector<pair<size_t,size_t> > areas;
-//        LabelArea(labels,cnt,areas);
+        logger(kipl::logging::Logger::LogMessage,"Removing small segments: Labeling");
+        TImage<int,2> labels;
+        int cnt=kipl::morphology::LabelImage(m_ImgSkel, labels,conn8);
 
-//        deque<int> labels2remove;
-//        for (size_t i=0; i<areas.size(); i++) {
-//            if (areas[i].second<pars.mProcessingSettings.m_nSmallItem)
-//				labels2remove.push_back(i);
-//        }
+        vector<pair<size_t,size_t> > areas;
+        LabelArea(labels,cnt,areas);
 
-//        msg.str("");
-//        msg<<"Found "<<labels2remove.size()<<" items to remove"<<endl;
+        deque<int> labels2remove;
+        for (size_t i=0; i<areas.size(); i++) {
+            if (areas[i].first<pars.mProcessingSettings.m_nSmallItem)
+                labels2remove.push_back(i);
+        }
 
-//        if (pars.mProcessingSettings.save_steps) { // Save labelled skeleton
-//            varname=pars.mImageInformation.basename+"_lsk";
-//            filename=pars.mImageInformation.path+varname+pars.mImageInformation.extensions.back();
-//			WriteTIFF(labels,filename.c_str());
-//		}
+        msg.str("");
+        msg<<"Found "<<labels2remove.size()<<" items to remove from a total of "<<cnt<<" items.";
+        logger(kipl::logging::Logger::LogMessage,msg.str());
 
-//		deque<int>::iterator it,it2;
-//		deque<int> skel_tmp;
+        if (pars.mProcessingSettings.save_steps) { // Save labelled skeleton
+            varname=pars.mImageInformation.basename+"_lsk";
+            filename=pars.mImageInformation.path+varname+pars.mImageInformation.extensions.back();
+            WriteTIFF(labels,filename.c_str());
+        }
 
-//		skel_tmp.clear();
-//		for (it2=skel.begin(); it2!=skel.end(); it2++) {
-//			int pos=*it2;
-//			int lbl=-1;
-//			for (it=labels2remove.begin(); it!=labels2remove.end(); it++) {
-//				lbl=*it;
-//				if (labels[pos]==lbl)
-//					break;
-//			}
-//			if (labels[pos]==lbl)
-//				res[pos]=0;
-//			else
-//				skel_tmp.push_back(pos);
+
+        deque<int>::iterator it,it2;
+        deque<int> skel_tmp;
+
+        skel_tmp.clear();
+        for (it2=skel.begin(); it2!=skel.end(); it2++) {
+            int pos=*it2;
+            int lbl=-1;
+            for (it=labels2remove.begin(); it!=labels2remove.end(); it++) {
+                lbl=*it;
+                if (labels[pos]==lbl)
+                    break;
+            }
+            if (labels[pos]==lbl)
+                m_ImgSkel[pos]=0;
+            else
+                skel_tmp.push_back(pos);
 			
-//		}
+        }
 
-//		skel.clear();
-//		copy(skel_tmp.begin(),skel_tmp.end(),back_inserter(skel));
+        skel.clear();
+        copy(skel_tmp.begin(),skel_tmp.end(),back_inserter(skel));
 
-//        if (pars.mProcessingSettings.save_steps) { // Save cleaned skeleton
-//            varname=pars.mImageInformation.basename+"_clsk";
-//            filename=pars.mImageInformation.path+varname+pars.mImageInformation.extensions.back();
-//			WriteTIFF(res,filename.c_str());
-//		}
+        if (pars.mProcessingSettings.save_steps) { // Save cleaned skeleton
+            varname=pars.mImageInformation.basename+"_clsk";
+            filename=pars.mImageInformation.path+varname+pars.mImageInformation.extensions.back();
+            WriteTIFF(res,filename.c_str());
+        }
 		
-//        kipl::morphology::SkeletonAnalysis(res,skel, lines, crossings, endpoints);
+        kipl::morphology::SkeletonAnalysis(m_ImgSkel,skel, lines, crossings, endpoints);
 
-//        msg.str("");
-//        msg<<"Skeleton info:"<<endl;
-//        msg<<skel.size()<<" skeleton size"<<endl;
-//        msg<<lines.size()<<" lines"<<endl;
-//        msg<<endpoints.size()<<" endpoints"<<endl<<endl;
-//        logger(kipl::logging::Logger::LogMessage,msg.str());
 
-//        GrowRoot(m_ImgMFR, m_ImgRoot,endpoints,pars,th_grow);
+        msg.str("");
+        msg<<"Skeleton info:"<<endl;
+        msg<<skel.size()<<" skeleton size"<<endl;
+        msg<<lines.size()<<" lines"<<endl;
+        msg<<endpoints.size()<<" endpoints"<<endl<<endl;
+        logger(kipl::logging::Logger::LogMessage,msg.str());
+
+        m_ImageList["05 Cleaned Skeleton"]=m_ImgSkel;
+        m_ImageList["05 Cleaned Skeleton"].Clone();
+
+        GrowRoot(m_ImgMFR, m_ImgRoot,endpoints,pars,th_grow);
+        m_ImageList["06 Tracked root"]=m_ImgRoot;
+
 	}
 	
 	size_t mdims[2]={3,3};
@@ -219,17 +231,19 @@ int RootFinder::Process(TImage<float,2> &img, TImage<float,2> &res, RootTrackCon
         res=mf(m_ImgThresMFR);
     else
         res=mf(m_ImgRoot);
+
 	
 	return 1;
-
 }
-
-
 
 int RootFinder::GrowRoot(TImage<float,2> &img, TImage<float,2> &root, deque<int> & endpoints,RootTrackConfig &pars, float th_grow)
 {
     ostringstream msg;
-    logger(kipl::logging::Logger::LogMessage,"Growing roots from end points");
+    msg.str("");
+
+    msg<<"Growing root from "<<endpoints.size()<<" end points.";
+    logger(kipl::logging::Logger::LogMessage,msg.str());
+
 	const int inQueue=-2;
 	const int isPiece=-1;
 
@@ -442,8 +456,6 @@ int RootFinder::mfr(TImage<float,2> & img,TImage<float,2> &res, float sigma, flo
 			for (y=-k; y<=k; y++, pos++) {
 				xval=x*cos_phi+y*sin_phi;
 				yval=y*cos_phi-x*sin_phi;
-                //pK[pos]=-exp(-(xval*xval/s1+yval*yval/s2));
-
                 pK[pos]=-cos(w*yval)*exp(-(xval*xval/s1+yval*yval/s2));
                 sum+=pK[pos];
 			}

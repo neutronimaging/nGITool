@@ -22,7 +22,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>5</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
@@ -517,6 +517,9 @@
              </item>
              <item row="1" column="4">
               <widget class="QSpinBox" name="spin_piecemin">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets the length of the shortest item allowed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="maximum">
                 <number>100000</number>
                </property>
@@ -822,7 +825,6 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <zorder>tabWidget</zorder>
           </widget>
          </item>
         </layout>
@@ -838,7 +840,7 @@
      <x>0</x>
      <y>0</y>
      <width>820</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

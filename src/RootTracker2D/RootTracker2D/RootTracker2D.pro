@@ -24,6 +24,12 @@ FORMS    += mainwindow.ui
 LIBS += -ltiff -lz
 LIBS += -L/usr/lib -lxml2
 
+unix:!macx {
+    QMAKE_CXXFLAGS += -fopenmp
+    QMAKE_LFLAGS += -lgomp
+    LIBS += -lgomp
+}
+
 INCLUDEPATH += /usr/include/libxml2
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../src/libs/kipl/trunk/kipl/kipl-build_Qt_4_8_1_for_GCC__Qt_SDK__Release/release/ -lkipl
