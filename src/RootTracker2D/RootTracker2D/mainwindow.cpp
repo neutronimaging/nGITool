@@ -9,6 +9,7 @@
 #include <base/thistogram.h>
 #include <ModuleException.h>
 #include <sstream>
+#include <QListWidgetItem>
 
 #include "rootfinder.h"
 
@@ -99,6 +100,11 @@ void MainWindow::on_button_loadimage_clicked()
         return;
     }
 
+    kipl::strings::filenames::StripFileName(m_Config.mImageInformation.filename,
+                                            m_Config.mImageInformation.path,
+                                            m_Config.mImageInformation.basename,
+                                            m_Config.mImageInformation.extensions);
+
     ui->combo_displayimage->clear();
     ui->combo_displayimage->addItem("Original");
     ui->combo_displayimage->setCurrentIndex(0);
@@ -144,6 +150,7 @@ void MainWindow::on_button_process_clicked()
     }
     ui->combo_displayimage->setCurrentIndex(i-1);
     ui->slider_kernels->setRange(0,m_RootFinder.m_KernelList.size()-1);
+    UpdateSaveList();
 }
 
 void MainWindow::UpdateConfig()
@@ -272,4 +279,60 @@ void MainWindow::on_slider_kernels_sliderMoved(int position)
         kipl::base::TImage<float,2> & img= m_RootFinder.m_KernelList[position];
         ui->viewer_kernel->set_image(img.GetDataPtr(),img.Dims());
     }
+}
+
+void MainWindow::UpdateSaveList()
+{
+    ui->list_imagenames->clear();
+    std::map<std::string, kipl::base::TImage<float,2> >::iterator it;
+
+    for (it=m_RootFinder.m_ImageList.begin(); it!=m_RootFinder.m_ImageList.end(); it++) {
+        QListWidgetItem *item = new QListWidgetItem;
+
+        if (!it->first.empty()) {
+            item->setText(QString::fromStdString(it->first));
+
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+            item->setCheckState(Qt::Checked); // AND initialize check state
+
+            ui->list_imagenames->insertItem(ui->list_imagenames->currentRow()+1,item);
+            ui->list_imagenames->setCurrentItem(item);
+        }
+    }
+}
+
+void MainWindow::on_button_saveimages_clicked()
+{
+    std::ostringstream msg;
+    QString fname=QFileDialog::getSaveFileName(this,
+                                      "Enter file name to save",
+                                      QString::fromStdString(m_Config.mImageInformation.path));
+                                     // QDir::homePath());
+
+    std::string path,name;
+    vector<std::string> ext;
+
+    kipl::strings::filenames::StripFileName(fname.toStdString(),path,name,ext);
+
+    for (int i=0; i<(ui->list_imagenames->count()); i++) {
+        QListWidgetItem * item=ui->list_imagenames->item(i);
+
+        if (item->checkState()==Qt::Checked) {
+            QString imgname=item->text();
+            kipl::base::TImage<float,2> & img = m_RootFinder.m_ImageList[imgname.toStdString()];
+            imgname.replace(' ','_');
+
+            std::string fname=path+name+(name[name.size()-1]=='_' ? "":"_")+imgname.toStdString()+".tif";
+            msg.str("");
+            msg<<"Saving "<<fname;
+            logger(kipl::logging::Logger::LogMessage,msg.str());
+            kipl::io::WriteTIFF32(img,fname.c_str());
+        }
+    }
+    str::string cfname=path+name+"_config.xml";
+
+    ofstream conf_file(cfname.c_str());
+
+    conf_file<<m_Config.WriteXML();
+
 }

@@ -33,11 +33,14 @@ private slots:
 
     void on_slider_kernels_sliderMoved(int position);
 
+    void on_button_saveimages_clicked();
+
 private:
     void UpdateConfig();
     void UpdateDialog();
     void SaveConfiguration(QString qfname);
     void LoadDefaults();
+    void UpdateSaveList();
 
     Ui::MainWindow *ui;
     RootTrackConfig m_Config;
