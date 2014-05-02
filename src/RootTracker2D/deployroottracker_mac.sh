@@ -41,6 +41,8 @@ if [ ! -d "./Resources" ]; then
 	mkdir ./Resources	
 fi
 
+cp $REPOSPATH/roots/trunk/src/RootTracker2D/figures/RT2D_splash.png ./Resources
+
 popd
 sed -i.bak s+com.yourcompany+ch.imagingscience+g $DEST/Contents/Info.plist
 

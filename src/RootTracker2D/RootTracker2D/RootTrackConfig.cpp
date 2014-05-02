@@ -146,7 +146,6 @@ std::string RootTrackConfig::cImageInformation::WriteXML(size_t indent)
 
 void RootTrackConfig::cImageInformation::ParseXML(xmlTextReaderPtr reader)
 {
-    cout<<"parsing imageinfo"<<endl;
     const xmlChar *name, *value;
     int ret = xmlTextReaderRead(reader);
     std::string sName, sValue;
@@ -167,7 +166,6 @@ void RootTrackConfig::cImageInformation::ParseXML(xmlTextReaderPtr reader)
                 sValue="Empty";
             sName=reinterpret_cast<const char *>(name);
 
-            cout<<sName<<"="<<sValue<<endl;
             if (sName=="filename") {
                 filename=sValue;
             }
@@ -321,7 +319,6 @@ std::string RootTrackConfig::cProcessingSettings::WriteXML(size_t indent)
 
 void RootTrackConfig::cProcessingSettings::ParseXML(xmlTextReaderPtr reader)
 {
-    cout<<"parsing settings"<<endl;
     const xmlChar *name, *value;
     int ret = xmlTextReaderRead(reader);
     std::string sName, sValue;

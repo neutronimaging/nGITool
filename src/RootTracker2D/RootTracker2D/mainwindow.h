@@ -35,6 +35,16 @@ private slots:
 
     void on_button_saveimages_clicked();
 
+    void on_actionOpen_triggered();
+
+    void on_actionSave_triggered();
+
+    void on_actionSave_as_triggered();
+
+    void on_actionNew_triggered();
+
+    void on_actionQuit_triggered();
+
 private:
     void UpdateConfig();
     void UpdateDialog();
@@ -43,6 +53,7 @@ private:
     void UpdateSaveList();
 
     Ui::MainWindow *ui;
+    std::string m_sParameterFileName;
     RootTrackConfig m_Config;
     RootFinder m_RootFinder;
 

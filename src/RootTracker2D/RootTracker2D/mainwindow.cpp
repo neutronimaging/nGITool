@@ -16,10 +16,19 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     logger("MainWindow"),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_sParameterFileName("noname.xml")
 {
+    setWindowTitle("RootTracker2D");
     ui->setupUi(this);
     logger.AddLogTarget(*ui->loggingview);
+    QDir dirs;
+
+    if (!dirs.exists(dirs.homePath()+"/.imagingtools")) {
+        logger(kipl::logging::Logger::LogMessage,"Created dir .imagingtools in your home dir.");
+        dirs.mkdir(dirs.homePath()+"/.imagingtools");
+    }
+
     LoadDefaults();
 
     UpdateDialog();
@@ -329,10 +338,106 @@ void MainWindow::on_button_saveimages_clicked()
             kipl::io::WriteTIFF32(img,fname.c_str());
         }
     }
-    str::string cfname=path+name+"_config.xml";
+    std::string cfname=path+name+"_config.xml";
 
     ofstream conf_file(cfname.c_str());
 
     conf_file<<m_Config.WriteXML();
 
+}
+
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString fname=QFileDialog::getOpenFileName(this,
+                                      "Select parameter file to open",
+                                      QDir::currentPath());
+
+    QMessageBox box;
+    ostringstream msg;
+    try {
+        m_Config.LoadConfigFile(fname.toStdString(),"roottracker");
+        UpdateDialog();
+    }
+    catch (ModuleException &e) {
+        msg.str("");
+
+        msg<<"Failed to open paramter file\n"<<e.what();
+        box.setText(QString::fromStdString(msg.str()));
+    }
+    catch (kipl::base::KiplException &e) {
+        msg.str("");
+
+        msg<<"Failed to open paramter file\n"<<e.what();
+        box.setText(QString::fromStdString(msg.str()));
+    }
+
+    catch (std::exception &e) {
+        msg.str("");
+
+        msg<<"Failed to open paramter file\n"<<e.what();
+        box.setText(QString::fromStdString(msg.str()));
+    }
+}
+
+
+void MainWindow::on_actionSave_triggered()
+{
+
+    if (m_sParameterFileName=="noname.xml") {
+        on_actionSave_as_triggered();
+    }
+    else {
+        std::ofstream parfile(m_sParameterFileName.c_str());
+
+        UpdateConfig();
+        parfile<<m_Config.WriteXML();
+    }
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+    QString fname=QFileDialog::getSaveFileName(this,
+                                      "Select location to save parameters",
+                                      QDir::currentPath());
+
+    QMessageBox box;
+    ostringstream msg;
+    try {
+        m_sParameterFileName=fname.toStdString();
+        std::ofstream parfile(m_sParameterFileName.c_str());
+        UpdateConfig();
+
+        parfile<<m_Config.WriteXML();
+    }
+    catch (ModuleException &e) {
+        msg.str("");
+
+        msg<<"Failed to save parameter file\n"<<e.what();
+        box.setText(QString::fromStdString(msg.str()));
+    }
+    catch (kipl::base::KiplException &e) {
+        msg.str("");
+
+        msg<<"Failed to save parameter file\n"<<e.what();
+        box.setText(QString::fromStdString(msg.str()));
+    }
+    catch (std::exception &e) {
+        msg.str("");
+
+        msg<<"Failed to save parameter file\n"<<e.what();
+        box.setText(QString::fromStdString(msg.str()));
+    }
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    RootTrackConfig conf;
+    m_Config=conf;
+    UpdateDialog();
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QApplication::quit();
 }
