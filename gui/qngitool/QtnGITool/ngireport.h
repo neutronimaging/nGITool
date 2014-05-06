@@ -25,7 +25,7 @@ public:
                         float *sample_osc);
 
 protected:
-    QtAddons::PlotPainter m_PlotPainter;
+    QtAddons::PlotPainter m_OscillationPlot;
 };
 
 #endif // NGIREPORT_H

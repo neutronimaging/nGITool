@@ -4,6 +4,8 @@
 #include <QPainter>
 #include <QDir>
 
+#include <math/mathconstants.h>
+
 void test_nGIReport()
 {
     nGIConfig config;
@@ -17,6 +19,13 @@ void test_nGIReport()
     float axis[N];
     float proj_osc[N];
     float ref_osc[N];
+    config.projections.nPhaseSteps=9;
+    float scale = 2*fPi/config.projections.nPhaseSteps;
+    for (int i=0; i<config.projections.nPhaseSteps; i++) {
+        axis[i]=i*scale;
+        proj_osc[i]=cos(axis[i]);
+        ref_osc[i]=sin(axis[i]);
+    }
 
     QString reportname=QDir::homePath()+"/testreport.pdf";
 
@@ -39,12 +48,11 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
 {
 
 
-
+    ostringstream msg;
+    OpenDestination(filename);
     m_Painter.begin(&m_Printer);
 
-
     MakeHeader(projname);
-    ostringstream msg;
 
     msg.str(""); msg<<"Operator:   "<<config->UserInformation.sOperator;
     Print(msg.str());
@@ -71,25 +79,39 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
 
     m_fLine+=m_fLineHeight;
 
+    // Plot
     Print("Data configuration",11.0);
-//    Print(&painter,"Oscillation plot",0.6*width,m_fLine);
-//    m_OscillationPlot.SetPlotData(axis,ref_osc,
-//            config->projections.nPhaseSteps,
-//            Gdk::Color("green"),
-//            0,
-//            Gtk_addons::PlotGlyph_Square,
-//            "Reference");
+    // Modules
+    int dstdims[]={0.88*m_fWidth/3,0.88*m_fWidth/3};
+    m_fLine+=m_fLineHeight;
+    Print("Amplitude",0,m_fLine,11);
+    Print("DPC",m_fWidth/3,m_fLine,11);
+    Print("DFI",2*m_fWidth/3,m_fLine,11);
+   // m_fLine+=0.75*m_fLineHeight;
 
-//    m_OscillationPlot.SetPlotData(axis,sample_osc,
-//            config->projections.nPhaseSteps,
-//            Gdk::Color("blue"),
-//            1,
-//            Gtk_addons::PlotGlyph_Square,
-//            "Sample");
+    m_ImagePainter.set_image(ampl.GetDataPtr(),ampl.Dims());
+    m_ImagePainter.Render(m_Painter,0,m_fLine,dstdims[0],dstdims[1]);
+
+    m_ImagePainter.set_image(dpc.GetDataPtr(),dpc.Dims());
+    m_ImagePainter.Render(m_Painter,m_fWidth/3,static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
+
+    m_ImagePainter.set_image(dfi.GetDataPtr(),dfi.Dims());
+    m_ImagePainter.Render(m_Painter,2*(m_fWidth/3),static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
+
+    m_fLine+=dstdims[1]+m_fLineHeight;
+    msg.str(""); msg<<"Visibility: "<<visibility;
+    Print(msg.str());
+
+    Print("Oscillation plot",0.6*m_fWidth,m_fLine,11);
+    m_fLine+=0.75*m_fLineHeight;
+    m_OscillationPlot.setCurveData(0,axis,ref_osc,config->projections.nPhaseSteps);
+    m_OscillationPlot.setCurveData(1,axis,sample_osc,config->projections.nPhaseSteps);
+    m_OscillationPlot.m_bShowGrid=true;
 
 //    m_OscillationPlot.ShowAxes(true);
 //    m_OscillationPlot.ShowLegend(true);
 //    m_OscillationPlot.Render(cr,0.6*width, m_fLine+m_fLineHeight, 0.35*width,4*m_fLineHeight);
+    m_OscillationPlot.Render(m_Painter,0.6*m_fWidth,m_fLine,0.4*m_fWidth,0.3*m_fWidth);
 
     m_fLine+=m_fLineHeight;
 
