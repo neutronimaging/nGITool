@@ -15,6 +15,9 @@ public:
     explicit nGIMainWindow(QWidget *parent = 0);
     ~nGIMainWindow();
     
+private slots:
+
+
 private:
     Ui::nGIMainWindow *ui;
 };
