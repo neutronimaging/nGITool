@@ -25,6 +25,7 @@ public:
                         float *sample_osc);
 
 protected:
+    void ProcessingModules(nGIConfig *config);
     QtAddons::PlotPainter m_OscillationPlot;
 };
 

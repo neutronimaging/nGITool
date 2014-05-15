@@ -53,7 +53,7 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
     m_Painter.begin(&m_Printer);
 
     MakeHeader(projname);
-
+    m_Painter.setPen(QColor(0,0,0));
     msg.str(""); msg<<"Operator:   "<<config->UserInformation.sOperator;
     Print(msg.str());
     msg.str(""); msg<<"Instrument: "<<config->UserInformation.sInstrument;
@@ -79,15 +79,34 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
 
     m_fLine+=m_fLineHeight;
 
-    // Plot
     Print("Data configuration",11.0);
     // Modules
+    msg.str(""); msg<<"Processed "<<(config->projections.nPhaseSteps)<<" phase steps over "
+                    <<(config->projections.fPeriods) <<(1<config->projections.fPeriods ? " periods " : " period ")
+                    <<"with "<<(config->projections.bCompletePeriod ? "a complete": "an incomplete")<<" period.";
+    Print(msg.str());
+    msg.str(""); msg<<"Dose correction activated: "<<(config->projections.bUseNorm ? "yes" : "no");
+    Print(msg.str());
+
+    if (config->process.bUseAmplLimits==true) {
+        msg.str(""); msg<<"Clamping transmission image to interval ["<<config->process.fAmplLimits[0]<<", "<<config->process.fAmplLimits[1]<<"]";
+        Print(msg.str());
+    }
+
+    if (config->process.bUseDFILimits==true) {
+        msg.str(""); msg<<"Clamped dark field image to interval ["<<config->process.fDFILimits[0]<<", "<<config->process.fDFILimits[1]<<"]";
+        Print(msg.str());
+    }
+    m_fLine+=m_fLineHeight;
+
+    ProcessingModules(config);
+
     int dstdims[]={0.88*m_fWidth/3,0.88*m_fWidth/3};
     m_fLine+=m_fLineHeight;
     Print("Amplitude",0,m_fLine,11);
     Print("DPC",m_fWidth/3,m_fLine,11);
     Print("DFI",2*m_fWidth/3,m_fLine,11);
-   // m_fLine+=0.75*m_fLineHeight;
+
 
     m_ImagePainter.set_image(ampl.GetDataPtr(),ampl.Dims());
     m_ImagePainter.Render(m_Painter,0,m_fLine,dstdims[0],dstdims[1]);
@@ -108,9 +127,8 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
     m_OscillationPlot.setCurveData(1,axis,sample_osc,config->projections.nPhaseSteps);
     m_OscillationPlot.m_bShowGrid=true;
 
-//    m_OscillationPlot.ShowAxes(true);
-//    m_OscillationPlot.ShowLegend(true);
-//    m_OscillationPlot.Render(cr,0.6*width, m_fLine+m_fLineHeight, 0.35*width,4*m_fLineHeight);
+    //m_OscillationPlot.ShowAxes(true);
+    //m_OscillationPlot.ShowLegend(true);
     m_OscillationPlot.Render(m_Painter,0.6*m_fWidth,m_fLine,0.4*m_fWidth,0.3*m_fWidth);
 
     m_fLine+=m_fLineHeight;
@@ -122,73 +140,37 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
 
     m_Painter.end();
 
-
-
-#ifdef CAIRO_HAS_PDF_SURFACE
-
-
-
-    msg.str(""); msg<<"Processed "<<(config->projections.nPhaseSteps)<<" phase steps over "
-                    <<(config->projections.fPeriods) <<(1<config->projections.fPeriods ? " periods " : " period ")
-                    <<"with "<<(config->projections.bCompletePeriod ? "a complete": "an incomplete")<<" period.";
-    Print(cr,msg.str());
-    msg.str(""); msg<<"Dose correction activated: "<<(config->projections.bUseNorm ? "yes" : "no");
-    Print(cr,msg.str());
-
-    if (config->process.bUseAmplLimits==true) {
-        msg.str(""); msg<<"Clamping transmission image to interval ["<<config->process.fAmplLimits[0]<<", "<<config->process.fAmplLimits[1]<<"]";
-        Print(cr,msg.str());
-    }
-
-    if (config->process.bUseDFILimits==true) {
-        msg.str(""); msg<<"Clamped dark field image to interval ["<<config->process.fDFILimits[0]<<", "<<config->process.fDFILimits[1]<<"]";
-        Print(cr,msg.str());
-    }
-    m_fLine+=m_fLineHeight;
-    cr->stroke();
-
-
-
-    ProcessingModules(cr,config);
-    // Images
-    int dstdims[]={160,160};
-    m_fLine+=m_fLineHeight;
-    cr->move_to(m_fMargin,m_fLine);
-    cr->show_text("Amplitude");
-    cr->move_to(m_fMargin+dstdims[0]+20,m_fLine);
-    cr->show_text("DPC");
-    cr->move_to(m_fMargin+2*(dstdims[0]+20),m_fLine);
-    cr->show_text("DFI");
-
-    m_fLine+=0.75*m_fLineHeight;
-
-    m_ImageRenderer.set_image(ampl.GetDataPtr(),ampl.Dims());
-    m_ImageRenderer.Render(cr,static_cast<int>(m_fMargin),static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
-
-    m_ImageRenderer.set_image(dpc.GetDataPtr(),dpc.Dims());
-    m_ImageRenderer.Render(cr,static_cast<int>(m_fMargin)+(dstdims[0]+20),static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
-
-    m_ImageRenderer.set_image(dfi.GetDataPtr(),dfi.Dims());
-    m_ImageRenderer.Render(cr,static_cast<int>(m_fMargin)+2*(dstdims[0]+20),static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
-
-    m_fLine+=dstdims[1]+m_fLineHeight;
-    msg.str(""); msg<<"Visibility: "<<visibility;
-    Print(cr,msg.str());
-    m_fLine+=m_fLineHeight;
-
-    if (!config->UserInformation.sComment.empty()) {
-        Print(cr,"Comment",11.0);
-        Print(cr,config->UserInformation.sComment);
-        cr->stroke();
-    }
-
-    cr->show_page();
-
-
-
-    return 0;
-
-#endif
     msg.str(""); msg<< "Wrote PDF file \"" << filename.toStdString() << "\"";
     logger(kipl::logging::Logger::LogVerbose,msg.str());
+}
+
+
+void nGIReport::ProcessingModules(nGIConfig *config)
+{
+    ostringstream msg;
+    msg.str("");
+
+    Print("Preprocessing modules:",11.0);
+    if (config->modules.empty()) {
+        Print("No pre-processing modules were used.");
+    }
+    else {
+        msg<<"Used "<<config->modules.size()<<" pre processing modules";
+        Print(msg.str());
+        std::list<ModuleConfig>::iterator it;
+        for (it=config->modules.begin(); it!=config->modules.end(); it++) {
+            if (it->m_bActive) {
+                msg.str("");
+                msg<<it->m_sModule<<" ["<<it->m_sSharedObject<<"]";
+                Print(msg.str());
+            }
+        }
+    }
+    m_fLine+=m_fLineHeight;
+    Print("Estimator",11.0);
+    msg.str("");
+    msg<<config->estimator.m_sModule<<" ["<<config->estimator.m_sSharedObject<<"]";
+    Print(msg.str());
+
+    m_fLine+=2*m_fLineHeight;
 }
