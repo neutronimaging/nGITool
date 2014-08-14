@@ -2,6 +2,7 @@
 #define NGIMAINWINDOW_H
 
 #include <QMainWindow>
+#include <nGIConfig.h>
 
 namespace Ui {
 class nGIMainWindow;
@@ -48,6 +49,11 @@ private:
     Ui::nGIMainWindow *ui;
     QRect m_CurrentCropROI;
     QRect m_CurrentDoseROI;
+
+    nGIConfig m_Config;
+
+    void UpdateConfig();
+    void UpdateDialog();
 };
 
 #endif // NGIMAINWINDOW_H

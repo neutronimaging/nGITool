@@ -68,13 +68,13 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
     m_fLine+=m_fLineHeight;
     Print("Input files",11.0);
 
-    msg.str(""); msg<<"Phase step images: "<<(config->projections.sPath)<<(config->projections.sFileMask) ;
+    msg.str(""); msg<<"Phase step images: "<<(config->projections.sProjectionMask) ;
     Print(msg.str());
 
-    msg.str(""); msg<<"Open beam: "<<(config->projections.sReferencePath)<<(config->projections.sObMask) ;
+    msg.str(""); msg<<"Open beam: "<<(config->projections.sReferenceMask) ;
     Print(msg.str());
 
-    msg.str(""); msg<<"Dark current: "<<(config->projections.sDarkPath)<<(config->projections.sDarkMask) ;
+    msg.str(""); msg<<"Dark current: "<<(config->projections.sDarkMask) ;
     Print(msg.str());
 
     m_fLine+=m_fLineHeight;

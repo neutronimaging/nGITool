@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1132</width>
-    <height>842</height>
+    <width>1188</width>
+    <height>858</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -185,18 +185,18 @@
                </size>
               </property>
               <property name="frameShape">
-               <enum>QFrame::Box</enum>
+               <enum>QFrame::NoFrame</enum>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>3</number>
               </property>
               <widget class="QWidget" name="page">
                <property name="geometry">
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>776</width>
-                 <height>218</height>
+                 <width>812</width>
+                 <height>275</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -699,8 +699,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>776</width>
-                 <height>290</height>
+                 <width>345</width>
+                 <height>123</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -804,8 +804,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>776</width>
-                 <height>290</height>
+                 <width>497</width>
+                 <height>168</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1160,8 +1160,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>776</width>
-                 <height>290</height>
+                 <width>775</width>
+                 <height>249</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1173,7 +1173,7 @@
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_20">
                     <item>
-                     <widget class="QCheckBox" name="checkBox">
+                     <widget class="QCheckBox" name="checkTransmission">
                       <property name="font">
                        <font>
                         <weight>75</weight>
@@ -1421,7 +1421,7 @@
                </widget>
               </item>
               <item>
-               <widget class="ModuleChainConfiguratorWidget" name="widget_5" native="true"/>
+               <widget class="ModuleChainConfiguratorWidget" name="ModuleConfPreproc" native="true"/>
               </item>
               <item>
                <widget class="QLabel" name="label_10">
@@ -1443,7 +1443,7 @@
                </widget>
               </item>
               <item>
-               <widget class="SingleModuleConfiguratorWidget" name="frame">
+               <widget class="SingleModuleConfiguratorWidget" name="ModuleConfEstimator">
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -1464,7 +1464,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_11">
               <item>
-               <widget class="QtAddons::QtLogViewer" name="widget_4" native="true"/>
+               <widget class="QtAddons::QtLogViewer" name="logger" native="true"/>
               </item>
              </layout>
             </item>
@@ -1477,7 +1477,7 @@
           <property name="currentIndex">
            <number>2</number>
           </property>
-          <widget class="QWidget" name="tab_3">
+          <widget class="QWidget" name="tabVisibility">
            <attribute name="title">
             <string>Visibility</string>
            </attribute>
@@ -1520,7 +1520,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox">
+                 <widget class="QSpinBox" name="spinWindowX">
                   <property name="maximum">
                    <number>10000</number>
                   </property>
@@ -1543,7 +1543,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_2">
+                 <widget class="QSpinBox" name="spinWindowY">
                   <property name="maximum">
                    <number>10000</number>
                   </property>
@@ -1561,7 +1561,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBox_3">
+                 <widget class="QSpinBox" name="spinWindowSize">
                   <property name="maximum">
                    <number>250</number>
                   </property>
@@ -1599,7 +1599,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tab_4">
+          <widget class="QWidget" name="tabProjections">
            <attribute name="title">
             <string>Projections</string>
            </attribute>
@@ -1617,16 +1617,39 @@
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QSlider" name="horizontalSlider">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="tab_7">
+          <widget class="QWidget" name="tabOscillation">
            <attribute name="title">
             <string>Oscillation</string>
            </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_29">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QWidget" name="widget" native="true"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
@@ -1652,7 +1675,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QtAddons::ImageViewerWidget" name="widget_3" native="true">
+         <widget class="QtAddons::ImageViewerWidget" name="imageTransmission" native="true">
           <property name="minimumSize">
            <size>
             <width>250</width>
@@ -1679,7 +1702,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QtAddons::ImageViewerWidget" name="widget_2" native="true">
+         <widget class="QtAddons::ImageViewerWidget" name="imageDPC" native="true">
           <property name="minimumSize">
            <size>
             <width>250</width>
@@ -1706,7 +1729,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QtAddons::ImageViewerWidget" name="widget" native="true">
+         <widget class="QtAddons::ImageViewerWidget" name="imageDFI" native="true">
           <property name="minimumSize">
            <size>
             <width>250</width>
@@ -1726,8 +1749,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1132</width>
-     <height>21</height>
+     <width>1188</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

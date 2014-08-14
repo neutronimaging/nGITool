@@ -25,7 +25,7 @@ INCLUDEPATH += /usr/include/libxml2
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../gui/trunk/qt/QtAddons-build_Qt_4_8_1_for_GCC__Qt_SDK__Release/release/ -lQtAddons
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../gui/trunk/qt/QtAddons-build_Qt_4_8_1_for_GCC__Qt_SDK__Release/debug/ -lQtAddons
 else:symbian: LIBS += -lQtAddons
-else:unix: LIBS += -L$$PWD/../../../../../gui/trunk/qt/QtAddons-build_Qt_4_8_1_Release/ -lQtAddons
+else:unix: LIBS += -L$$PWD/../../../../../gui/trunk/qt/QtAddons-build_Qt_4_8_1_for_GCC__Qt_SDK__Release/ -lQtAddons
 
 INCLUDEPATH += $$PWD/../../../../../gui/trunk/qt/QtAddons
 DEPENDPATH += $$PWD/../../../../../gui/trunk/qt/QtAddons
