@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1188</width>
-    <height>858</height>
+    <width>1198</width>
+    <height>864</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -188,7 +188,7 @@
                <enum>QFrame::NoFrame</enum>
               </property>
               <property name="currentIndex">
-               <number>3</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="page">
                <property name="geometry">
@@ -196,7 +196,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>812</width>
-                 <height>275</height>
+                 <height>269</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -699,8 +699,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>345</width>
-                 <height>123</height>
+                 <width>337</width>
+                 <height>121</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -804,8 +804,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>497</width>
-                 <height>168</height>
+                 <width>561</width>
+                 <height>166</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1160,8 +1160,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>775</width>
-                 <height>249</height>
+                 <width>791</width>
+                 <height>96</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1443,14 +1443,7 @@
                </widget>
               </item>
               <item>
-               <widget class="SingleModuleConfiguratorWidget" name="ModuleConfEstimator">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-               </widget>
+               <widget class="SingleModuleConfiguratorWidget" name="ModuleConfEstimator" native="true"/>
               </item>
              </layout>
             </item>
@@ -1749,7 +1742,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1188</width>
+     <width>1198</width>
      <height>22</height>
     </rect>
    </property>
@@ -1815,20 +1808,20 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>QtAddons::QtLogViewer</class>
-   <extends>QWidget</extends>
-   <header location="global">qtlogviewer.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>ModuleChainConfiguratorWidget</class>
    <extends>QWidget</extends>
    <header location="global">modulechainconfiguratorwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>QtAddons::QtLogViewer</class>
+   <extends>QWidget</extends>
+   <header>qtlogviewer.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>SingleModuleConfiguratorWidget</class>
-   <extends>QFrame</extends>
+   <extends>QWidget</extends>
    <header location="global">singlemoduleconfiguratorwidget.h</header>
    <container>1</container>
   </customwidget>

@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
 
     QApplication a(argc, argv);
-    nGIMainWindow w;
+    nGIMainWindow w(&a);
     w.show();
     
     return a.exec();

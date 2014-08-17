@@ -19,7 +19,6 @@ rm -f *.1.0.dylib
 `$CPCMD $REPOS/ngi/trunk/core/nGIFramework/build-nGIFramework-Qt5-Release/libnGIFramework.1.0.0.dylib .`
 `$CPCMD $REPOS/ngi/trunk/core/nGIPreprocessing/build-nGIPreprocessing-Qt5-Release/libnGIPreprocessing.1.0.0.dylib .`
 
-# `$CPCMD /Users/kaestner/QtSDK/Madde/sysroots/harmattan_sysroot_10.2011.34-1_slim/usr/lib/libgomp.so.1.0.0 .`
 
 
 for f in `ls *.1.0.0.dylib`; do
@@ -29,7 +28,5 @@ for f in `ls *.1.0.0.dylib`; do
     ln -s $bn.1.0.dylib $bn.1.dylib
     ln -s $bn.1.dylib $bn.dylib
 done
-
-#`$CPCMD /Users/kaestner/repos/tomography/trunk/src/muhrec3/resources/* $DEST/../Resources`
 
 popd

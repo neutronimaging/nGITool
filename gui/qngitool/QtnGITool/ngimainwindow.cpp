@@ -2,12 +2,16 @@
 #include "ngimainwindow.h"
 #include "ui_ngimainwindow.h"
 #include <io/DirAnalyzer.h>
+#include <QDateTime>
 
-nGIMainWindow::nGIMainWindow(QWidget *parent) :
+nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
+    logger("nGIMainWindow"),
+    m_QtApp(app),
     ui(new Ui::nGIMainWindow)
 {
     ui->setupUi(this);
+    logger.AddLogTarget(*(ui->logger));
     on_checkCropImages_toggled(ui->checkCropImages->checkState());
     on_checkDoseRegion_toggled(ui->checkDoseRegion->checkState());
     on_checkClampTransmission_toggled(ui->checkClampTransmission->checkState());
@@ -18,6 +22,38 @@ nGIMainWindow::~nGIMainWindow()
 {
     delete ui;
 }
+
+void nGIMainWindow::on_actionNew_triggered() {
+    logger(kipl::logging::Logger::LogMessage,"New triggered");
+
+}
+
+void nGIMainWindow::on_actionOpen_triggered()
+{
+    logger(kipl::logging::Logger::LogMessage,"Load triggered");
+}
+void nGIMainWindow::on_actionSave_triggered()
+{
+    logger(kipl::logging::Logger::LogMessage,"Save triggered");
+}
+
+void nGIMainWindow::on_actionSave_as_triggered()
+{
+    logger(kipl::logging::Logger::LogMessage,"Save as triggered");
+}
+
+void nGIMainWindow::on_actionQuit_triggered()
+{
+    logger(kipl::logging::Logger::LogMessage,"Quit triggered");
+
+     m_QtApp->quit();
+}
+
+void nGIMainWindow::on_actionPrint_triggered()
+{
+    logger(kipl::logging::Logger::LogMessage,"Print triggered");
+}
+
 
 void nGIMainWindow::on_checkCropImages_toggled(bool checked)
 {
@@ -206,6 +242,14 @@ void nGIMainWindow::on_checkClampDFI_toggled(bool checked)
 
 void nGIMainWindow::UpdateConfig()
 {
+    QDateTime datetime;
+    m_Config.UserInformation.sDate       = datetime.toString().toStdString();
+    m_Config.UserInformation.sComment    = ui->textComment->toPlainText().toStdString();
+    m_Config.UserInformation.sInstrument = ui->editInstrument->text().toStdString();
+    m_Config.UserInformation.sOperator   = ui->editOperator->text().toStdString();
+    m_Config.UserInformation.sProjectNumber = ui->editProjectName->text().toStdString();
+    m_Config.UserInformation.sSample     = ui->editSample->text().toStdString();
+
     m_Config.projections.sProjectionMask = ui->editProjectionMask->text().toStdString();
     m_Config.projections.sReferenceMask  = ui->editReferenceMask->text().toStdString();
     m_Config.projections.sDarkMask       = ui->editDarkMask->text().toStdString();
@@ -214,7 +258,7 @@ void nGIMainWindow::UpdateConfig()
     m_Config.projections.sDestPath       = ui->editDestinationPath->text().toStdString();
     m_Config.projections.sDestMask       = ui->editDestinationMask->text().toStdString();
 
-    m_Config.projections.nFilesCnt       = 1;
+    m_Config.projections.nFilesCnt       = ui->spinImageCount->value();
     m_Config.projections.nPhaseSteps     = ui->spinPhaseSteps->value();
     m_Config.projections.nFileStride     = ui->spinProjectionStride->value();
     m_Config.projections.nFirstIndex     = ui->spinProjectionFirst->value();
@@ -254,48 +298,55 @@ void nGIMainWindow::UpdateConfig()
 
 void nGIMainWindow::UpdateDialog()
 {
-    m_Config.projections.sProjectionMask = ui->editProjectionMask->text().toStdString();
-    m_Config.projections.sReferenceMask  = ui->editReferenceMask->text().toStdString();
-    m_Config.projections.sDarkMask       = ui->editDarkMask->text().toStdString();
-    m_Config.projections.nDarkCnt        = ui->spinDarkCount->value();
+    ui->textComment->setText(QString::fromStdString(m_Config.UserInformation.sComment));
+    ui->editInstrument->setText(QString::fromStdString(m_Config.UserInformation.sInstrument));
 
-    m_Config.projections.sDestPath       = ui->editDestinationPath->text().toStdString();
-    m_Config.projections.sDestMask       = ui->editDestinationMask->text().toStdString();
+    ui->editOperator->setText(QString::fromStdString(m_Config.UserInformation.sOperator));
+    ui->editProjectName->setText(QString::fromStdString(m_Config.UserInformation.sProjectNumber));
+    ui->editSample->setText(QString::fromStdString(m_Config.UserInformation.sSample));
 
-    m_Config.projections.nFilesCnt       = 1;
-    m_Config.projections.nPhaseSteps     = ui->spinPhaseSteps->value();
-    m_Config.projections.nFileStride     = ui->spinProjectionStride->value();
-    m_Config.projections.nFirstIndex     = ui->spinProjectionFirst->value();
+    ui->editProjectionMask->setText(QString::fromStdString(m_Config.projections.sProjectionMask));
+    ui->editReferenceMask->setText(QString::fromStdString(m_Config.projections.sReferenceMask));
+    ui->editDarkMask->setText(QString::fromStdString(m_Config.projections.sDarkMask));
+    ui->spinDarkCount->setValue(m_Config.projections.nDarkCnt);
 
-    m_Config.projections.nRefFileStride  = ui->spinReferenceStride->value();
-    m_Config.projections.nRefFirstIndex  = ui->spinReferenceFirst->value();
-    m_Config.projections.nDarkFirstIndex = ui->spinDarkFirst->value();
-    m_Config.projections.bCompletePeriod = ui->checkCompletePeriod->checkState();
-    m_Config.projections.fPeriods        = ui->spinPeriods->value();
-    m_Config.projections.bUseROI         = ui->checkCropImages->checkState();
+    ui->editDestinationPath->setText(QString::fromStdString(m_Config.projections.sDestPath));
+    ui->editDestinationMask->setText(QString::fromStdString(m_Config.projections.sDestMask));
 
-    m_Config.projections.nROI[0]         = ui->spinCrop0->value();
-    m_Config.projections.nROI[1]         = ui->spinCrop1->value();
-    m_Config.projections.nROI[2]         = ui->spinCrop2->value();
-    m_Config.projections.nROI[3]         = ui->spinCrop3->value();
+    ui->spinImageCount->setValue(m_Config.projections.nFilesCnt);
+    ui->spinPhaseSteps->setValue(m_Config.projections.nPhaseSteps);
+    ui->spinProjectionStride->setValue(m_Config.projections.nFileStride);
+    ui->spinProjectionFirst->setValue(m_Config.projections.nFirstIndex);
 
-    m_Config.projections.bUseNorm        = ui->checkDoseRegion->checkState();
-    m_Config.projections.nNormROI[0]     = ui->spinDose0->value();
-    m_Config.projections.nNormROI[1]     = ui->spinDose1->value();
-    m_Config.projections.nNormROI[2]     = ui->spinDose2->value();
-    m_Config.projections.nNormROI[3]     = ui->spinDose3->value();
+    ui->spinReferenceStride->setValue(m_Config.projections.nRefFileStride);
+    ui->spinReferenceFirst->setValue(m_Config.projections.nRefFirstIndex);
+    ui->spinDarkFirst->setValue(m_Config.projections.nDarkFirstIndex);
+    ui->checkCompletePeriod->setChecked(m_Config.projections.bCompletePeriod);
+    ui->spinPeriods->setValue(m_Config.projections.fPeriods);
+    ui->checkCropImages->setChecked(m_Config.projections.bUseROI);
 
-    m_Config.process.bComputeAmplitude   = ui->checkTransmission->checkState();
-    m_Config.process.bComputeDFI         = ui->checkDarkField->checkState();
-    m_Config.process.bComputeDPC         = ui->checkDPC->checkState();
+    ui->spinCrop0->setValue(m_Config.projections.nROI[0]);
+    ui->spinCrop1->setValue(m_Config.projections.nROI[1]);
+    ui->spinCrop2->setValue(m_Config.projections.nROI[2]);
+    ui->spinCrop3->setValue(m_Config.projections.nROI[3]);
+
+    ui->checkDoseRegion->setChecked(m_Config.projections.bUseNorm);
+    ui->spinDose0->setValue(m_Config.projections.nNormROI[0]);
+    ui->spinDose1->setValue(m_Config.projections.nNormROI[1]);
+    ui->spinDose2->setValue(m_Config.projections.nNormROI[2]);
+    ui->spinDose3->setValue(m_Config.projections.nNormROI[3]);
+
+    ui->checkTransmission->setChecked(m_Config.process.bComputeAmplitude);
+    ui->checkDarkField->setChecked(m_Config.process.bComputeDFI);
+    ui->checkDPC->setChecked(m_Config.process.bComputeDPC);
     m_Config.process.bComputeVisibilty   = true; // needed?
     m_Config.process.bSerialize          = false;
-    m_Config.process.bUseAmplLimits      = ui->checkClampTransmission->checkState();
-    m_Config.process.bUseDFILimits       = ui->checkClampDFI->checkState();
+    ui->checkClampTransmission->setChecked(m_Config.process.bUseAmplLimits);
+    ui->checkClampDFI->setChecked(m_Config.process.bUseDFILimits);
 
-    m_Config.process.nVisibilityWindow   = ui->spinWindowSize->value();
-    m_Config.process.nVisibilityWindowPos[0] = ui->spinWindowX->value();
-    m_Config.process.nVisibilityWindowPos[1] = ui->spinWindowY->value();
-    m_Config.estimator = ui->ModuleConfEstimator->GetModule();
-    m_Config.modules   = ui->ModuleConfPreproc->GetModules();
+    ui->spinWindowSize->setValue(m_Config.process.nVisibilityWindow);
+    ui->spinWindowX->setValue(m_Config.process.nVisibilityWindowPos[0]);
+    ui->spinWindowY->setValue(m_Config.process.nVisibilityWindowPos[1]);
+    ui->ModuleConfEstimator->SetModule(m_Config.estimator);
+    ui->ModuleConfPreproc->SetModules(m_Config.modules);
 }
