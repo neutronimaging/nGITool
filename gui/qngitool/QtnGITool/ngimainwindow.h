@@ -60,8 +60,11 @@ private:
     QRect m_CurrentCropROI;
     QRect m_CurrentDoseROI;
 
-    nGIConfig m_Config;
+    std::string m_sConfigFilename;
 
+    nGIConfig m_Config;
+    void LoadDefaults();
+    void SaveCurrentSetup();
     void UpdateConfig();
     void UpdateDialog();
 };

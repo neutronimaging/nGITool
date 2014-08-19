@@ -1,8 +1,24 @@
 #include <QFileDialog>
+#include <QDateTime>
+#include <QDir>
+#include <QString>
+#include <QMessageBox>
+
 #include "ngimainwindow.h"
 #include "ui_ngimainwindow.h"
+#include "ngireport.h"
+#include <nGIException.h>
+#include <base/KiplException.h>
+#include <ModuleException.h>
+
 #include <io/DirAnalyzer.h>
-#include <QDateTime>
+#include <strings/filenames.h>
+
+#include <fstream>
+#include <sstream>
+#include <string>
+
+
 
 nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
@@ -12,6 +28,7 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     logger.AddLogTarget(*(ui->logger));
+    LoadDefaults();
     on_checkCropImages_toggled(ui->checkCropImages->checkState());
     on_checkDoseRegion_toggled(ui->checkDoseRegion->checkState());
     on_checkClampTransmission_toggled(ui->checkClampTransmission->checkState());
@@ -23,35 +40,158 @@ nGIMainWindow::~nGIMainWindow()
     delete ui;
 }
 
-void nGIMainWindow::on_actionNew_triggered() {
-    logger(kipl::logging::Logger::LogMessage,"New triggered");
+void nGIMainWindow::LoadDefaults()
+{
+    std::string defaultsname;
+    QDir dir;
+    QString currentname=dir.homePath()+"/.imagingtools/CurrentnGI.xml";
 
+    bool bUseDefaults=true;
+    if (dir.exists(currentname)) {
+        defaultsname=currentname.toStdString();
+        bUseDefaults=false;
+    }
+    else {
+    #ifdef Q_OS_WIN32
+         defaultsname="resources/defaults_windows.xml";
+    #elseif Q_OS_LINUX
+        defaultsname=m_sApplicationPath+"resources/defaults_linux.xml";
+    #elseif Q_OS_DARWIN
+        defaultsname=m_sApplicationPath+"../Resources/defaults_mac.xml";
+    #endif
+        bUseDefaults=true;
+    }
+    std::ostringstream msg;
+
+    kipl::strings::filenames::CheckPathSlashes(defaultsname,false);
+    try {
+        m_Config.LoadConfigFile(defaultsname.c_str(),"ngitool");
+        msg.str(""); msg<<"Loaded config file "<<defaultsname;
+        logger(kipl::logging::Logger::LogMessage, msg.str());
+    }
+    catch (nGIException &e) {
+        msg<<"Loading defaults failed :\n"<<e.what();
+        logger(kipl::logging::Logger::LogError,msg.str());
+    }
+    catch (ModuleException &e) {
+        msg<<"Loading defaults failed :\n"<<e.what();
+        logger(kipl::logging::Logger::LogError,msg.str());
+    }
+    catch (kipl::base::KiplException &e) {
+        msg<<"Loading defaults failed :\n"<<e.what();
+        logger(kipl::logging::Logger::LogError,msg.str());
+    }
+
+    if (bUseDefaults) {
+        m_Config.projections.sProjectionMask       = QDir::homePath().toStdString();
+        m_Config.projections.sReferenceMask        = QDir::homePath().toStdString();
+        m_Config.projections.sDestPath             = QDir::homePath().toStdString();
+
+        std::list<ModuleConfig>::iterator it;
+
+        std::string sSearchStr = "@executable_path";
+        std::string sModulePath=m_QtApp->applicationDirPath().toStdString();
+        size_t pos=0;
+        for (it=m_Config.modules.begin(); it!=m_Config.modules.end(); it++) {
+            pos=it->m_sSharedObject.find(sSearchStr);
+            logger(kipl::logging::Logger::LogMessage,it->m_sSharedObject);
+            if (pos!=std::string::npos)
+                it->m_sSharedObject.replace(pos,sSearchStr.size(),sModulePath);
+            logger(kipl::logging::Logger::LogMessage,it->m_sSharedObject);
+        }
+    }
+
+    UpdateDialog();
+}
+
+void nGIMainWindow::on_actionNew_triggered() {
+    logger(kipl::logging::Logger::LogMessage,"Requested new config");
+    nGIConfig conf;
+    m_Config=conf;
+    UpdateDialog();
 }
 
 void nGIMainWindow::on_actionOpen_triggered()
 {
-    logger(kipl::logging::Logger::LogMessage,"Load triggered");
+    logger(kipl::logging::Logger::LogMessage,"Load saved configuration");
+    std::ostringstream msg;
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open nGI processing configuration"),tr("configurations (*.xml)"));
+
+    QMessageBox msgbox;
+
+    msgbox.setWindowTitle(tr("Config file error"));
+    msgbox.setText(tr("Failed to load the configuration file"));
+
+    try {
+        m_Config.LoadConfigFile(fileName.toStdString(),"reconstructor");
+    }
+    catch (nGIException & e) {
+        msg<<"Failed to load the configuration file :\n"<<
+             e.what();
+        msgbox.setDetailedText(QString::fromStdString(msg.str()));
+        msgbox.exec();
+    }
+    catch (ModuleException & e) {
+        msg<<"Failed to load the configuration file :\n"<<
+             e.what();
+        msgbox.setDetailedText(QString::fromStdString(msg.str()));
+        msgbox.exec();
+    }
+    catch (kipl::base::KiplException & e) {
+        msg<<"Failed to load the configuration file :\n"<<
+             e.what();
+        msgbox.setDetailedText(QString::fromStdString(msg.str()));
+        msgbox.exec();
+    }
+    catch (std::exception & e) {
+        msg<<"Failed to load the configuration file :\n"<<
+             e.what();
+        msgbox.setDetailedText(QString::fromStdString(msg.str()));
+        msgbox.exec();
+    }
+
+    UpdateDialog();
 }
 void nGIMainWindow::on_actionSave_triggered()
 {
-    logger(kipl::logging::Logger::LogMessage,"Save triggered");
+    logger(kipl::logging::Logger::LogMessage,"Save configuration");
+    if (m_sConfigFilename=="noname.xml")
+        on_actionSave_as_triggered();
+    else {
+        std::ofstream conffile(m_sConfigFilename.c_str());
+
+        conffile<<m_Config.WriteXML();
+    }
 }
 
 void nGIMainWindow::on_actionSave_as_triggered()
 {
-    logger(kipl::logging::Logger::LogMessage,"Save as triggered");
+    logger(kipl::logging::Logger::LogMessage,"Saveing configuration as");
+    QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
+
+    m_sConfigFilename=fname.toStdString();
+    std::ofstream conffile(m_sConfigFilename.c_str());
+
+    conffile<<m_Config.WriteXML();
 }
 
 void nGIMainWindow::on_actionQuit_triggered()
 {
+    SaveCurrentSetup();
+
     logger(kipl::logging::Logger::LogMessage,"Quit triggered");
 
-     m_QtApp->quit();
+    m_QtApp->quit();
 }
 
 void nGIMainWindow::on_actionPrint_triggered()
 {
-    logger(kipl::logging::Logger::LogMessage,"Print triggered");
+    logger(kipl::logging::Logger::LogMessage,"Printing report");
+    QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
+
+    nGIReport report;
+
+    report.CreateReport
 }
 
 
@@ -211,7 +351,7 @@ void nGIMainWindow::on_buttonDestinationBrowse_clicked()
 
 void nGIMainWindow::on_buttonCreateReport_clicked()
 {
-
+    on_actionPrint_triggered();
 }
 
 void nGIMainWindow::on_buttonProcessAll_clicked()
@@ -349,4 +489,20 @@ void nGIMainWindow::UpdateDialog()
     ui->spinWindowY->setValue(m_Config.process.nVisibilityWindowPos[1]);
     ui->ModuleConfEstimator->SetModule(m_Config.estimator);
     ui->ModuleConfPreproc->SetModules(m_Config.modules);
+}
+
+void nGIMainWindow::SaveCurrentSetup()
+{
+    logger(kipl::logging::Logger::LogMessage,"Saving current setup");
+    QDir dir;
+    QString qcurrentname=dir.homePath()+"/.imagingtools";
+
+    if (!dir.exists(qcurrentname)) {
+        dir.mkdir(qcurrentname);
+    }
+    qcurrentname+="/CurrentnGI.xml";
+    std::string currentname=qcurrentname.toStdString();
+    kipl::strings::filenames::CheckPathSlashes(currentname,false);
+    std::ofstream outfile(currentname.c_str());
+    outfile<<m_Config.WriteXML();
 }
