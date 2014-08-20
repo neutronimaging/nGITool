@@ -3,11 +3,13 @@
 #include <QDir>
 #include <QString>
 #include <QMessageBox>
+#include <QRect>
 
 #include "ngimainwindow.h"
 #include "ui_ngimainwindow.h"
 #include "ngireport.h"
 #include <nGIException.h>
+#include <nGIFactory.h>
 #include <base/KiplException.h>
 #include <ModuleException.h>
 
@@ -24,7 +26,8 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     QMainWindow(parent),
     logger("nGIMainWindow"),
     m_QtApp(app),
-    ui(new Ui::nGIMainWindow)
+    ui(new Ui::nGIMainWindow),
+    m_pEngine(NULL)
 {
     ui->setupUi(this);
     logger.AddLogTarget(*(ui->logger));
@@ -191,7 +194,7 @@ void nGIMainWindow::on_actionPrint_triggered()
 
     nGIReport report;
 
-    report.CreateReport
+    //report.CreateReport();
 }
 
 
@@ -361,7 +364,165 @@ void nGIMainWindow::on_buttonProcessAll_clicked()
 
 void nGIMainWindow::on_buttonPreview_clicked()
 {
+    UpdateConfig();
 
+    SaveCurrentSetup();
+
+    nGIConfig cfg(m_Config);
+    cfg.projections.nFilesCnt     = 1;
+    cfg.process.bComputeAmplitude = true;
+    cfg.process.bComputeDPC       = true;
+    cfg.process.bComputeDFI       = true;
+    cfg.process.bSerialize		  = false;
+    cfg.projections.bUseROI       = ui->checkPreviewCropped->checkState();
+
+    nGIFactory factory;
+    if (m_pEngine!=NULL) {
+        delete m_pEngine;
+        m_pEngine=NULL;
+    }
+
+    QMessageBox msgdlg;
+    msgdlg.setText("There was an error during processing your data");
+    try {
+        m_pEngine=factory.BuildEngine(cfg,NULL);
+        logger(kipl::logging::Logger::LogVerbose,"Building the Engine was successful.");
+        m_pEngine->Run();
+        logger(kipl::logging::Logger::LogVerbose,"The data was successfully processed.");
+    }
+    catch (kipl::base::KiplException & e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (nGIException  &e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (ModuleException  &e) {
+            logger(kipl::logging::Logger::LogError,e.what());
+            msgdlg.setDetailedText(QString::fromStdString(e.what()));
+            msgdlg.exec();
+            return;
+        }
+    catch (std::exception & e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (...) {
+        logger(kipl::logging::Logger::LogError,"Unknown error");
+        msgdlg.setDetailedText("An unexpected exeption was thrown");
+        msgdlg.exec();
+        exit(-1);
+    }
+
+    ShowResults();
+}
+
+void nGIMainWindow::ShowResults()
+{
+    std::cout<<"show\n";
+    QMessageBox msgdlg;
+    msgdlg.setText("An error occurred");
+
+    kipl::base::TImage<float> trans;
+    kipl::base::TImage<float> phase;
+    kipl::base::TImage<float> dark;
+    kipl::base::TImage<float> vis;
+
+    try {
+        m_pEngine->GetResults(trans,phase,dark,vis);
+    }
+    catch (nGIException  &e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (ModuleException  &e) {
+            logger(kipl::logging::Logger::LogError,e.what());
+            msgdlg.setDetailedText(QString::fromStdString(e.what()));
+            msgdlg.exec();
+            return;
+        }
+    catch (std::exception & e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (...) {
+        logger(kipl::logging::Logger::LogError,"Unknown error");
+        msgdlg.setDetailedText("An unexpected exception was thrown.");
+        msgdlg.exec();
+        exit(-1);
+    }
+
+    ui->imageTransmission->set_image(trans.GetDataPtr(),trans.Dims());
+    ui->imageDPC->set_image(phase.GetDataPtr(),phase.Dims());
+    ui->imageDFI->set_image(dark.GetDataPtr(),dark.Dims());
+
+    const size_t nBins=2048;
+    float axis[nBins];
+    size_t hist[nBins];
+    kipl::base::TImage<float,3> &proj=m_pEngine->GetProjections();
+    size_t nLo=0,nHi=0;
+
+    ui->sliderProjections->setRange(m_Config.projections.nFirstIndex,m_Config.projections.nFirstIndex+m_Config.projections.nPhaseSteps);
+    //scale_projections->get_adjustment()->configure(0.0, 1.0, mConfig.projections.nPhaseSteps, 1.0, 1.0, 0.0);
+
+    // Plot oscillations
+    float proj_osc[2048];
+    float ref_osc[2048];
+
+    m_pEngine->OscillationPlot(axis,proj_osc,ref_osc);
+ //   ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps, QColor("blue"),0,QtAddons::PlotGlyph_Square,"Sample");
+ //   ui->plotOscillation->plot(axis,ref_osc,m_Config.projections.nPhaseSteps, QColor("green"),1,QtAddons::PlotGlyph_Square,"Reference");
+    ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps);
+    ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps);
+    ui->plotOscillation->setPlotSettings();
+
+    QRect rect;
+    if (m_Config.projections.bUseROI==true) {
+        if (!ui->checkPreviewCropped->checkState()) {
+            rect.setRect(m_Config.projections.nROI[0],
+                    m_Config.projections.nROI[1],
+                    m_Config.projections.nROI[2]-m_Config.projections.nROI[0],
+                    m_Config.projections.nROI[3]-m_Config.projections.nROI[1]);
+
+            ui->imageTransmission->set_rectangle(rect,QColor("yellow"),0);
+            ui->imageDPC->set_rectangle(rect,QColor("yellow"),0);
+            ui->imageDFI->set_rectangle(rect,QColor("yellow"),0);
+        }
+        else {
+            ui->imageTransmission->clear_rectangle(0);
+            ui->imageDPC->clear_rectangle(0);
+            ui->imageDFI->clear_rectangle(0);
+        }
+    }
+    else {
+        ui->imageTransmission->clear_rectangle(0);
+        ui->imageDPC->clear_rectangle(0);
+        ui->imageDFI->clear_rectangle(0);
+    }
+
+    //on_changed_normroi();
+    ui->imageVisibility->set_image(vis.GetDataPtr(),vis.Dims());
+
+    if (m_Config.process.nVisibilityWindowPos[0]*m_Config.process.nVisibilityWindowPos[1]==0) {
+        m_Config.process.nVisibilityWindowPos[0]=vis.Size(0)/2;
+        m_Config.process.nVisibilityWindowPos[1]=vis.Size(1)/2;
+        ui->spinWindowX->setValue(m_Config.process.nVisibilityWindowPos[0]);
+        ui->spinWindowY->setValue(m_Config.process.nVisibilityWindowPos[1]);
+    }
+    else {
+        //Draw_VisibilityWindow();
+    }
 }
 
 void nGIMainWindow::on_checkClampTransmission_toggled(bool checked)

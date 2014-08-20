@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <nGIConfig.h>
 #include <logging/logger.h>
+#include <nGIEngine.h>
 
 namespace Ui {
 class nGIMainWindow;
@@ -63,8 +64,11 @@ private:
     std::string m_sConfigFilename;
 
     nGIConfig m_Config;
+    nGIEngine *m_pEngine;
     void LoadDefaults();
     void SaveCurrentSetup();
+
+    void ShowResults();
     void UpdateConfig();
     void UpdateDialog();
 };

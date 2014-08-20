@@ -1478,7 +1478,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_18">
               <item>
-               <widget class="QtAddons::ImageViewerWidget" name="widget_6" native="true">
+               <widget class="QtAddons::ImageViewerWidget" name="imageVisibility" native="true">
                 <property name="minimumSize">
                  <size>
                   <width>250</width>
@@ -1612,7 +1612,7 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <item>
-                 <widget class="QSlider" name="horizontalSlider">
+                 <widget class="QSlider" name="sliderProjections">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
                     <horstretch>0</horstretch>
@@ -1638,7 +1638,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_5">
               <item>
-               <widget class="QWidget" name="widget" native="true"/>
+               <widget class="QtAddons::Plotter" name="plotOscillation" native="true"/>
               </item>
              </layout>
             </item>
@@ -1823,6 +1823,12 @@
    <class>SingleModuleConfiguratorWidget</class>
    <extends>QWidget</extends>
    <header location="global">singlemoduleconfiguratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QtAddons::Plotter</class>
+   <extends>QWidget</extends>
+   <header location="global">plotter.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
