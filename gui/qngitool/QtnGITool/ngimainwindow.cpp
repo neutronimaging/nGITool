@@ -485,7 +485,6 @@ void nGIMainWindow::ShowResults()
  //   ui->plotOscillation->plot(axis,ref_osc,m_Config.projections.nPhaseSteps, QColor("green"),1,QtAddons::PlotGlyph_Square,"Reference");
     ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps);
     ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps);
-    ui->plotOscillation->setPlotSettings();
 
     QRect rect;
     if (m_Config.projections.bUseROI==true) {
