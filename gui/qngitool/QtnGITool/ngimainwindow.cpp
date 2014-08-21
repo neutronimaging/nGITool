@@ -359,7 +359,19 @@ void nGIMainWindow::on_buttonCreateReport_clicked()
 
 void nGIMainWindow::on_buttonProcessAll_clicked()
 {
+    const int N=30;
+    float x[N];
+    float y1[N];
+    float y2[N];
 
+    for (int i=0; i<N; i++) {
+        x[i]=2.0f*3.1415*float(i)/float(N);
+        y1[i]=sin(x[i]);
+        y2[i]=cos(x[i]);
+    }
+
+    ui->plotOscillation->setCurveData(0,x,y1,N,QColor("red"),QtAddons::PlotGlyph_Square);
+    ui->plotOscillation->setCurveData(1,x,y2,N,QColor("blue"),QtAddons::PlotGlyph_Plus);
 }
 
 void nGIMainWindow::on_buttonPreview_clicked()
