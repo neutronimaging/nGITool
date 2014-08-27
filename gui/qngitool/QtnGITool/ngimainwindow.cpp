@@ -71,7 +71,7 @@ void nGIMainWindow::LoadDefaults()
 
     kipl::strings::filenames::CheckPathSlashes(defaultsname,false);
     try {
-        m_Config.LoadConfigFile(defaultsname.c_str(),"ngitool");
+        m_Config.LoadConfigFile(defaultsname.c_str(),"ngi");
         msg.str(""); msg<<"Loaded config file "<<defaultsname;
         logger(kipl::logging::Logger::LogMessage, msg.str());
     }
