@@ -62,6 +62,7 @@ private:
     QRect m_CurrentDoseROI;
 
     std::string m_sConfigFilename;
+    std::string m_sApplicationName;
 
     nGIConfig m_Config;
     nGIEngine *m_pEngine;

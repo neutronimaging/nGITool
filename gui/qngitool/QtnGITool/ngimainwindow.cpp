@@ -27,9 +27,12 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     logger("nGIMainWindow"),
     m_QtApp(app),
     ui(new Ui::nGIMainWindow),
+    m_sApplicationName("ngitool"),
     m_pEngine(NULL)
 {
     ui->setupUi(this);
+    ui->ModuleConfEstimator->Configure(m_sApplicationName);
+    ui->ModuleConfPreproc->configure(m_sApplicationName,m_QtApp->applicationDirPath().toStdString());
     logger.AddLogTarget(*(ui->logger));
     LoadDefaults();
     on_checkCropImages_toggled(ui->checkCropImages->checkState());
@@ -377,7 +380,6 @@ void nGIMainWindow::on_buttonProcessAll_clicked()
 void nGIMainWindow::on_buttonPreview_clicked()
 {
     UpdateConfig();
-
     SaveCurrentSetup();
 
     nGIConfig cfg(m_Config);
