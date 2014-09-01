@@ -200,12 +200,16 @@ void nGIMainWindow::on_actionPrint_triggered()
     kipl::base::TImage<float,2> phase;
     kipl::base::TImage<float,2> dark;
     kipl::base::TImage<float,2> vis;
+
     m_pEngine->GetResults(trans,phase,dark,vis);
     float axis[1024],ref_osc[1024],sample_osc[1024];
     m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
     report.CreateReport(fname,
-                        m_Config.cUserInformation.sProjectNumber,
-                        &m_Config,trans,phase,dfi,vis,axis,ref_osc,sample_osc);
+                        m_Config.UserInformation.sProjectNumber,
+                        &m_Config,
+                        trans,phase,dark,
+                        0.0f,
+                        axis,ref_osc,sample_osc);
 
 }
 
