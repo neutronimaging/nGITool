@@ -196,8 +196,17 @@ void nGIMainWindow::on_actionPrint_triggered()
     QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
 
     nGIReport report;
+    kipl::base::TImage<float,2> trans;
+    kipl::base::TImage<float,2> phase;
+    kipl::base::TImage<float,2> dark;
+    kipl::base::TImage<float,2> vis;
+    m_pEngine->GetResults(trans,phase,dark,vis);
+    float axis[1024],ref_osc[1024],sample_osc[1024];
+    m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
+    report.CreateReport(fname,
+                        m_Config.cUserInformation.sProjectNumber,
+                        &m_Config,trans,phase,dfi,vis,axis,ref_osc,sample_osc);
 
-    //report.CreateReport();
 }
 
 
@@ -400,9 +409,9 @@ void nGIMainWindow::on_buttonPreview_clicked()
     msgdlg.setText("There was an error during processing your data");
     try {
         m_pEngine=factory.BuildEngine(cfg,NULL);
-        logger(kipl::logging::Logger::LogVerbose,"Building the Engine was successful.");
+        logger(kipl::logging::Logger::LogMessage,"Building the Engine was successful.");
         m_pEngine->Run();
-        logger(kipl::logging::Logger::LogVerbose,"The data was successfully processed.");
+        logger(kipl::logging::Logger::LogMessage,"The data was successfully processed.");
     }
     catch (kipl::base::KiplException & e) {
         logger(kipl::logging::Logger::LogError,e.what());
@@ -497,8 +506,8 @@ void nGIMainWindow::ShowResults()
     m_pEngine->OscillationPlot(axis,proj_osc,ref_osc);
  //   ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps, QColor("blue"),0,QtAddons::PlotGlyph_Square,"Sample");
  //   ui->plotOscillation->plot(axis,ref_osc,m_Config.projections.nPhaseSteps, QColor("green"),1,QtAddons::PlotGlyph_Square,"Reference");
-    ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps);
-    ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps);
+    ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps,QColor("blue"),QtAddons::PlotGlyph_Plus);
+    ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps,QColor("green"),QtAddons::PlotGlyph_Plus);
 
     QRect rect;
     if (m_Config.projections.bUseROI==true) {
