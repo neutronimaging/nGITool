@@ -142,6 +142,8 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
 
     msg.str(""); msg<< "Wrote PDF file \"" << filename.toStdString() << "\"";
     logger(kipl::logging::Logger::LogVerbose,msg.str());
+
+    return 0;
 }
 
 

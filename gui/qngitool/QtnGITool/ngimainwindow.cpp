@@ -60,9 +60,9 @@ void nGIMainWindow::LoadDefaults()
     else {
     #ifdef Q_OS_WIN32
          defaultsname="resources/defaults_windows.xml";
-    #elseif Q_OS_LINUX
+    #elif Q_OS_LINUX
         defaultsname=m_sApplicationPath+"resources/defaults_linux.xml";
-    #elseif Q_OS_DARWIN
+    #elif Q_OS_DARWIN
         defaultsname=m_sApplicationPath+"../Resources/defaults_mac.xml";
     #endif
         bUseDefaults=true;
