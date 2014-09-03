@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1198</width>
-    <height>864</height>
+    <width>1352</width>
+    <height>841</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -188,15 +188,15 @@
                <enum>QFrame::NoFrame</enum>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>2</number>
               </property>
               <widget class="QWidget" name="page">
                <property name="geometry">
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>770</width>
-                 <height>269</height>
+                 <width>782</width>
+                 <height>187</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -300,6 +300,9 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="maximum">
+                       <number>10000</number>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -336,6 +339,9 @@
                         <width>60</width>
                         <height>0</height>
                        </size>
+                      </property>
+                      <property name="maximum">
+                       <number>10000</number>
                       </property>
                      </widget>
                     </item>
@@ -375,6 +381,12 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10000</number>
+                      </property>
                      </widget>
                     </item>
                     <item>
@@ -388,6 +400,12 @@
                      <widget class="QSpinBox" name="spin_FilesPerStep">
                       <property name="toolTip">
                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of images acquired per phase step. Used to increase the count statistics.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10000</number>
                       </property>
                      </widget>
                     </item>
@@ -431,6 +449,19 @@
                      </widget>
                     </item>
                     <item>
+                     <spacer name="horizontalSpacer_5">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
                      <widget class="QLabel" name="label_15">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -465,6 +496,9 @@
                         <width>60</width>
                         <height>0</height>
                        </size>
+                      </property>
+                      <property name="maximum">
+                       <number>10000</number>
                       </property>
                      </widget>
                     </item>
@@ -503,6 +537,12 @@
                         <width>60</width>
                         <height>0</height>
                        </size>
+                      </property>
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10000</number>
                       </property>
                      </widget>
                     </item>
@@ -559,61 +599,6 @@
                      </spacer>
                     </item>
                     <item>
-                     <widget class="QLabel" name="label_17">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>50</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Count</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="spinDarkCount">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>60</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_27">
-                    <item>
-                     <spacer name="horizontalSpacer_3">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>550</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
                      <widget class="QLabel" name="label_18">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -649,9 +634,56 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="maximum">
+                       <number>10000</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_17">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Count</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="spinDarkCount">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>60</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximum">
+                       <number>10000</number>
+                      </property>
                      </widget>
                     </item>
                    </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_27"/>
                   </item>
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_26">
@@ -718,8 +750,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>337</width>
-                 <height>121</height>
+                 <width>289</width>
+                 <height>108</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -823,8 +855,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>561</width>
-                 <height>166</height>
+                 <width>782</width>
+                 <height>284</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1179,8 +1211,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>791</width>
-                 <height>96</height>
+                 <width>718</width>
+                 <height>79</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1487,7 +1519,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_2">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tabVisibility">
            <attribute name="title">
@@ -1569,7 +1601,11 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinVisROI2"/>
+                 <widget class="QSpinBox" name="spinVisROI2">
+                  <property name="maximum">
+                   <number>10000</number>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QLabel" name="label_20">
@@ -1579,7 +1615,11 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinVisROI3"/>
+                 <widget class="QSpinBox" name="spinVisROI3">
+                  <property name="maximum">
+                   <number>10000</number>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QPushButton" name="buttonGetVisROI">
@@ -1592,6 +1632,13 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelVisibility">
+                <property name="text">
+                 <string>Visibility unknown</string>
+                </property>
+               </widget>
               </item>
               <item>
                <spacer name="verticalSpacer_6">
@@ -1760,8 +1807,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1198</width>
-     <height>22</height>
+     <width>1352</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

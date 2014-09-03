@@ -61,6 +61,18 @@ private slots:
     void on_spinVisROI2_valueChanged(int arg1);
     void on_spinVisROI3_valueChanged(int arg1);
 
+    void on_spinCrop0_valueChanged(int arg1);
+    void on_spinCrop1_valueChanged(int arg1);
+    void on_spinCrop2_valueChanged(int arg1);
+    void on_spinCrop3_valueChanged(int arg1);
+
+    void on_spinDose0_valueChanged(int arg1);
+    void on_spinDose1_valueChanged(int arg1);
+    void on_spinDose2_valueChanged(int arg1);
+    void on_spinDose3_valueChanged(int arg1);
+
+    void on_sliderProjections_valueChanged(int value);
+
 private:
     Ui::nGIMainWindow *ui;
 
@@ -70,16 +82,22 @@ private:
     std::string m_sConfigFilename;
     std::string m_sApplicationName;
 
+    float m_fVisibility;
+
     nGIConfig m_Config;
     nGIEngine *m_pEngine;
     void LoadDefaults();
     void SaveCurrentSetup();
 
     void ShowResults();
+    void Draw_VisibilityWindow();
+    void DisplayNewProjection(int slice);
     void UpdateConfig();
     void UpdateDialog();
 
     void on_spinVisROI_changed(int x);
+    void on_spinCrop_Changed(int x);
+    void on_spinDose_Changed(int x);
 };
 
 #endif // NGIMAINWINDOW_H

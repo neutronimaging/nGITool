@@ -27,6 +27,8 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     logger("nGIMainWindow"),
     m_QtApp(app),
     ui(new Ui::nGIMainWindow),
+    m_CurrentCropROI(0,0,1,1),
+    m_CurrentDoseROI(0,0,1,1),
     m_sApplicationName("ngitool"),
     m_pEngine(NULL)
 {
@@ -230,8 +232,9 @@ void nGIMainWindow::on_checkCropImages_toggled(bool checked)
     ui->labelCrop2->setEnabled(checked);
     ui->labelCrop3->setEnabled(checked);
     ui->buttonGetCropROI->setEnabled(checked);
+
     if (checked) {
-        ui->imageProjections->set_rectangle(m_CurrentCropROI,Qt::green,0);
+        ui->imageProjections->set_rectangle(m_CurrentCropROI,Qt::red,0);
     }
     else {
         ui->imageProjections->clear_rectangle(0);
@@ -247,7 +250,7 @@ void nGIMainWindow::on_buttonGetCropROI_clicked()
     ui->spinCrop2->setValue(m_CurrentCropROI.y()+m_CurrentCropROI.width());
     ui->spinCrop3->setValue(m_CurrentCropROI.y()+m_CurrentCropROI.height());
 
-    ui->imageProjections->set_rectangle(m_CurrentCropROI,Qt::green,0);
+    ui->imageProjections->set_rectangle(m_CurrentCropROI,Qt::red,0);
 }
 
 void nGIMainWindow::on_buttonGetDoseROI_clicked()
@@ -259,7 +262,7 @@ void nGIMainWindow::on_buttonGetDoseROI_clicked()
     ui->spinDose2->setValue(m_CurrentDoseROI.y()+m_CurrentDoseROI.width());
     ui->spinDose3->setValue(m_CurrentDoseROI.y()+m_CurrentDoseROI.height());
 
-    ui->imageProjections->set_rectangle(m_CurrentDoseROI,Qt::yellow,1);
+    ui->imageProjections->set_rectangle(m_CurrentDoseROI,Qt::green,1);
 }
 
 void nGIMainWindow::on_checkDoseRegion_toggled(bool checked)
@@ -273,8 +276,9 @@ void nGIMainWindow::on_checkDoseRegion_toggled(bool checked)
     ui->labelDose2->setEnabled(checked);
     ui->labelDose3->setEnabled(checked);
     ui->buttonGetDoseROI->setEnabled(checked);
+
     if (checked) {
-        ui->imageProjections->set_rectangle(m_CurrentDoseROI,Qt::yellow,1);
+        ui->imageProjections->set_rectangle(m_CurrentDoseROI,Qt::green,1);
     }
     else {
         ui->imageProjections->clear_rectangle(1);
@@ -505,16 +509,13 @@ void nGIMainWindow::ShowResults()
     kipl::base::TImage<float,3> &proj=m_pEngine->GetProjections();
     size_t nLo=0,nHi=0;
 
-    ui->sliderProjections->setRange(m_Config.projections.nFirstIndex,m_Config.projections.nFirstIndex+m_Config.projections.nPhaseSteps);
-    //scale_projections->get_adjustment()->configure(0.0, 1.0, mConfig.projections.nPhaseSteps, 1.0, 1.0, 0.0);
+    ui->sliderProjections->setRange(0,m_Config.projections.nPhaseSteps);
 
     // Plot oscillations
     float proj_osc[2048];
     float ref_osc[2048];
 
     m_pEngine->OscillationPlot(axis,proj_osc,ref_osc);
- //   ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps, QColor("blue"),0,QtAddons::PlotGlyph_Square,"Sample");
- //   ui->plotOscillation->plot(axis,ref_osc,m_Config.projections.nPhaseSteps, QColor("green"),1,QtAddons::PlotGlyph_Square,"Reference");
     ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps,QColor("blue"),QtAddons::PlotGlyph_Plus);
     ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps,QColor("green"),QtAddons::PlotGlyph_Plus);
 
@@ -526,9 +527,9 @@ void nGIMainWindow::ShowResults()
                     m_Config.projections.nROI[2]-m_Config.projections.nROI[0],
                     m_Config.projections.nROI[3]-m_Config.projections.nROI[1]);
 
-            ui->imageTransmission->set_rectangle(rect,QColor("yellow"),0);
-            ui->imageDPC->set_rectangle(rect,QColor("yellow"),0);
-            ui->imageDFI->set_rectangle(rect,QColor("yellow"),0);
+            ui->imageTransmission->set_rectangle(rect,Qt::blue,0);
+            ui->imageDPC->set_rectangle(rect,Qt::blue,0);
+            ui->imageDFI->set_rectangle(rect,Qt::blue,0);
         }
         else {
             ui->imageTransmission->clear_rectangle(0);
@@ -542,11 +543,10 @@ void nGIMainWindow::ShowResults()
         ui->imageDFI->clear_rectangle(0);
     }
 
-    //on_changed_normroi();
     ui->imageVisibility->set_image(vis.GetDataPtr(),vis.Dims());
 
-    if ((m_Config.process.nVisibilityROI[2]-m_Config.process.nVisibilityROI[0])==0 ||
-        (m_Config.process.nVisibilityROI[3]-m_Config.process.nVisibilityROI[1])==0  ) {
+    if ((m_Config.process.nVisibilityROI[2]-m_Config.process.nVisibilityROI[0])<1 ||
+        (m_Config.process.nVisibilityROI[3]-m_Config.process.nVisibilityROI[1])<1  ) {
         m_Config.process.nVisibilityROI[0]=vis.Size(0)/2-10;
         m_Config.process.nVisibilityROI[1]=vis.Size(1)/2-10;
         m_Config.process.nVisibilityROI[2]=vis.Size(0)/2+10;
@@ -557,8 +557,43 @@ void nGIMainWindow::ShowResults()
         ui->spinVisROI2->setValue(m_Config.process.nVisibilityROI[2]);
         ui->spinVisROI3->setValue(m_Config.process.nVisibilityROI[3]);
     }
-    else {
-        //Draw_VisibilityWindow();
+    Draw_VisibilityWindow();
+}
+
+void nGIMainWindow::Draw_VisibilityWindow()
+{
+    if ((m_Config.process.nVisibilityROI[2] - m_Config.process.nVisibilityROI[0]) &&
+         (m_Config.process.nVisibilityROI[3] - m_Config.process.nVisibilityROI[1])) {
+//		int w2=mConfig.process.nVisibilityWindow>>1;
+
+//		Gtk_addons::ImageViewerRectangle rect;
+//		int window=mConfig.process.nVisibilityWindow;
+
+//		rect.x      = mConfig.process.nVisibilityWindowPos[0]-w2;
+//		rect.y      = mConfig.process.nVisibilityWindowPos[1]-w2;
+//		rect.width  = mConfig.process.nVisibilityWindow;
+//		rect.height = mConfig.process.nVisibilityWindow;
+//		rect.color  = Gdk::Color("yellow");
+//		viewer_visibility.set_rectangle(rect,0);
+
+        m_fVisibility=100.0f*m_pEngine->Visibility(m_Config.process.nVisibilityROI);
+        std::ostringstream msg;
+        msg<<"Visibility: "<<setprecision(4)<<m_fVisibility<<"%";
+        ui->labelVisibility->setText(QString::fromStdString(msg.str()));
+    }
+}
+
+void nGIMainWindow::DisplayNewProjection(int slice)
+{
+    if (m_pEngine!=NULL) {
+        kipl::base::TImage<float,3> &projections=m_pEngine->GetProjections();
+
+        float lo, hi;
+        ui->imageProjections->get_levels(&lo,&hi);
+
+        float *pSlice=projections.GetLinePtr(0,slice);
+
+        ui->imageProjections->set_image(pSlice, projections.Dims(), lo, hi);
     }
 }
 
@@ -724,8 +759,8 @@ void nGIMainWindow::on_spinVisROI_changed(int x)
 {
     QRect rect( ui->spinVisROI0->value(),
                 ui->spinVisROI1->value(),
-                ui->spinVisROI2->value(),
-                ui->spinVisROI3->value());
+                ui->spinVisROI2->value()-ui->spinVisROI0->value(),
+                ui->spinVisROI3->value()-ui->spinVisROI1->value());
 
     ui->imageVisibility->set_rectangle(rect,QColor("green"),0);
 }
@@ -748,4 +783,71 @@ void nGIMainWindow::on_spinVisROI2_valueChanged(int arg1)
 void nGIMainWindow::on_spinVisROI3_valueChanged(int arg1)
 {
     on_spinVisROI_changed(arg1);
+}
+
+void nGIMainWindow::on_spinCrop_Changed(int x)
+{
+    m_CurrentCropROI.setCoords(ui->spinVisROI0->value(),
+                ui->spinVisROI1->value(),
+                ui->spinVisROI2->value(),
+                ui->spinVisROI3->value());
+
+    ui->imageVisibility->set_rectangle(m_CurrentCropROI,QColor("red"),0);
+}
+
+void nGIMainWindow::on_spinCrop0_valueChanged(int arg1)
+{
+    on_spinCrop_Changed(arg1);
+}
+
+void nGIMainWindow::on_spinCrop1_valueChanged(int arg1)
+{
+    on_spinCrop_Changed(arg1);
+}
+
+void nGIMainWindow::on_spinCrop2_valueChanged(int arg1)
+{
+    on_spinCrop_Changed(arg1);
+}
+
+void nGIMainWindow::on_spinCrop3_valueChanged(int arg1)
+{
+    on_spinCrop_Changed(arg1);
+}
+
+void nGIMainWindow::on_spinDose_Changed(int x)
+{
+    m_CurrentDoseROI.setCoords(ui->spinVisROI0->value(),
+                ui->spinVisROI1->value(),
+                ui->spinVisROI2->value(),
+                ui->spinVisROI3->value());
+
+    ui->imageVisibility->set_rectangle(m_CurrentDoseROI,QColor("green"),0);
+
+}
+
+void nGIMainWindow::on_spinDose0_valueChanged(int arg1)
+{
+    on_spinDose_Changed(arg1);
+}
+
+void nGIMainWindow::on_spinDose1_valueChanged(int arg1)
+{
+    on_spinDose_Changed(arg1);
+}
+
+void nGIMainWindow::on_spinDose2_valueChanged(int arg1)
+{
+    on_spinDose_Changed(arg1);
+}
+
+void nGIMainWindow::on_spinDose3_valueChanged(int arg1)
+{
+    on_spinDose_Changed(arg1);
+}
+
+
+void nGIMainWindow::on_sliderProjections_valueChanged(int value)
+{
+    DisplayNewProjection(value);
 }
