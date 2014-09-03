@@ -1,5 +1,6 @@
-﻿set REPOS=C:\Users\kaestner\repos
-set DEST=build-QtnGITool-Qt5-Release\release
+﻿echo ----------------- Deploy copy --------------
+set REPOS=C:\Users\kaestner\repos
+set DEST=C:\Users\kaestner\repos\ngi\trunk\gui\qngitool\build-QtnGITool-Qt5-Release\release
 pushd .
 cd %DEST%
 
@@ -21,7 +22,7 @@ copy %REPOS%\external\lib64\libxml2-2.dll .
 copy %REPOS%\external\lib64\libiconv.dll .
 
 cd C:\Qt\Qt5.2.1\5.2.1\msvc2012_64_opengl\bin
-windeployqt %REPOS%\ngi\trunk\gui\qngitool\%DEST%\QtnGITool.exe
-copy Qt5PrintSupport.dll %REPOS%\ngi\trunk\gui\qngitool\%DEST%
+windeployqt %DEST%\QtnGITool.exe
+copy Qt5PrintSupport.dll %DEST%
 
 popd
