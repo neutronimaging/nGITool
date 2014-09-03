@@ -60,10 +60,15 @@ void nGIMainWindow::LoadDefaults()
     else {
     #ifdef Q_OS_WIN32
          defaultsname="resources/defaults_windows.xml";
-    #elif Q_OS_LINUX
-        defaultsname=m_sApplicationPath+"resources/defaults_linux.xml";
-    #elif Q_OS_DARWIN
-        defaultsname=m_sApplicationPath+"../Resources/defaults_mac.xml";
+    #else
+        #ifdef Q_OS_LINUX
+            defaultsname=m_QtApp->applicationDirPath().toStdString()+"resources/defaults_linux.xml";
+        #else
+            #ifdef Q_OS_DARWIN
+//                defaultsname=m_QtApp->applicationDirPath().toStdString()+"../Resources/defaults_mac.xml";
+                defaultsname = "../Resources/defaults_mac.xml";
+            #endif
+        #endif
     #endif
         bUseDefaults=true;
     }
@@ -540,11 +545,17 @@ void nGIMainWindow::ShowResults()
     //on_changed_normroi();
     ui->imageVisibility->set_image(vis.GetDataPtr(),vis.Dims());
 
-    if (m_Config.process.nVisibilityWindowPos[0]*m_Config.process.nVisibilityWindowPos[1]==0) {
-        m_Config.process.nVisibilityWindowPos[0]=vis.Size(0)/2;
-        m_Config.process.nVisibilityWindowPos[1]=vis.Size(1)/2;
-        ui->spinWindowX->setValue(m_Config.process.nVisibilityWindowPos[0]);
-        ui->spinWindowY->setValue(m_Config.process.nVisibilityWindowPos[1]);
+    if ((m_Config.process.nVisibilityROI[2]-m_Config.process.nVisibilityROI[0])==0 ||
+        (m_Config.process.nVisibilityROI[3]-m_Config.process.nVisibilityROI[1])==0  ) {
+        m_Config.process.nVisibilityROI[0]=vis.Size(0)/2-10;
+        m_Config.process.nVisibilityROI[1]=vis.Size(1)/2-10;
+        m_Config.process.nVisibilityROI[2]=vis.Size(0)/2+10;
+        m_Config.process.nVisibilityROI[3]=vis.Size(1)/2+10;
+
+        ui->spinVisROI0->setValue(m_Config.process.nVisibilityROI[0]);
+        ui->spinVisROI1->setValue(m_Config.process.nVisibilityROI[1]);
+        ui->spinVisROI2->setValue(m_Config.process.nVisibilityROI[2]);
+        ui->spinVisROI3->setValue(m_Config.process.nVisibilityROI[3]);
     }
     else {
         //Draw_VisibilityWindow();
@@ -616,9 +627,11 @@ void nGIMainWindow::UpdateConfig()
     m_Config.process.bUseAmplLimits      = ui->checkClampTransmission->checkState();
     m_Config.process.bUseDFILimits       = ui->checkClampDFI->checkState();
 
-    m_Config.process.nVisibilityWindow   = ui->spinWindowSize->value();
-    m_Config.process.nVisibilityWindowPos[0] = ui->spinWindowX->value();
-    m_Config.process.nVisibilityWindowPos[1] = ui->spinWindowY->value();
+    m_Config.process.nVisibilityROI[0] = ui->spinVisROI0->value();
+    m_Config.process.nVisibilityROI[1] = ui->spinVisROI1->value();
+    m_Config.process.nVisibilityROI[2] = ui->spinVisROI2->value();
+    m_Config.process.nVisibilityROI[3] = ui->spinVisROI3->value();
+
     m_Config.estimator = ui->ModuleConfEstimator->GetModule();
     m_Config.modules   = ui->ModuleConfPreproc->GetModules();
 }
@@ -671,9 +684,11 @@ void nGIMainWindow::UpdateDialog()
     ui->checkClampTransmission->setChecked(m_Config.process.bUseAmplLimits);
     ui->checkClampDFI->setChecked(m_Config.process.bUseDFILimits);
 
-    ui->spinWindowSize->setValue(m_Config.process.nVisibilityWindow);
-    ui->spinWindowX->setValue(m_Config.process.nVisibilityWindowPos[0]);
-    ui->spinWindowY->setValue(m_Config.process.nVisibilityWindowPos[1]);
+    ui->spinVisROI0->setValue(m_Config.process.nVisibilityROI[0]);
+    ui->spinVisROI1->setValue(m_Config.process.nVisibilityROI[1]);
+    ui->spinVisROI2->setValue(m_Config.process.nVisibilityROI[2]);
+    ui->spinVisROI3->setValue(m_Config.process.nVisibilityROI[3]);
+
     ui->ModuleConfEstimator->SetModule(m_Config.estimator);
     ui->ModuleConfPreproc->SetModules(m_Config.modules);
 }
@@ -692,4 +707,45 @@ void nGIMainWindow::SaveCurrentSetup()
     kipl::strings::filenames::CheckPathSlashes(currentname,false);
     std::ofstream outfile(currentname.c_str());
     outfile<<m_Config.WriteXML();
+}
+
+void nGIMainWindow::on_buttonGetVisROI_clicked()
+{
+    QRect rect = ui->imageVisibility->get_marked_roi();
+
+    ui->spinVisROI0->setValue(rect.x());
+    ui->spinVisROI1->setValue(rect.y());
+    ui->spinVisROI2->setValue(rect.x()+rect.width());
+    ui->spinVisROI3->setValue(rect.y()+rect.height());
+    ui->imageVisibility->set_rectangle(rect,QColor("green"),0);
+}
+
+void nGIMainWindow::on_spinVisROI_changed(int x)
+{
+    QRect rect( ui->spinVisROI0->value(),
+                ui->spinVisROI1->value(),
+                ui->spinVisROI2->value(),
+                ui->spinVisROI3->value());
+
+    ui->imageVisibility->set_rectangle(rect,QColor("green"),0);
+}
+
+void nGIMainWindow::on_spinVisROI0_valueChanged(int arg1)
+{
+    on_spinVisROI_changed(arg1);
+}
+
+void nGIMainWindow::on_spinVisROI1_valueChanged(int arg1)
+{
+    on_spinVisROI_changed(arg1);
+}
+
+void nGIMainWindow::on_spinVisROI2_valueChanged(int arg1)
+{
+    on_spinVisROI_changed(arg1);
+}
+
+void nGIMainWindow::on_spinVisROI3_valueChanged(int arg1)
+{
+    on_spinVisROI_changed(arg1);
 }

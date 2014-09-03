@@ -55,6 +55,12 @@ private slots:
     void on_actionQuit_triggered();
     void on_actionPrint_triggered();
 
+    void on_buttonGetVisROI_clicked();
+    void on_spinVisROI0_valueChanged(int arg1);
+    void on_spinVisROI1_valueChanged(int arg1);
+    void on_spinVisROI2_valueChanged(int arg1);
+    void on_spinVisROI3_valueChanged(int arg1);
+
 private:
     Ui::nGIMainWindow *ui;
 
@@ -72,6 +78,8 @@ private:
     void ShowResults();
     void UpdateConfig();
     void UpdateDialog();
+
+    void on_spinVisROI_changed(int x);
 };
 
 #endif // NGIMAINWINDOW_H
