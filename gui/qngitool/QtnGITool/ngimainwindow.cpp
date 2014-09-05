@@ -244,11 +244,18 @@ void nGIMainWindow::on_checkCropImages_toggled(bool checked)
 void nGIMainWindow::on_buttonGetCropROI_clicked()
 {
     m_CurrentCropROI=ui->imageProjections->get_marked_roi();
-
+    ui->spinCrop0->blockSignals(true);
+    ui->spinCrop1->blockSignals(true);
+    ui->spinCrop2->blockSignals(true);
+    ui->spinCrop3->blockSignals(true);
     ui->spinCrop0->setValue(m_CurrentCropROI.x());
     ui->spinCrop1->setValue(m_CurrentCropROI.y());
     ui->spinCrop2->setValue(m_CurrentCropROI.y()+m_CurrentCropROI.width());
     ui->spinCrop3->setValue(m_CurrentCropROI.y()+m_CurrentCropROI.height());
+    ui->spinCrop0->blockSignals(false);
+    ui->spinCrop1->blockSignals(false);
+    ui->spinCrop2->blockSignals(false);
+    ui->spinCrop3->blockSignals(false);
 
     ui->imageProjections->set_rectangle(m_CurrentCropROI,Qt::red,0);
 }
@@ -257,10 +264,18 @@ void nGIMainWindow::on_buttonGetDoseROI_clicked()
 {
     m_CurrentDoseROI=ui->imageProjections->get_marked_roi();
 
+    ui->spinDose0->blockSignals(true);
+    ui->spinDose1->blockSignals(true);
+    ui->spinDose2->blockSignals(true);
+    ui->spinDose3->blockSignals(true);
     ui->spinDose0->setValue(m_CurrentDoseROI.x());
     ui->spinDose1->setValue(m_CurrentDoseROI.y());
     ui->spinDose2->setValue(m_CurrentDoseROI.y()+m_CurrentDoseROI.width());
     ui->spinDose3->setValue(m_CurrentDoseROI.y()+m_CurrentDoseROI.height());
+    ui->spinDose0->blockSignals(false);
+    ui->spinDose1->blockSignals(false);
+    ui->spinDose2->blockSignals(false);
+    ui->spinDose3->blockSignals(false);
 
     ui->imageProjections->set_rectangle(m_CurrentDoseROI,Qt::green,1);
 }
@@ -748,10 +763,19 @@ void nGIMainWindow::on_buttonGetVisROI_clicked()
 {
     QRect rect = ui->imageVisibility->get_marked_roi();
 
+    ui->spinVisROI0->blockSignals(true);
+    ui->spinVisROI1->blockSignals(true);
+    ui->spinVisROI2->blockSignals(true);
+    ui->spinVisROI3->blockSignals(true);
     ui->spinVisROI0->setValue(rect.x());
     ui->spinVisROI1->setValue(rect.y());
     ui->spinVisROI2->setValue(rect.x()+rect.width());
     ui->spinVisROI3->setValue(rect.y()+rect.height());
+    ui->spinVisROI0->blockSignals(false);
+    ui->spinVisROI1->blockSignals(false);
+    ui->spinVisROI2->blockSignals(false);
+    ui->spinVisROI3->blockSignals(false);
+
     ui->imageVisibility->set_rectangle(rect,QColor("green"),0);
 }
 
