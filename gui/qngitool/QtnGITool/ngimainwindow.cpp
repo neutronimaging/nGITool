@@ -524,7 +524,7 @@ void nGIMainWindow::ShowResults()
     kipl::base::TImage<float,3> &proj=m_pEngine->GetProjections();
     size_t nLo=0,nHi=0;
 
-    ui->sliderProjections->setRange(0,m_Config.projections.nPhaseSteps);
+    ui->sliderProjections->setRange(0,m_Config.projections.nPhaseSteps-1);
 
     // Plot oscillations
     float proj_osc[2048];
