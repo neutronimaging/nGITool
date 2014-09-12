@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
             mbox.addButton(QMessageBox::Abort);
             mbox.setText(QString::fromStdString(msg.str()));
             mbox.setWindowTitle("License error");
-            mbox.setDetailedText(QString::fromStdString(license.GetMessage()));
+            mbox.setDetailedText(QString::fromStdString(license.GetLockerMessage()));
             res=mbox.exec();
             std::cout<<"Res ="<<res<<std::endl;
             if (res==QMessageBox::Save) {
