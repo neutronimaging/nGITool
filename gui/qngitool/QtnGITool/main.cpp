@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
             }
             if (mbox.clickedButton() == registerbutton) {
                 logger(kipl::logging::Logger::LogMessage,"Opening default web browser.");
-                QDesktopServices::openUrl(QUrl("http://www.imagingscience.ch/usermanager/index.php"));
+                QDesktopServices::openUrl(QUrl("http://www.imagingscience.ch/usermanager/index.php?nodekey="+QString::fromStdString(*license.GetNodeString().begin())));
             }
         }
     } while (!license.AccessGranted() && res!=QMessageBox::Abort);
