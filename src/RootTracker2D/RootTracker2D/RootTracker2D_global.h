@@ -1,0 +1,12 @@
+#ifndef ROOTTRACKER2D_GLOBAL_H
+#define ROOTTRACKER2D_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(ROOTTRACKER2D_LIBRARY)
+#  define ROOTTRACKER2D_EXPORT Q_DECL_EXPORT
+#else
+#  define ROOTTRACKER2D_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // QTADDONS_GLOBAL_H

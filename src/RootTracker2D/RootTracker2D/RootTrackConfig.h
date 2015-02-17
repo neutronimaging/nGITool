@@ -5,6 +5,7 @@
 #ifndef ARGUMENTS_H
 #define ARGUMENTS_H
 
+#include "RootTracker2D_global.h"
 #include <string>
 #include <vector>
 #include <ConfigBase.h>
@@ -12,13 +13,13 @@
 /**
 @author Anders Kaestner
 */
-class RootTrackConfig : public ConfigBase
+class ROOTTRACKER2D_EXPORT RootTrackConfig : public ConfigBase
 {
 	public:
         RootTrackConfig();
         virtual std::string WriteXML();
 		int help();
-        struct DLL_EXPORT cImageInformation {
+        struct ROOTTRACKER2D_EXPORT cImageInformation {
             cImageInformation();
             cImageInformation(const cImageInformation &a);
             cImageInformation & operator=(const cImageInformation &a);
@@ -36,7 +37,7 @@ class RootTrackConfig : public ConfigBase
             int img_log;
         };
 
-        struct DLL_EXPORT cProcessingSettings {
+        struct ROOTTRACKER2D_EXPORT cProcessingSettings {
             cProcessingSettings();
             cProcessingSettings(const cProcessingSettings &a);
             cProcessingSettings & operator=(const cProcessingSettings &a);
