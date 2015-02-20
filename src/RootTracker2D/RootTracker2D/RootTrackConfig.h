@@ -13,13 +13,13 @@
 /**
 @author Anders Kaestner
 */
-class ROOTTRACKER2D_EXPORT RootTrackConfig : public ConfigBase
+class RootTrackConfig : public ConfigBase
 {
 	public:
         RootTrackConfig();
         virtual std::string WriteXML();
 		int help();
-        struct ROOTTRACKER2D_EXPORT cImageInformation {
+        struct cImageInformation {
             cImageInformation();
             cImageInformation(const cImageInformation &a);
             cImageInformation & operator=(const cImageInformation &a);
@@ -37,7 +37,7 @@ class ROOTTRACKER2D_EXPORT RootTrackConfig : public ConfigBase
             int img_log;
         };
 
-        struct ROOTTRACKER2D_EXPORT cProcessingSettings {
+        struct cProcessingSettings {
             cProcessingSettings();
             cProcessingSettings(const cProcessingSettings &a);
             cProcessingSettings & operator=(const cProcessingSettings &a);

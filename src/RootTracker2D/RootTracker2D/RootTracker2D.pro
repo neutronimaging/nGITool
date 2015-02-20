@@ -69,7 +69,7 @@ else:unix:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../gui/trunk
 INCLUDEPATH += $$PWD/../../../../../gui/trunk/qt/QtAddons
 DEPENDPATH += $$PWD/../../../../../gui/trunk/qt/QtAddons
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Release/release/ -lModuleConfig
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Release/release -lModuleConfig
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Debug/debug/ -lModuleConfig
 else:symbian: LIBS += -lModuleConfig
 else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Release/ -lModuleConfig
