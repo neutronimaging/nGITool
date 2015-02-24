@@ -23,28 +23,28 @@ HEADERS  += RootTracker2D_global.h \
 FORMS    += mainwindow.ui
 
 unix:!symbian {
+    unix:macx {
+        QMAKE_CXXFLAGS += -fPIC -O2
+        INCLUDEPATH += /usr/local/include /opt/local/include/libxml2
+        QMAKE_INFO_PLIST = Info.plist
+        LIBS += -L/opt/local/lib -lxml2
+        ICON = muhrec3.icns
+    }
+    else {
+        INCLUDEPATH += /usr/include/libxml2
+        QMAKE_CXXFLAGS += -fPIC -fopenmp -O2
+        QMAKE_LFLAGS += -lgomp
+        LIBS += -lgomp -lxml2
+    }
+
+    LIBS += -ltiff -lcfitsio
+
     maemo5 {
         target.path = /opt/usr/lib
     } else {
         target.path = /usr/lib
     }
     INSTALLS += target
-
-    unix:macx {
-        QMAKE_CXXFLAGS += -fPIC -O2
-        INCLUDEPATH += /usr/local/include
-        QMAKE_LIBDIR += /usr/local/lib
-        QMAKE_INFO_PLIST = Info.plist
-        ICON = muhrec3.icns
-    }
-    else {
-        QMAKE_CXXFLAGS += -fPIC -fopenmp -O2
-        QMAKE_LFLAGS += -lgomp
-        LIBS += -lgomp
-    }
-
-    LIBS += -ltiff -lxml2 -lcfitsio
-    INCLUDEPATH += /usr/include/libxml2
 }
 
 win32 {
@@ -57,8 +57,6 @@ win32 {
     LIBS += -llibxml2_dll -llibtiff -lcfitsio
     QMAKE_CXXFLAGS += /openmp /O2
 }
-
-INCLUDEPATH += /usr/include/libxml2
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtAddons-Qt5-Release/release/ -lQtAddons
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtAddons-Qt5-Debug/debug/ -lQtAddons

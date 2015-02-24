@@ -1,11 +1,12 @@
 DIRECTORY="/Users/kaestner/Applications"
 REPOSPATH="/Users/kaestner/repos"
+QTPATH="/Applications/Qt54/5.4/clang_64/"
 
 if [ ! -d "$DIRECTORY" ]; then
   mkdir $DIRECTORY
 fi
 
-cp -r $REPOSPATH/roots/trunk/src/RootTracker2D/RootTracker2D-build-desktop-Desktop_Qt_4_8_1_for_GCC__Qt_SDK__Release/RootTracker2D.app $DIRECTORY
+cp -r $REPOSPATH/roots/trunk/src/RootTracker2D/build-RootTracker2D-Qt5-Release/RootTracker2D.app $DIRECTORY
 
 pushd .
 CPCMD="cp"
@@ -16,10 +17,9 @@ if [ ! -d "./Frameworks" ]; then
  mkdir ./Frameworks
 fi
 
-`$CPCMD $REPOSPATH/src/libs/kipl/trunk/kipl/kipl-build_Qt_4_8_1_for_GCC__Qt_SDK__Release/libkipl.1.0.0.dylib $DEST/Contents/Frameworks`
-`$CPCMD $REPOSPATH/src/libs/modules/trunk/ModuleConfig/ModuleConfig-build_Qt_4_8_1_for_GCC__Qt_SDK__Release/libModuleConfig.1.0.0.dylib $DEST/Contents/Frameworks`
-`$CPCMD $REPOSPATH/gui/trunk/qt/QtAddons-build_Qt_4_8_1_for_GCC__Qt_SDK__Release/libQtAddons.1.0.0.dylib $DEST/Contents/Frameworks`
-#`$CPCMD $REPOSPATH/gui/trunk/qt/QtModuleConfigure-build-Qt_4_8_1_for_GCC__Qt_SDK__Release/libQtModuleConfigure.1.0.0.dylib $DEST/Contents/Frameworks`
+`$CPCMD $REPOSPATH/kipl/trunk/kipl/build-kipl-Qt5-Release/libkipl.1.0.0.dylib $DEST/Contents/Frameworks`
+`$CPCMD $REPOSPATH/modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Release/libModuleConfig.1.0.0.dylib $DEST/Contents/Frameworks`
+`$CPCMD $REPOSPATH/gui/trunk/qt/build-QtAddons-Qt5-Release/libQtAddons.1.0.0.dylib $DEST/Contents/Frameworks`
 
 rm -f ./MacOS/*.dylib
 
@@ -40,11 +40,14 @@ cd ..
 if [ ! -d "./Resources" ]; then
 	mkdir ./Resources	
 fi
+# cp $QTPATH/plugins/printsupport/libcocoaprintersupport.dylib $DEST/Contents/PlugIns/printsupport/
 
 cp $REPOSPATH/roots/trunk/src/RootTracker2D/figures/RT2D_splash.png ./Resources
 
 popd
 sed -i.bak s+com.yourcompany+ch.imagingscience+g $DEST/Contents/Info.plist
 
-
-/Users/kaestner/QtSDK/Desktop/Qt/4.8.1/gcc/bin/macdeployqt $DEST
+cd $QTPATH/bin/
+echo "Do deploy..."
+./macdeployqt $DEST -always-overwrite #-dmg
+popd 

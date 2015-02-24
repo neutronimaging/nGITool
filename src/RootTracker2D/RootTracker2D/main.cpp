@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     QSplashScreen splash(pixmap);
 
     splash.show();
+
     a.processEvents();
 
     MainWindow w;
