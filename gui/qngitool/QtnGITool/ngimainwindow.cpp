@@ -1,3 +1,4 @@
+#include <QtWidgets>
 #include <QFileDialog>
 #include <QDateTime>
 #include <QDir>
@@ -7,7 +8,7 @@
 
 #include "ngimainwindow.h"
 #include "ui_ngimainwindow.h"
-#include "ngireport.h"
+//#include "ngireport.h"
 #include <nGIException.h>
 #include <nGIFactory.h>
 #include <base/KiplException.h>
@@ -202,7 +203,7 @@ void nGIMainWindow::on_actionPrint_triggered()
     logger(kipl::logging::Logger::LogMessage,"Printing report");
     QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
 
-    nGIReport report;
+    //nGIReport report;
     kipl::base::TImage<float,2> trans;
     kipl::base::TImage<float,2> phase;
     kipl::base::TImage<float,2> dark;
@@ -211,12 +212,13 @@ void nGIMainWindow::on_actionPrint_triggered()
     m_pEngine->GetResults(trans,phase,dark,vis);
     float axis[1024],ref_osc[1024],sample_osc[1024];
     m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
-    report.CreateReport(fname,
-                        m_Config.UserInformation.sProjectNumber,
-                        &m_Config,
-                        trans,phase,dark,
-                        0.0f,
-                        axis,ref_osc,sample_osc);
+
+//    report.CreateReport(fname,
+//                        m_Config.UserInformation.sProjectNumber,
+//                        &m_Config,
+//                        trans,phase,dark,
+//                        0.0f,
+//                        axis,ref_osc,sample_osc);
 
 }
 

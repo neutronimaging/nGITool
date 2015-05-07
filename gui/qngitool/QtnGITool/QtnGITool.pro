@@ -6,7 +6,6 @@
 
 QT       += core widgets printsupport
 
-
 TARGET = QtnGITool
 TEMPLATE = app
 
@@ -32,9 +31,26 @@ win32 {
 
     DEFINES += NOMINMAX
 }
-else {
-    LIBS += -L/usr/lib -L/usr/local/lib -lxml2 -ltiff
+
+unix {
+    INCLUDEPATH += "../../../../external/src/linalg"
+    QMAKE_CXXFLAGS += -fPIC -O2 #-std=c++11
+    #QMAKE_LFLAGS +=  -stdlib=libc++
+
     INCLUDEPATH += /usr/include/libxml2
+    unix:!macx {
+        QMAKE_CXXFLAGS += -fopenmp
+        QMAKE_LFLAGS += -lgomp
+        LIBS += -lgomp
+    }
+
+    unix:macx {
+        INCLUDEPATH += /opt/local/include
+        QMAKE_LIBDIR += /opt/local/lib
+    }
+
+    LIBS +=  -lxml2 -ltiff
+
 }
 
 win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Release/release -lkipl
