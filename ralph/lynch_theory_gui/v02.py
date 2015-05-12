@@ -12,6 +12,8 @@ from PyQt4 import QtCore, QtGui
 from plotting import *
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 import numpy
+from PyQt4.QtGui import *
+
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -265,15 +267,16 @@ class Ui_Form(object):
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), clear)
         self.gridLayout.addWidget(self.pushButton_2, 8, 4, 1, 1)
+        
         self.label_10 = QtGui.QLabel(Form)
         self.label_10.setVisible(False)
         self.label_10.setObjectName(_fromUtf8("label_10"))
         self.gridLayout.addWidget(self.label_10, 4, 0, 1, 1)
-        self.label_9 = QtGui.QLabel(Form)
-        self.label_9.setVisible(False)
-        self.label_9.setFrameShape(QtGui.QFrame.NoFrame)
-        self.label_9.setObjectName(_fromUtf8("label_9"))
-        self.gridLayout.addWidget(self.label_9, 3, 0, 1, 1)
+        
+        self.label_logo = QtGui.QLabel(Form)
+        self.label_logo.setObjectName(_fromUtf8("label_logo"))
+        self.gridLayout.addWidget(self.label_logo, 2, 0, 1, 1)
+        
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
         self.gridLayout.addWidget(self.canvas, 2, 3, 6, 2)
@@ -286,8 +289,8 @@ class Ui_Form(object):
         QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lineEdit_9.clear)
         QtCore.QObject.connect(self.radioButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lineEdit_8.clear)
         QtCore.QObject.connect(self.radioButton_5, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lineEdit_10.clear)
-        QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_9.setVisible)
-        QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_10.setVisible)
+#        QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_9.setVisible)
+#        QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_10.setVisible)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -308,8 +311,9 @@ class Ui_Form(object):
         self.radioButton_5.setText(_translate("Form", "SDD", None))
         self.pushButton.setText(_translate("Form", "Plot", None))
         self.pushButton_2.setText(_translate("Form", "Clear", None))
-        self.label_10.setText(_translate("Form", "10 micron", None))
-        self.label_9.setText(_translate("Form", "0", None))
+        pixmap = QPixmap(os.getcwd() + '/PSI-Logo.png')
+        pixmap2 = pixmap.scaledToWidth(256)
+        self.label_logo.setPixmap(pixmap2)
 
 
 if __name__ == "__main__":

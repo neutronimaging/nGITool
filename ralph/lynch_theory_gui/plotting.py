@@ -40,7 +40,7 @@ def diameter(xmin,xmax, lam, f, T,SDD, filename):
         xx[x] = D
         x = x+1
     
-    plt.plot(xx,DFI)
+    #plt.plot(xx,DFI)
     plt.xlabel('Particle Diameter')
     plt.ylabel('DFI signal')
     directory = os.getcwd()
