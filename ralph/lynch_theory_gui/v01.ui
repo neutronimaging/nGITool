@@ -7,133 +7,68 @@
     <x>0</x>
     <y>0</y>
     <width>880</width>
-    <height>350</height>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="3">
-    <widget class="QLineEdit" name="lineEdit_6"/>
-   </item>
-   <item row="7" column="0">
-    <widget class="QRadioButton" name="radioButton_2">
-     <property name="text">
-      <string>Wavelength</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
-    <widget class="QRadioButton" name="radioButton_4">
-     <property name="text">
-      <string>Thickness</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="2">
-    <widget class="QRadioButton" name="radioButton_3">
-     <property name="text">
-      <string>Concentration</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="1" column="3">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Thickness</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QRadioButton" name="radioButton">
-     <property name="text">
-      <string>Particle Diameter</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLabel" name="label_8">
-     <property name="text">
-      <string>Filename: </string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Wavelength</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLineEdit" name="lineEdit_9"/>
-   </item>
-   <item row="1" column="2">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Concentration</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
+   <item row="0" column="2">
     <widget class="QLineEdit" name="lineEdit_8"/>
    </item>
-   <item row="0" column="2">
+   <item row="0" column="3">
     <widget class="QLineEdit" name="lineEdit_7"/>
    </item>
-   <item row="1" column="0">
+   <item row="4" column="1">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Diameter</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="7" column="2">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Max x-value</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
+   <item row="5" column="3">
     <widget class="QLineEdit" name="lineEdit_3"/>
    </item>
-   <item row="3" column="1">
+   <item row="6" column="2">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Min x-value:</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
+   <item row="7" column="3">
     <widget class="QLineEdit" name="lineEdit_2"/>
    </item>
-   <item row="5" column="0">
+   <item row="9" column="1">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Scan variable:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="4">
+   <item row="4" column="5">
     <widget class="QLabel" name="label_11">
      <property name="text">
       <string>SDD</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="3">
+   <item row="12" column="4">
     <widget class="QPushButton" name="pushButton">
      <property name="text">
       <string>Plot</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="7" column="1">
     <widget class="QLabel" name="label_10">
      <property name="visible">
       <bool>false</bool>
@@ -143,7 +78,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="6" column="1">
     <widget class="QLabel" name="label_9">
      <property name="visible">
       <bool>false</bool>
@@ -157,10 +92,95 @@
     </widget>
    </item>
    <item row="0" column="4">
+    <widget class="QLineEdit" name="lineEdit_6"/>
+   </item>
+   <item row="11" column="1">
+    <widget class="QRadioButton" name="radioButton_2">
+     <property name="text">
+      <string>Wavelength</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="3">
+    <widget class="QLineEdit" name="lineEdit"/>
+   </item>
+   <item row="11" column="3">
+    <widget class="QRadioButton" name="radioButton_4">
+     <property name="text">
+      <string>Thickness</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="3">
+    <widget class="QRadioButton" name="radioButton_3">
+     <property name="text">
+      <string>Concentration</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Thickness</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QRadioButton" name="radioButton">
+     <property name="text">
+      <string>Particle Diameter</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Filename: </string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Wavelength</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEdit_9"/>
+   </item>
+   <item row="4" column="3">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Concentration</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="4" rowspan="7" colspan="2">
+    <widget class="QListWidget" name="listWidget"/>
+   </item>
+   <item row="5" column="1">
+    <widget class="QGraphicsView" name="graphicsView"/>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLineEdit" name="lineEdit_4"/>
+   </item>
+   <item row="0" column="6">
     <widget class="QLineEdit" name="lineEdit_10"/>
    </item>
-   <item row="2" column="3" rowspan="6" colspan="2">
-    <widget class="QListWidget" name="listWidget"/>
+   <item row="4" column="6">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>period G2</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <widget class="QRadioButton" name="radioButton_5">
+     <property name="text">
+      <string>G2 period</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

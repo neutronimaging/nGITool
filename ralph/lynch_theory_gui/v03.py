@@ -9,9 +9,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-from plotting import *
+from plotting_v02 import *
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 import numpy
+from PyQt4.QtGui import *
+
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -46,7 +48,9 @@ class Ui_Form(object):
             SDD = float(SDD)
             filename = self.lineEdit_3.displayText() 
             filename = str(filename)
-            x,y = diameter(xmin, xmax,lam, f, T,SDD, filename)
+            g2 = self.lineEdit_12.displayText()
+            g2 = float(g2)
+            x,y = diameter(xmin, xmax,lam, f, T,SDD, filename,g2)
             
             ax = self.figure.add_subplot(111)
             ax.plot(x,y, c=numpy.random.rand(3,))
@@ -67,7 +71,9 @@ class Ui_Form(object):
             D = float(D)
             filename = self.lineEdit_3.displayText() 
             filename = str(filename)
-            x,y = wavelength(xmin, xmax,D, f, T,SDD, filename)
+            g2 = self.lineEdit_12.displayText()
+            g2 = float(g2)
+            x,y = wavelength(xmin, xmax,D, f, T,SDD, filename,g2)
             
             ax = self.figure.add_subplot(111)
             ax.plot(x,y, c=numpy.random.rand(3,))
@@ -88,7 +94,9 @@ class Ui_Form(object):
             D = float(D)
             filename = self.lineEdit_3.displayText() 
             filename = str(filename)
-            x,y = concentration(xmin, xmax,D, lam, T,SDD, filename)
+            g2 = self.lineEdit_12.displayText()
+            g2 = float(g2)
+            x,y = concentration(xmin, xmax,D, lam, T,SDD, filename,g2)
             
             ax = self.figure.add_subplot(111)
             ax.plot(x,y, c=numpy.random.rand(3,))
@@ -109,7 +117,9 @@ class Ui_Form(object):
             D = float(D)
             filename = self.lineEdit_3.displayText() 
             filename = str(filename)
-            x,y = thickness(xmin, xmax,D, lam, f,SDD, filename)
+            g2 = self.lineEdit_12.displayText()
+            g2 = float(g2)
+            x,y = thickness(xmin, xmax,D, lam, f,SDD, filename,g2)
             
             ax = self.figure.add_subplot(111)
             ax.plot(x,y, c=numpy.random.rand(3,))
@@ -130,7 +140,32 @@ class Ui_Form(object):
             D = float(D)
             filename = self.lineEdit_3.displayText()        
             filename = str(filename)
-            x,y = SDD(xmin, xmax,D, lam, f,T, filename)
+            g2 = self.lineEdit_12.displayText()
+            g2 = float(g2)
+            x,y = SDD(xmin, xmax,D, lam, f,T, filename,g2)
+    
+            ax = self.figure.add_subplot(111)
+            ax.plot(x,y, c=numpy.random.rand(3,))
+            self.canvas.draw()
+        
+        def myfunc_g2():
+            xmin = self.lineEdit.displayText()        
+            xmin = float(xmin)
+            xmax = self.lineEdit_2.displayText()        
+            xmax = float(xmax)
+            lam = self.lineEdit_8.displayText()        
+            lam = float(lam)
+            f = self.lineEdit_7.displayText()        
+            f = float(f)
+            T = self.lineEdit_6.displayText()        
+            T = float(T)
+            D = self.lineEdit_9.displayText()        
+            D = float(D)
+            filename = self.lineEdit_3.displayText()        
+            filename = str(filename)
+            SDD = self.lineEdit_10.displayText()        
+            SDD = float(SDD)
+            x,y = g2(xmin, xmax,D, lam, f,T, filename,SDD)
     
             ax = self.figure.add_subplot(111)
             ax.plot(x,y, c=numpy.random.rand(3,))
@@ -147,6 +182,8 @@ class Ui_Form(object):
                 myfunc_T()
             elif self.radioButton_5.isChecked():
                 myfunc_SDD()
+            elif self.radioButton_6.isChecked():
+                myfunc_g2()
                 
         def change_default_lam():
             self.lineEdit.setText('2.9e-10')
@@ -167,6 +204,10 @@ class Ui_Form(object):
         def change_default_SDD():
             self.lineEdit.setText('0.005')
             self.lineEdit_2.setText('0.045')
+            
+        def change_default_g2():
+            self.lineEdit.setText('5e-7')
+            self.lineEdit_2.setText('10e-6')
             
         def clear():
             ax = self.figure.add_subplot(111)
@@ -215,25 +256,25 @@ class Ui_Form(object):
         self.gridLayout.addWidget(self.label_11, 1, 4, 1, 1)
         self.label_8 = QtGui.QLabel(Form)
         self.label_8.setObjectName(_fromUtf8("label_8"))
-        self.gridLayout.addWidget(self.label_8, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_8, 2, 2, 1, 1)
         self.lineEdit_3 = QtGui.QLineEdit(Form)
         self.lineEdit_3.setObjectName(_fromUtf8("lineEdit_3"))
         self.lineEdit_3.setPlaceholderText('Filename')
-        self.gridLayout.addWidget(self.lineEdit_3, 2, 2, 1, 1)
+        self.gridLayout.addWidget(self.lineEdit_3, 2, 3, 1, 1)
         self.label_2 = QtGui.QLabel(Form)
         self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.gridLayout.addWidget(self.label_2, 3, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_2, 3, 2, 1, 1)
         self.lineEdit = QtGui.QLineEdit(Form)
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
         self.lineEdit.setText('0')
-        self.gridLayout.addWidget(self.lineEdit, 3, 2, 1, 1)
+        self.gridLayout.addWidget(self.lineEdit, 3, 3, 1, 1)
         self.label_3 = QtGui.QLabel(Form)
         self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.gridLayout.addWidget(self.label_3, 4, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_3, 4, 2, 1, 1)
         self.lineEdit_2 = QtGui.QLineEdit(Form)
         self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
         self.lineEdit_2.setText('10e-6')
-        self.gridLayout.addWidget(self.lineEdit_2, 4, 2, 1, 1)
+        self.gridLayout.addWidget(self.lineEdit_2, 4, 3, 1, 1)
         self.label = QtGui.QLabel(Form)
         self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout.addWidget(self.label, 5, 0, 1, 1)
@@ -260,25 +301,36 @@ class Ui_Form(object):
         self.pushButton = QtGui.QPushButton(Form)
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), eval_var)
-        self.gridLayout.addWidget(self.pushButton, 8, 3, 1, 1)
+        self.gridLayout.addWidget(self.pushButton, 8, 4, 1, 1)
         self.pushButton_2 = QtGui.QPushButton(Form)
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), clear)
-        self.gridLayout.addWidget(self.pushButton_2, 8, 4, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_2, 8, 6, 1, 1)
+        
         self.label_10 = QtGui.QLabel(Form)
         self.label_10.setVisible(False)
         self.label_10.setObjectName(_fromUtf8("label_10"))
         self.gridLayout.addWidget(self.label_10, 4, 0, 1, 1)
-        self.label_9 = QtGui.QLabel(Form)
-        self.label_9.setVisible(False)
-        self.label_9.setFrameShape(QtGui.QFrame.NoFrame)
-        self.label_9.setObjectName(_fromUtf8("label_9"))
-        self.gridLayout.addWidget(self.label_9, 3, 0, 1, 1)
+        
+        self.label_logo = QtGui.QLabel(Form)
+        self.label_logo.setObjectName(_fromUtf8("label_logo"))
+        self.gridLayout.addWidget(self.label_logo, 2, 0, 1, 2)
+        
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
-        self.gridLayout.addWidget(self.canvas, 2, 3, 6, 2)
-
-    
+        self.gridLayout.addWidget(self.canvas, 2, 4, 6, 3)
+        
+        self.lineEdit_12 = QtGui.QLineEdit(Form)
+        self.lineEdit_12.setObjectName(_fromUtf8("lineEdit_12"))
+        self.lineEdit_12.setText('4e-6')
+        self.gridLayout.addWidget(self.lineEdit_12, 0, 6, 1, 1)
+        self.label_12 = QtGui.QLabel(Form)
+        self.label_12.setObjectName(_fromUtf8("label_12"))
+        self.gridLayout.addWidget(self.label_12, 1, 6, 1, 1)
+        self.radioButton_6 = QtGui.QRadioButton(Form)
+        self.radioButton_6.setObjectName(_fromUtf8("radioButton_6"))
+        QtCore.QObject.connect(self.radioButton_6, QtCore.SIGNAL(_fromUtf8("clicked()")), change_default_g2)
+        self.gridLayout.addWidget(self.radioButton_6, 8, 0, 1, 1)
 
         self.retranslateUi(Form)
         QtCore.QObject.connect(self.radioButton_3, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.lineEdit_7.clear)
@@ -286,8 +338,7 @@ class Ui_Form(object):
         QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lineEdit_9.clear)
         QtCore.QObject.connect(self.radioButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lineEdit_8.clear)
         QtCore.QObject.connect(self.radioButton_5, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lineEdit_10.clear)
-        QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_9.setVisible)
-        QtCore.QObject.connect(self.radioButton, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_10.setVisible)
+        QtCore.QObject.connect(self.radioButton_6, QtCore.SIGNAL(_fromUtf8("clicked()")), self.lineEdit_12.clear)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -308,8 +359,11 @@ class Ui_Form(object):
         self.radioButton_5.setText(_translate("Form", "SDD", None))
         self.pushButton.setText(_translate("Form", "Plot", None))
         self.pushButton_2.setText(_translate("Form", "Clear", None))
-        self.label_10.setText(_translate("Form", "10 micron", None))
-        self.label_9.setText(_translate("Form", "0", None))
+        pixmap = QPixmap(os.getcwd() + '/PSI-Logo.png')
+        pixmap2 = pixmap.scaledToWidth(400)
+        self.label_logo.setPixmap(pixmap2)
+        self.label_12.setText(_translate("Form", "period G2", None))
+        self.radioButton_6.setText(_translate("Form", "G2 period", None))
 
 
 if __name__ == "__main__":
