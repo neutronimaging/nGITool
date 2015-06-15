@@ -252,7 +252,7 @@ void nGIMainWindow::on_buttonGetCropROI_clicked()
     ui->spinCrop3->blockSignals(true);
     ui->spinCrop0->setValue(m_CurrentCropROI.x());
     ui->spinCrop1->setValue(m_CurrentCropROI.y());
-    ui->spinCrop2->setValue(m_CurrentCropROI.y()+m_CurrentCropROI.width());
+    ui->spinCrop2->setValue(m_CurrentCropROI.x()+m_CurrentCropROI.width());
     ui->spinCrop3->setValue(m_CurrentCropROI.y()+m_CurrentCropROI.height());
     ui->spinCrop0->blockSignals(false);
     ui->spinCrop1->blockSignals(false);
@@ -272,7 +272,7 @@ void nGIMainWindow::on_buttonGetDoseROI_clicked()
     ui->spinDose3->blockSignals(true);
     ui->spinDose0->setValue(m_CurrentDoseROI.x());
     ui->spinDose1->setValue(m_CurrentDoseROI.y());
-    ui->spinDose2->setValue(m_CurrentDoseROI.y()+m_CurrentDoseROI.width());
+    ui->spinDose2->setValue(m_CurrentDoseROI.x()+m_CurrentDoseROI.width());
     ui->spinDose3->setValue(m_CurrentDoseROI.y()+m_CurrentDoseROI.height());
     ui->spinDose0->blockSignals(false);
     ui->spinDose1->blockSignals(false);
@@ -683,6 +683,10 @@ void nGIMainWindow::UpdateConfig()
     m_Config.process.nVisibilityROI[1] = ui->spinVisROI1->value();
     m_Config.process.nVisibilityROI[2] = ui->spinVisROI2->value();
     m_Config.process.nVisibilityROI[3] = ui->spinVisROI3->value();
+    m_Config.process.fAmplLimits[0]    = ui->dspinClampTransLow->value();
+    m_Config.process.fAmplLimits[1]    = ui->dspinClampTransHigh->value();
+    m_Config.process.fDFILimits[0]     = ui->dspinClampDFILow->value();
+    m_Config.process.fDFILimits[1]     = ui->dspinClampDFIHigh->value();
 
     m_Config.estimator = ui->ModuleConfEstimator->GetModule();
     m_Config.modules   = ui->ModuleConfPreproc->GetModules();
@@ -733,8 +737,14 @@ void nGIMainWindow::UpdateDialog()
     ui->checkDPC->setChecked(m_Config.process.bComputeDPC);
     m_Config.process.bComputeVisibilty   = true; // needed?
     m_Config.process.bSerialize          = false;
+
     ui->checkClampTransmission->setChecked(m_Config.process.bUseAmplLimits);
+    ui->dspinClampTransLow->setValue(m_Config.process.fAmplLimits[0]);
+    ui->dspinClampTransHigh->setValue(m_Config.process.fAmplLimits[1]);
+
     ui->checkClampDFI->setChecked(m_Config.process.bUseDFILimits);
+    ui->dspinClampDFILow->setValue(m_Config.process.fDFILimits[0]);
+    ui->dspinClampDFIHigh->setValue(m_Config.process.fDFILimits[1]);
 
     ui->spinVisROI0->setValue(m_Config.process.nVisibilityROI[0]);
     ui->spinVisROI1->setValue(m_Config.process.nVisibilityROI[1]);
@@ -813,10 +823,10 @@ void nGIMainWindow::on_spinVisROI3_valueChanged(int arg1)
 
 void nGIMainWindow::on_spinCrop_Changed(int x)
 {
-    m_CurrentCropROI.setCoords(ui->spinVisROI0->value(),
-                ui->spinVisROI1->value(),
-                ui->spinVisROI2->value(),
-                ui->spinVisROI3->value());
+    m_CurrentCropROI.setCoords(ui->spinCrop0->value(),
+                ui->spinCrop1->value(),
+                ui->spinCrop2->value(),
+                ui->spinCrop3->value());
 
     ui->imageVisibility->set_rectangle(m_CurrentCropROI,QColor("red"),0);
 }
@@ -843,10 +853,10 @@ void nGIMainWindow::on_spinCrop3_valueChanged(int arg1)
 
 void nGIMainWindow::on_spinDose_Changed(int x)
 {
-    m_CurrentDoseROI.setCoords(ui->spinVisROI0->value(),
-                ui->spinVisROI1->value(),
-                ui->spinVisROI2->value(),
-                ui->spinVisROI3->value());
+    m_CurrentDoseROI.setCoords(ui->spinDose0->value(),
+                ui->spinDose1->value(),
+                ui->spinDose2->value(),
+                ui->spinDose3->value());
 
     ui->imageVisibility->set_rectangle(m_CurrentDoseROI,QColor("green"),0);
 
