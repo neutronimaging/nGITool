@@ -22,7 +22,6 @@ fi
 `$CPCMD $REPOSPATH/gui/trunk/qt/build-QtModuleConfigure-Qt5-Release/libQtModuleConfigure.1.0.0.dylib $DEST/Contents/Frameworks`
 `$CPCMD $REPOSPATH/kipl/trunk/kipl/build-kipl-Qt5-Release/libkipl.1.0.0.dylib $DEST/Contents/Frameworks`
 `$CPCMD $REPOSPATH/ngi/trunk/core/nGIFramework/build-nGIFramework-Qt5-Release/libnGIFramework.1.0.0.dylib $DEST/Contents/Frameworks`
-`$CPCMD $REPOSPATH/ngi/trunk/core/nGIFramework/build-nGIFramework-Qt5-Release/libnGIFramework.1.0.0.dylib $DEST/Contents/Frameworks`
 `$CPCMD $REPOSPATH/ngi/trunk/core/nGIEstimators/build-nGIEstimators-Qt5-Release/libnGIEstimators.1.0.0.dylib $DEST/Contents/Frameworks`
 `$CPCMD $REPOSPATH/ngi/trunk/core/nGIPreprocessing/build-nGIPreprocessing-Qt5-Release/libnGIPreprocessing.1.0.0.dylib $DEST/Contents/Frameworks`
 
