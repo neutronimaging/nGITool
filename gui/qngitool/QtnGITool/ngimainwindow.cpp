@@ -8,7 +8,7 @@
 
 #include "ngimainwindow.h"
 #include "ui_ngimainwindow.h"
-//#include "ngireport.h"
+#include "ngireport.h"
 #include <nGIException.h>
 #include <nGIFactory.h>
 #include <base/KiplException.h>
@@ -203,23 +203,31 @@ void nGIMainWindow::on_actionPrint_triggered()
     logger(kipl::logging::Logger::LogMessage,"Printing report");
     QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
 
-    //nGIReport report;
+    test_nGIReport();
+
+    nGIReport report;
     kipl::base::TImage<float,2> trans;
     kipl::base::TImage<float,2> phase;
     kipl::base::TImage<float,2> dark;
     kipl::base::TImage<float,2> vis;
 
-    m_pEngine->GetResults(trans,phase,dark,vis);
-    float axis[1024],ref_osc[1024],sample_osc[1024];
-    m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
+    if (m_pEngine!=NULL) {
+        m_pEngine->GetResults(trans,phase,dark,vis);
+        float axis[1024],ref_osc[1024],sample_osc[1024];
+        m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
 
-//    report.CreateReport(fname,
-//                        m_Config.UserInformation.sProjectNumber,
-//                        &m_Config,
-//                        trans,phase,dark,
-//                        0.0f,
-//                        axis,ref_osc,sample_osc);
-
+        report.CreateReport(fname,
+                            m_Config.UserInformation.sProjectNumber,
+                            &m_Config,
+                            trans,phase,dark,
+                            0.0f,
+                            axis,ref_osc,sample_osc);
+    }
+    else {
+        QMessageBox msgdlg;
+        msgdlg.setText("Please run the preview once before requesting a report.");
+        msgdlg.exec();
+    }
 }
 
 
@@ -401,19 +409,59 @@ void nGIMainWindow::on_buttonCreateReport_clicked()
 
 void nGIMainWindow::on_buttonProcessAll_clicked()
 {
-    const int N=30;
-    float x[N];
-    float y1[N];
-    float y2[N];
+    UpdateConfig();
+    SaveCurrentSetup();
 
-    for (int i=0; i<N; i++) {
-        x[i]=2.0f*3.1415*float(i)/float(N);
-        y1[i]=sin(x[i]);
-        y2[i]=cos(x[i]);
+    nGIConfig cfg(m_Config);
+
+    cfg.process.bSerialize		  = true;
+
+    nGIFactory factory;
+    if (m_pEngine!=NULL) {
+        delete m_pEngine;
+        m_pEngine=NULL;
     }
 
-    ui->plotOscillation->setCurveData(0,x,y1,N,QColor("red"),QtAddons::PlotGlyph_Square);
-    ui->plotOscillation->setCurveData(1,x,y2,N,QColor("blue"),QtAddons::PlotGlyph_Plus);
+    QMessageBox msgdlg;
+    msgdlg.setText("There was an error during processing your data");
+    try {
+        m_pEngine=factory.BuildEngine(cfg,NULL);
+        logger(kipl::logging::Logger::LogMessage,"Building the Engine was successful.");
+        m_pEngine->Run();
+        logger(kipl::logging::Logger::LogMessage,"The data was successfully processed.");
+    }
+    catch (kipl::base::KiplException & e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (nGIException  &e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (ModuleException  &e) {
+            logger(kipl::logging::Logger::LogError,e.what());
+            msgdlg.setDetailedText(QString::fromStdString(e.what()));
+            msgdlg.exec();
+            return;
+        }
+    catch (std::exception & e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
+    catch (...) {
+        logger(kipl::logging::Logger::LogError,"Unknown error");
+        msgdlg.setDetailedText("An unexpected exeption was thrown");
+        msgdlg.exec();
+        exit(-1);
+    }
+
+    ShowResults();
 }
 
 void nGIMainWindow::on_buttonPreview_clicked()
