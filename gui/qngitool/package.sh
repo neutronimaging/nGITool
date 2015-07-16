@@ -6,6 +6,6 @@ echo $fname
 pushd .
 cd ~/repos/ngi
 #tar -jcvhf $fname muhrec3
-tar -jcvf $fname qtngitool
+tar -jcvf $fname qngitool
 popd
  
