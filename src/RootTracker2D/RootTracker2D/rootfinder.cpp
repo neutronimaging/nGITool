@@ -58,8 +58,11 @@ int RootFinder::Process(TImage<float,2> &img, TImage<float,2> &res, RootTrackCon
         pars.mProcessingSettings.mfr_ratio,
         pars.mProcessingSettings.mfr_omega,
         pars.mProcessingSettings.mfr_dirs);
+    logger(kipl::logging::Logger::LogMessage,"MFR done");
     m_ImageList["02 MFR filtered"]=m_ImgMFR;
     m_ImageList["02 MFR filtered"].Clone();
+
+    logger(kipl::logging::Logger::LogMessage,"Added to list");
 	string filename;
 	string varname;
     if (pars.mProcessingSettings.save_steps) { // Save mfr image
@@ -433,7 +436,7 @@ int RootFinder::mfr(TImage<float,2> & img,TImage<float,2> &res, float sigma, flo
 	TImage<float,2> tmp(dims);
 	int x,y,k=0;
 	size_t i,j, pos;
-	float *K;
+
 	float sin_phi,cos_phi,sum;
 	float xval,yval;
 	k=int(2.5*sigma+0.5);
@@ -447,7 +450,7 @@ int RootFinder::mfr(TImage<float,2> & img,TImage<float,2> &res, float sigma, flo
         m_KernelList.push_back(K);
         float *pK=K.GetDataPtr();
 
-		cout<<"."<<flush;
+        cout<<"Proc direction "<<i<<" "<<flush;
 		// Create filter kernel 
 		sin_phi=sin(i*delta_phi);
 		cos_phi=cos(i*delta_phi);
@@ -470,10 +473,11 @@ int RootFinder::mfr(TImage<float,2> & img,TImage<float,2> &res, float sigma, flo
 
 		for (j=0; j<img.Size(); j++)
 			res[j]=res[j]>tmp[j] ? res[j] : tmp[j];
+
+
 	}
 
 	cout<<endl;
-	delete [] K;
 
 	return 1;
 }
