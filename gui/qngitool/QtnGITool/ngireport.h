@@ -1,6 +1,7 @@
 #ifndef NGIREPORT_H
 #define NGIREPORT_H
 
+#include <QtCore/qglobal.h>
 #include <reportgeneratorbase.h>
 #include <nGIConfig.h>
 #include <base/timage.h>

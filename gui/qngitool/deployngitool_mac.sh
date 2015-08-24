@@ -1,6 +1,6 @@
 DIRECTORY="/Users/kaestner/Applications"
 REPOSPATH="/Users/kaestner/repos"
-QTPATH="/Applications/Qt54/5.4/clang_64/"
+QTPATH="/Applications/Qt541/5.4/clang_64/"
 if [ ! -d "$DIRECTORY" ]; then
   mkdir $DIRECTORY
 fi

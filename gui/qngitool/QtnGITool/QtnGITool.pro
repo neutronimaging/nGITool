@@ -8,6 +8,7 @@ QT       += core widgets printsupport
 
 TARGET = QtnGITool
 TEMPLATE = app
+CONFIG += c++11
 
 
 SOURCES += main.cpp\
@@ -34,8 +35,7 @@ win32 {
 
 unix {
     INCLUDEPATH += "../../../../external/src/linalg"
-    QMAKE_CXXFLAGS += -fPIC -O2 #-std=c++11
-    #QMAKE_LFLAGS +=  -stdlib=libc++
+    QMAKE_CXXFLAGS += -fPIC -O2
 
     INCLUDEPATH += /usr/include/libxml2
     unix:!macx {
@@ -47,6 +47,7 @@ unix {
     unix:macx {
         INCLUDEPATH += /opt/local/include
         QMAKE_LIBDIR += /opt/local/lib
+        DEFINES += QT_NO_PRINTER
     }
 
     LIBS +=  -lxml2 -ltiff

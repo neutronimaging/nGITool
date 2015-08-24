@@ -1,8 +1,9 @@
 #include "ngireport.h"
 #include <generators/Sine2D.h>
-#include <QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QPainter>
 #include <QDir>
+#include <QMessageBox>
 
 #include <math/mathconstants.h>
 
@@ -47,7 +48,7 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
                     float *sample_osc)
 {
 
-
+#ifndef QT_NO_PRINTER
     ostringstream msg;
     OpenDestination(filename);
     m_Painter.begin(&m_Printer);
@@ -142,7 +143,11 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
 
     msg.str(""); msg<< "Wrote PDF file \"" << filename.toStdString() << "\"";
     logger(kipl::logging::Logger::LogVerbose,msg.str());
-
+#else
+    logger(kipl::logging::Logger::LogMessage,"Printing is disabled");
+//    QMessageBox msgbox(Icon(),QString("No printing"),QString("Printing is currently disabled."),QMessageBox::StandardButton::Ok,NULL,);
+//    msgbox.exec();
+#endif
     return 0;
 }
 
