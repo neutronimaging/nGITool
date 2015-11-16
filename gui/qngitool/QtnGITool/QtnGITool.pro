@@ -39,12 +39,14 @@ unix {
 
     INCLUDEPATH += /usr/include/libxml2
     unix:!macx {
+
         QMAKE_CXXFLAGS += -fopenmp
         QMAKE_LFLAGS += -lgomp
         LIBS += -lgomp
     }
 
     unix:macx {
+        QMAKE_MAC_SDK = macosx10.11
         INCLUDEPATH += /opt/local/include
         QMAKE_LIBDIR += /opt/local/lib
         DEFINES += QT_NO_PRINTER

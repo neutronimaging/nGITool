@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1352</width>
-    <height>841</height>
+    <width>1457</width>
+    <height>864</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -188,15 +188,15 @@
                <enum>QFrame::NoFrame</enum>
               </property>
               <property name="currentIndex">
-               <number>2</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="page">
                <property name="geometry">
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>782</width>
-                 <height>187</height>
+                 <width>746</width>
+                 <height>245</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -750,8 +750,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>289</width>
-                 <height>108</height>
+                 <width>770</width>
+                 <height>264</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -809,7 +809,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="spinPeriods"/>
+                     <widget class="QDoubleSpinBox" name="spinPeriods"/>
                     </item>
                     <item>
                      <spacer name="horizontalSpacer_16">
@@ -855,8 +855,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>782</width>
-                 <height>284</height>
+                 <width>770</width>
+                 <height>264</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1211,8 +1211,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>718</width>
-                 <height>79</height>
+                 <width>772</width>
+                 <height>96</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1807,8 +1807,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1352</width>
-     <height>24</height>
+     <width>1457</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
