@@ -31,7 +31,8 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     m_CurrentCropROI(0,0,1,1),
     m_CurrentDoseROI(0,0,1,1),
     m_sApplicationName("ngitool"),
-    m_pEngine(NULL)
+    m_bNewResult(true),
+    m_pEngine(nullptr)
 {
     ui->setupUi(this);
     ui->ModuleConfEstimator->Configure(m_sApplicationName);
@@ -42,6 +43,7 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     on_checkDoseRegion_toggled(ui->checkDoseRegion->checkState());
     on_checkClampTransmission_toggled(ui->checkClampTransmission->checkState());
     on_checkClampDFI_toggled(ui->checkClampDFI->checkState());
+    m_QtApp->setWindowIcon(QIcon("../Resources/ngi_icon.icns"));
 }
 
 nGIMainWindow::~nGIMainWindow()
@@ -203,7 +205,14 @@ void nGIMainWindow::on_actionPrint_triggered()
     logger(kipl::logging::Logger::LogMessage,"Printing report");
     QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
 
-    test_nGIReport();
+    if (fname.isEmpty()) {
+        QMessageBox dlg;
+
+        dlg.setText("You have to provide a filename to create a report");
+        dlg.exec();
+
+        return ;
+    }
 
     nGIReport report;
     kipl::base::TImage<float,2> trans;
@@ -211,7 +220,7 @@ void nGIMainWindow::on_actionPrint_triggered()
     kipl::base::TImage<float,2> dark;
     kipl::base::TImage<float,2> vis;
 
-    if (m_pEngine!=NULL) {
+    if (m_pEngine!=nullptr) {
         m_pEngine->GetResults(trans,phase,dark,vis);
         float axis[1024],ref_osc[1024],sample_osc[1024];
         m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
@@ -417,15 +426,15 @@ void nGIMainWindow::on_buttonProcessAll_clicked()
     cfg.process.bSerialize		  = true;
 
     nGIFactory factory;
-    if (m_pEngine!=NULL) {
+    if (m_pEngine!=nullptr) {
         delete m_pEngine;
-        m_pEngine=NULL;
+        m_pEngine=nullptr;
     }
 
     QMessageBox msgdlg;
     msgdlg.setText("There was an error during processing your data");
     try {
-        m_pEngine=factory.BuildEngine(cfg,NULL);
+        m_pEngine=factory.BuildEngine(cfg,nullptr);
         logger(kipl::logging::Logger::LogMessage,"Building the Engine was successful.");
         m_pEngine->Run();
         logger(kipl::logging::Logger::LogMessage,"The data was successfully processed.");
@@ -478,15 +487,15 @@ void nGIMainWindow::on_buttonPreview_clicked()
     cfg.projections.bUseROI       = ui->checkPreviewCropped->checkState();
 
     nGIFactory factory;
-    if (m_pEngine!=NULL) {
+    if (m_pEngine!=nullptr) {
         delete m_pEngine;
-        m_pEngine=NULL;
+        m_pEngine=nullptr;
     }
 
     QMessageBox msgdlg;
     msgdlg.setText("There was an error during processing your data");
     try {
-        m_pEngine=factory.BuildEngine(cfg,NULL);
+        m_pEngine=factory.BuildEngine(cfg,nullptr);
         logger(kipl::logging::Logger::LogMessage,"Building the Engine was successful.");
         m_pEngine->Run();
         logger(kipl::logging::Logger::LogMessage,"The data was successfully processed.");
@@ -522,6 +531,7 @@ void nGIMainWindow::on_buttonPreview_clicked()
         exit(-1);
     }
 
+    m_bNewResult=true;
     ShowResults();
 }
 
@@ -575,6 +585,8 @@ void nGIMainWindow::ShowResults()
     size_t nLo=0,nHi=0;
 
     ui->sliderProjections->setRange(0,m_Config.projections.nPhaseSteps-1);
+    ui->sliderProjections->setValue(0);
+    DisplayNewProjection(0);
 
     // Plot oscillations
     float proj_osc[2048];
@@ -650,11 +662,14 @@ void nGIMainWindow::Draw_VisibilityWindow()
 
 void nGIMainWindow::DisplayNewProjection(int slice)
 {
-    if (m_pEngine!=NULL) {
+    if (m_pEngine!=nullptr) {
         kipl::base::TImage<float,3> &projections=m_pEngine->GetProjections();
 
         float lo, hi;
-        ui->imageProjections->get_levels(&lo,&hi);
+        if (m_bNewResult==true)
+            lo=hi=0.0f;
+        else
+            ui->imageProjections->get_levels(&lo,&hi);
 
         float *pSlice=projections.GetLinePtr(0,slice);
 

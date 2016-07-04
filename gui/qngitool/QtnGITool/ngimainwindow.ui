@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>1457</width>
-    <height>864</height>
+    <height>914</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>nGITool</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../Resources/ngi_icon.icns</normaloff>../Resources/ngi_icon.icns</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -181,22 +185,22 @@
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>400</height>
+                <height>450</height>
                </size>
               </property>
               <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="page">
                <property name="geometry">
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>746</width>
-                 <height>245</height>
+                 <width>770</width>
+                 <height>345</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -300,6 +304,9 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="toolTip">
+                       <string>Number of phase step sets to process</string>
+                      </property>
                       <property name="maximum">
                        <number>10000</number>
                       </property>
@@ -339,6 +346,9 @@
                         <width>60</width>
                         <height>0</height>
                        </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Index of the first raw data file</string>
                       </property>
                       <property name="maximum">
                        <number>10000</number>
@@ -381,6 +391,9 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="toolTip">
+                       <string>Index distance between two adjacent phase steps</string>
+                      </property>
                       <property name="minimum">
                        <number>1</number>
                       </property>
@@ -399,7 +412,7 @@
                     <item>
                      <widget class="QSpinBox" name="spin_FilesPerStep">
                       <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of images acquired per phase step. Used to increase the count statistics.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       <string>[not implemented] Number of files to accumulate per phase step.</string>
                       </property>
                       <property name="minimum">
                        <number>1</number>
@@ -497,6 +510,9 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="toolTip">
+                       <string>Index of the first open beam file</string>
+                      </property>
                       <property name="maximum">
                        <number>10000</number>
                       </property>
@@ -537,6 +553,9 @@
                         <width>60</width>
                         <height>0</height>
                        </size>
+                      </property>
+                      <property name="toolTip">
+                       <string>Index distance between two adjacent phase steps</string>
                       </property>
                       <property name="minimum">
                        <number>1</number>
@@ -634,6 +653,9 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="toolTip">
+                       <string>First file index of te dark current files</string>
+                      </property>
                       <property name="maximum">
                        <number>10000</number>
                       </property>
@@ -675,8 +697,99 @@
                         <height>0</height>
                        </size>
                       </property>
+                      <property name="toolTip">
+                       <string>Number of dark current files</string>
+                      </property>
                       <property name="maximum">
                        <number>10000</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_24">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_12">
+                      <item>
+                       <widget class="QLabel" name="label_37">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Number of phase steps</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QSpinBox" name="spinPhaseSteps">
+                        <property name="toolTip">
+                         <string>Number of phase steps to complete a phase stepping data set</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_15">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_30">
+                      <item>
+                       <widget class="QLabel" name="label_38">
+                        <property name="text">
+                         <string>Number of periods in the phase scan</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QDoubleSpinBox" name="spinPeriods">
+                        <property name="toolTip">
+                         <string>Number of phase step periods in the data set. This is usually an integer but floating point values are valid</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_16">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="checkCompletePeriod">
+                      <property name="toolTip">
+                       <string>Complete period means that the first and the last image in the data set represent the same condition</string>
+                      </property>
+                      <property name="text">
+                       <string>Complete period</string>
                       </property>
                      </widget>
                     </item>
@@ -745,118 +858,13 @@
                 </item>
                </layout>
               </widget>
-              <widget class="QWidget" name="page_2">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>770</width>
-                 <height>264</height>
-                </rect>
-               </property>
-               <attribute name="label">
-                <string>Phase stepping</string>
-               </attribute>
-               <layout class="QVBoxLayout" name="verticalLayout_25">
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_24">
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_12">
-                    <item>
-                     <widget class="QLabel" name="label_37">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Number of phase steps</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="spinPhaseSteps"/>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_15">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_30">
-                    <item>
-                     <widget class="QLabel" name="label_38">
-                      <property name="text">
-                       <string>Number of periods in the phase scan</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="spinPeriods"/>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_16">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="checkCompletePeriod">
-                    <property name="text">
-                     <string>Complete period</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="verticalSpacer_5">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </widget>
               <widget class="QWidget" name="page_3">
                <property name="geometry">
                 <rect>
                  <x>0</x>
                  <y>0</y>
                  <width>770</width>
-                 <height>264</height>
+                 <height>348</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1211,8 +1219,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>772</width>
-                 <height>96</height>
+                 <width>773</width>
+                 <height>348</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1401,6 +1409,9 @@
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
               <property name="topMargin">
                <number>3</number>
               </property>
@@ -1519,7 +1530,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget_2">
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="tabVisibility">
            <attribute name="title">
@@ -1533,7 +1544,7 @@
                 <property name="minimumSize">
                  <size>
                   <width>250</width>
-                  <height>250</height>
+                  <height>400</height>
                  </size>
                 </property>
                </widget>
@@ -1669,7 +1680,7 @@
                 <property name="minimumSize">
                  <size>
                   <width>250</width>
-                  <height>250</height>
+                  <height>400</height>
                  </size>
                 </property>
                </widget>

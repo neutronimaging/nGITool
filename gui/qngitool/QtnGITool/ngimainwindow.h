@@ -83,6 +83,7 @@ private:
     std::string m_sApplicationName;
 
     float m_fVisibility;
+    bool m_bNewResult;
 
     nGIConfig m_Config;
     nGIEngine *m_pEngine;
