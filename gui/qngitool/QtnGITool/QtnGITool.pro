@@ -10,6 +10,8 @@ TARGET = QtnGITool
 TEMPLATE = app
 CONFIG += c++11
 
+CONFIG(release, debug|release): DESTDIR = $$PWD/../../../../../Applications
+else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../../../Applications/debug
 
 SOURCES += main.cpp\
         ngimainwindow.cpp \
@@ -48,44 +50,33 @@ unix {
     unix:macx {
         QMAKE_MAC_SDK = macosx10.11
         INCLUDEPATH += /opt/local/include
-        QMAKE_LIBDIR += /opt/local/lib
+        QMAKE_LIBDIR += /opt/local/lib $$PWD/../../../../../lib
         DEFINES += QT_NO_PRINTER
+        ICON = $$PWD/ngi_icon.icns
     }
 
     LIBS +=  -lxml2 -ltiff
 
 }
 
+ICON = ../Resources/ngi_icon.icns
+
 win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Release/release -lkipl
 else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Debug/debug -lkipl
-else:symbian: LIBS += -lkipl
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Release/ -lkipl
-else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Debug/ -lkipl
+else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../lib -lkipl -lModuleConfig -lQtAddons -lQtModuleConfigure -lnGIFramework
+else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../lib/debug/ -lkipl -lModuleConfig -lQtAddons -lQtModuleConfigure -lnGIFramework
 
 win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtAddons-Qt5-Release/release -lQtAddons
 else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtAddons-Qt5-Debug/debug -lQtAddons
-else:symbian: LIBS += -lQtAddons
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtAddons-Qt5-Release/ -lQtAddons
-else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtAddons-Qt5-Debug/ -lQtAddons
 
-win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../core/nGIFramework/build-nGIFramework-Qt5-Release/release -lnGIFramework
-else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../core/nGIFramework/build-nGIFramework-Qt5-Debug/debug -lnGIFramework
-else:symbian: LIBS += -lnGIFramework
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../core/nGIFramework/build-nGIFramework-Qt5-Release/ -lnGIFramework
-else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../core/nGIFramework/build-nGIFramework-Qt5-Debug/ -lnGIFramework
+win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../build-nGIFramework-Qt5-Release/release -lnGIFramework
+else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../build-nGIFramework-Qt5-Debug/debug -lnGIFramework
 
 win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Release/release -lModuleConfig
 else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Debug/debug -lModuleConfig
-else:symbian: LIBS += -lModuleConfig
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Release -lModuleConfig
-else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Debug -lModuleConfig
 
 win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtModuleConfigure-Qt5-Release/release -lQtModuleConfigure
 else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtModuleConfigure-Qt5-Debug/debug -lQtModuleConfigure
-else:symbian: LIBS += -lQtModuleConfigure
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtModuleConfigure-Qt5-Release/ -lQtModuleConfigure
-else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../gui/trunk/qt/build-QtModuleConfigure-Qt5-Debug/ -lQtModuleConfigure
-
 
 
 INCLUDEPATH += $$PWD/../../../../../gui/trunk/qt/QtAddons
