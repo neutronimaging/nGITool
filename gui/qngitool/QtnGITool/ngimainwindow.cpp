@@ -709,6 +709,9 @@ void nGIMainWindow::UpdateConfig()
     m_Config.projections.nDarkCnt        = ui->spinDarkCount->value();
 
     m_Config.projections.sDestPath       = ui->editDestinationPath->text().toStdString();
+    kipl::strings::filenames::CheckPathSlashes(m_Config.projections.sDestPath,true);
+    ui->editDestinationPath->setText(QString::fromStdString(m_Config.projections.sDestPath));
+
     m_Config.projections.sDestMask       = ui->editDestinationMask->text().toStdString();
 
     m_Config.projections.nFilesCnt       = ui->spinImageCount->value();
