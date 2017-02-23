@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1457</width>
-    <height>914</height>
+    <height>992</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -735,6 +735,9 @@
                         <property name="toolTip">
                          <string>Number of phase steps to complete a phase stepping data set</string>
                         </property>
+                        <property name="maximum">
+                         <number>256</number>
+                        </property>
                        </widget>
                       </item>
                       <item>
@@ -863,8 +866,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>770</width>
-                 <height>348</height>
+                 <width>541</width>
+                 <height>166</height>
                 </rect>
                </property>
                <attribute name="label">
@@ -1214,198 +1217,183 @@
                 </item>
                </layout>
               </widget>
-              <widget class="QWidget" name="page_4">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>773</width>
-                 <height>348</height>
-                </rect>
-               </property>
-               <attribute name="label">
-                <string>Images to compute</string>
-               </attribute>
-               <layout class="QVBoxLayout" name="verticalLayout_7">
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_28">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_20">
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_28">
+                 <widget class="QCheckBox" name="checkTransmission">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Transmission</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
                   <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_20">
-                    <item>
-                     <widget class="QCheckBox" name="checkTransmission">
-                      <property name="font">
-                       <font>
-                        <weight>75</weight>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Transmission</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_13">
-                      <item>
-                       <widget class="QCheckBox" name="checkClampTransmission">
-                        <property name="text">
-                         <string>Clamp</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="labelClampTransLow">
-                        <property name="text">
-                         <string>Low</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QDoubleSpinBox" name="dspinClampTransLow"/>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="labelClampTransHigh">
-                        <property name="text">
-                         <string>High</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QDoubleSpinBox" name="dspinClampTransHigh"/>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <spacer name="verticalSpacer_2">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
+                   <widget class="QCheckBox" name="checkClampTransmission">
+                    <property name="text">
+                     <string>Clamp</string>
+                    </property>
+                   </widget>
                   </item>
                   <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_21">
-                    <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_15">
-                      <item>
-                       <widget class="QCheckBox" name="checkDPC">
-                        <property name="font">
-                         <font>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Differential phase</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <spacer name="verticalSpacer">
-                        <property name="orientation">
-                         <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>20</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
+                   <widget class="QLabel" name="labelClampTransLow">
+                    <property name="text">
+                     <string>Low</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
                   </item>
                   <item>
-                   <layout class="QVBoxLayout" name="verticalLayout_22">
-                    <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_8">
-                      <item>
-                       <widget class="QCheckBox" name="checkDarkField">
-                        <property name="font">
-                         <font>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Dark field</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_14">
-                        <item>
-                         <widget class="QCheckBox" name="checkClampDFI">
-                          <property name="text">
-                           <string>Clamp</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="labelClampDFILow">
-                          <property name="text">
-                           <string>Low</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QDoubleSpinBox" name="dspinClampDFILow"/>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="labelClampDFIHigh">
-                          <property name="text">
-                           <string>High</string>
-                          </property>
-                          <property name="alignment">
-                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QDoubleSpinBox" name="dspinClampDFIHigh"/>
-                        </item>
-                       </layout>
-                      </item>
-                      <item>
-                       <spacer name="verticalSpacer_3">
-                        <property name="orientation">
-                         <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>20</width>
-                          <height>40</height>
-                         </size>
-                        </property>
-                       </spacer>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
+                   <widget class="QDoubleSpinBox" name="dspinClampTransLow"/>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="labelClampTransHigh">
+                    <property name="text">
+                     <string>High</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="dspinClampTransHigh"/>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_21">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_15">
+                  <item>
+                   <widget class="QCheckBox" name="checkDPC">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Differential phase</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                  </layout>
                 </item>
                </layout>
-              </widget>
-             </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_22">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                  <item>
+                   <widget class="QCheckBox" name="checkDarkField">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Dark field</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <item>
+                     <widget class="QCheckBox" name="checkClampDFI">
+                      <property name="text">
+                       <string>Clamp</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="labelClampDFILow">
+                      <property name="text">
+                       <string>Low</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="dspinClampDFILow"/>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="labelClampDFIHigh">
+                      <property name="text">
+                       <string>High</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="dspinClampDFIHigh"/>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">

@@ -182,7 +182,7 @@ void nGIMainWindow::on_actionSave_triggered()
 
 void nGIMainWindow::on_actionSave_as_triggered()
 {
-    logger(kipl::logging::Logger::LogMessage,"Saveing configuration as");
+    logger(kipl::logging::Logger::LogMessage,"Saving configuration as");
     QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
 
     m_sConfigFilename=fname.toStdString();
