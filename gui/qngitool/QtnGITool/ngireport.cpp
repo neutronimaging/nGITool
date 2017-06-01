@@ -102,21 +102,21 @@ int nGIReport::CreateReport(QString filename, std::string projname, nGIConfig *c
 
     ProcessingModules(config);
 
-    int dstdims[]={0.88*m_fWidth/3,0.88*m_fWidth/3};
+    int dstdims[]={static_cast<int>(0.88*m_fWidth/3),static_cast<int>(0.88*m_fWidth/3)};
     m_fLine+=m_fLineHeight;
     Print("Amplitude",0,m_fLine,11);
     Print("DPC",m_fWidth/3,m_fLine,11);
     Print("DFI",2*m_fWidth/3,m_fLine,11);
 
 
-    m_ImagePainter.set_image(ampl.GetDataPtr(),ampl.Dims());
-    m_ImagePainter.Render(m_Painter,0,m_fLine,dstdims[0],dstdims[1]);
+//    m_ImagePainter.set_image(ampl.GetDataPtr(),ampl.Dims());
+//    m_ImagePainter.Render(m_Painter,0,m_fLine,dstdims[0],dstdims[1]);
 
-    m_ImagePainter.set_image(dpc.GetDataPtr(),dpc.Dims());
-    m_ImagePainter.Render(m_Painter,m_fWidth/3,static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
+//    m_ImagePainter.set_image(dpc.GetDataPtr(),dpc.Dims());
+//    m_ImagePainter.Render(m_Painter,static_cast<int>(m_fWidth/3),static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
 
-    m_ImagePainter.set_image(dfi.GetDataPtr(),dfi.Dims());
-    m_ImagePainter.Render(m_Painter,2*(m_fWidth/3),static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
+//    m_ImagePainter.set_image(dfi.GetDataPtr(),dfi.Dims());
+//    m_ImagePainter.Render(m_Painter,static_cast<int>(2*(m_fWidth/3)),static_cast<int>(m_fLine),dstdims[0],dstdims[1]);
 
     m_fLine+=dstdims[1]+m_fLineHeight;
     msg.str(""); msg<<"Visibility: "<<visibility;

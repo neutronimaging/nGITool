@@ -139,7 +139,7 @@ void nGIMainWindow::on_actionOpen_triggered()
     msgbox.setText(tr("Failed to load the configuration file"));
 
     try {
-        m_Config.LoadConfigFile(fileName.toStdString(),"reconstructor");
+        m_Config.LoadConfigFile(fileName.toStdString(),"ngi");
     }
     catch (nGIException & e) {
         msg<<"Failed to load the configuration file :\n"<<
@@ -203,6 +203,8 @@ void nGIMainWindow::on_actionQuit_triggered()
 void nGIMainWindow::on_actionPrint_triggered()
 {
     logger(kipl::logging::Logger::LogMessage,"Printing report");
+    ostringstream msg;
+
     QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
 
     if (fname.isEmpty()) {
@@ -225,12 +227,26 @@ void nGIMainWindow::on_actionPrint_triggered()
         float axis[1024],ref_osc[1024],sample_osc[1024];
         m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
 
+        try {
         report.CreateReport(fname,
                             m_Config.UserInformation.sProjectNumber,
                             &m_Config,
                             trans,phase,dark,
                             0.0f,
                             axis,ref_osc,sample_osc);
+        }
+        catch (kipl::base::KiplException &e) {
+            msg.str(""); msg<<"A kipl exception was thrown while creating a report: "<<e.what();
+            logger(logger.LogError,msg.str());
+        }
+        catch (nGIException &e) {
+            msg.str(""); msg<<"A nGI exception was thrown while creating a report: "<<e.what();
+            logger(logger.LogError,msg.str());
+        }
+        catch (std::exception & e) {
+            msg.str(""); msg<<"A STL exception was thrown while creating a report: "<<e.what();
+            logger(logger.LogError,msg.str());
+        }
     }
     else {
         QMessageBox msgdlg;
