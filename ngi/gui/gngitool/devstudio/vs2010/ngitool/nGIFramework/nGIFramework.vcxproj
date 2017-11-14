@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{75FBC50E-580F-4168-8F8A-4BC30A7FED3F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>nGIFramework</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;NGIFRAMEWORK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_WINDOWS;_USRDLL;NGIFRAMEWORK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Documents and Settings\kaestner\My Documents\repos\src\external\include\fitsio;C:\Documents and Settings\kaestner\My Documents\repos\src\external\include;C:\dev\gtkmm\include\libxml2;C:\Documents and Settings\kaestner\My Documents\repos\src\libs\modules\trunk\ModuleConfig\include;C:\Documents and Settings\kaestner\My Documents\repos\src\libs\kipl\trunk\kipl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(TargetDir);C:\dev\gtkmm\lib;C:\Documents and Settings\kaestner\My Documents\repos\src\external\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zlib_2010.lib;libxml2.lib;cfitsio.lib;kipl.lib; ModuleConfig.lib;libtiff.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\nGIFramework\include\EstimatorBase.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\InteractionBase.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\ModuleItem.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\nGIConfig.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\nGIEngine.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\nGIException.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\nGIFactory.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\nGIProcessor.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\PreprocModuleBase.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\ProjectionReader.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\stdafx.h" />
+    <ClInclude Include="..\..\..\nGIFramework\include\targetver.h" />
+    <ClInclude Include="..\..\..\nGIFramework\src\stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\nGIFramework\src\EstimatorBase.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\InteractionBase.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\ModuleItem.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\nGIConfig.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\nGIEngine.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\nGIException.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\nGIFactory.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\nGIProcessor.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\PreprocModuleBase.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\ProjectionReader.cpp" />
+    <ClCompile Include="..\..\..\nGIFramework\src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
