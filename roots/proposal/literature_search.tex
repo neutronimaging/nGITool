@@ -1,0 +1,82 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{hyperref}
+\usepackage[style=reading, doi=true]{biblatex}
+\usepackage[margin=2cm]{geometry}
+
+% biblatex must be installed separately
+% http://www.lagom.nl/latex/i2b/online.html helps to convert ISI citations
+%opening
+\title{Literature search}
+\author{A. Kaestner}
+
+\addbibresource{literature_search.bib}
+\nocite{*}
+
+\begin{document}
+\maketitle
+
+\section{Used keywords}
+\begin{itemize}
+ \item imaging AND root NOT dental NOT tooth
+
+\end{itemize}
+
+\section{Image processing}
+\subsection{General interest}
+!\cite{sijbers07}\\
+!\cite{welk07}\\
+!\cite{zhu10}
+
+\subsection{Filter methods}
+\cite{lee08b}
+
+\subsection{Skeletons}
+!\cite{hesselink08}
+
+\subsection{Imaging}
+!!!\cite{burger11}
+
+\section{Image quality}
+\cite{burns11}
+
+\section{CT}
+\subsection{Imaging}
+\cite{guizar-sicairos11}
+\subsection{Reconstruction methods}
+\cite{amin11}\\
+\cite{bilgic11}\\
+!!\cite{yoon10}\\
+!!\cite{sungwon10}(duplicated?)
+
+
+\section{Roots}
+\cite{felipussi08}\\
+\cite{yugan10}\\
+!!!\cite{fernandez10}\\
+!!!\cite{french08}\\
+!!\cite{goclawski09}\\
+!\cite{guo11}\\
+!!\cite{miyamura07}\\
+!!!\cite{muehlich08}\\
+!!!\cite{page08}\\
+!!\cite{tajima11}\\
+!\cite{vandenhirtz10}\\
+!\cite{wu11}\\
+!\cite{haiwen09}\\
+!!!\cite{ying11b}\\
+!!!\cite{tonglin08}\\
+!\cite{zobel08}
+
+\subsection{Anatomy}
+\cite{bagbreveci11}\\
+\cite{avila-montes10}\\
+!!\cite{delibasis10}\\
+!!!\cite{mille09}\\
+!\cite{jing11}
+
+\section{Not so relevant}
+
+\printbibliography
+
+\end{document}
