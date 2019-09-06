@@ -1,9 +1,4 @@
-/*
- * nGIPenalizedMLEstimator.cpp
- *
- *  Created on: Apr 12, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
 #include "stdafx.h"
 #include "../include/nGIPenalizedMLEstimator.h"
@@ -23,7 +18,7 @@
 #endif
 
 nGIPenalizedMLEstimator::nGIPenalizedMLEstimator() :
-	EstimatorBase("nGIPenalizedMLEstimator",NULL),
+    EstimatorBase("nGIPenalizedMLEstimator",nullptr),
 	m_nFilterSize(7)
 {
 

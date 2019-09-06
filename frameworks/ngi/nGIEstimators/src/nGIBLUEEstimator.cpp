@@ -1,9 +1,4 @@
-/*
- * nGIBLUEEstimator.cpp
- *
- *  Created on: Apr 12, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
 #include "stdafx.h"
 #include "../include/nGIBLUEEstimator.h"
@@ -23,7 +18,7 @@
 #endif
 
 nGIBLUEEstimator::nGIBLUEEstimator() :
-	EstimatorBase("nGIBLUEEstimator",NULL),
+    EstimatorBase("nGIBLUEEstimator",nullptr),
 	m_nFilterSize(7)
 {
 

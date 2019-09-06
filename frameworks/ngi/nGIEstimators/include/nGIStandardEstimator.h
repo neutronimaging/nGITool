@@ -1,12 +1,7 @@
-/*
- * nGILogNorm.h
- *
- *  Created on: Mar 15, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
-#ifndef NGISTDEST_H_
-#define NGISTDEST_H_
+#ifndef NGISTDEST_H
+#define NGISTDEST_H
 #include "../src/stdafx.h"
 #include <EstimatorBase.h>
 #include <complex>

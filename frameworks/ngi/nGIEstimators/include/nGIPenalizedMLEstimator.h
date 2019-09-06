@@ -1,12 +1,7 @@
-/*
- * nGIPenalizedMLEstimator.h
- *
- *  Created on: Apr 12, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
-#ifndef nGIPenalizedMLEstimator_H_
-#define nGIPenalizedMLEstimator_H_
+#ifndef nGIPenalizedMLEstimator_H
+#define nGIPenalizedMLEstimator_H
 
 #include "../src/stdafx.h"
 #include <EstimatorBase.h>

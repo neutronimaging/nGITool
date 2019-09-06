@@ -1,9 +1,4 @@
-/*
- * nGILSEstimator.cpp
- *
- *  Created on: Apr 12, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
 #include "stdafx.h"
 #include "../include/nGILSEstimator.h"

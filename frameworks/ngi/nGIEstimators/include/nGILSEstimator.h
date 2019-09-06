@@ -1,12 +1,7 @@
-/*
- * nGILSEstimator.h
- *
- *  Created on: Apr 12, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
-#ifndef NGILSESTIMATOR_H_
-#define NGILSESTIMATOR_H_
+#ifndef NGILSESTIMATOR_H
+#define NGILSESTIMATOR_H
 
 #include "../src/stdafx.h"
 #include <EstimatorBase.h>

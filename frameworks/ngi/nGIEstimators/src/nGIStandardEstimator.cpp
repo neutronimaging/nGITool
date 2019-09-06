@@ -1,9 +1,4 @@
-/*
- * nGILogNorm.cpp
- *
- *  Created on: Mar 15, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
 #include "stdafx.h"
 #include "../include/nGIStandardEstimator.h"
@@ -13,16 +8,16 @@
 #endif
 
 nGIStandardEstimator::nGIStandardEstimator() :
-	EstimatorBase("nGIStandardEstimator",NULL),
-	sin_LUT(NULL),
-	cos_LUT(NULL)
+    EstimatorBase("nGIStandardEstimator",nullptr),
+    sin_LUT(nullptr),
+    cos_LUT(nullptr)
 {
 }
 
 nGIStandardEstimator::~nGIStandardEstimator() {
-	if (sin_LUT!=NULL)
+    if (sin_LUT!=nullptr)
 		delete [] sin_LUT;
-	if (cos_LUT!=NULL)
+    if (cos_LUT!=nullptr)
 		delete [] cos_LUT;
 
 }
@@ -38,9 +33,9 @@ int nGIStandardEstimator::Configure(nGIConfig config, std::map<std::string, std:
 
 int nGIStandardEstimator::Initialize()
 {
-	if (sin_LUT!=NULL)
+    if (sin_LUT!=nullptr)
 		delete [] sin_LUT;
-	if (cos_LUT!=NULL)
+    if (cos_LUT!=nullptr)
 		delete [] cos_LUT;
 
 	sin_LUT=new float[mConfig.projections.nPhaseSteps];

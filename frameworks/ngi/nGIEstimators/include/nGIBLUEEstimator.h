@@ -1,12 +1,7 @@
-/*
- * nGIBLUEEstimator.h
- *
- *  Created on: Apr 12, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
-#ifndef NGIBLUEESTIMATOR_H_
-#define NGIBLUEESTIMATOR_H_
+#ifndef NGIBLUEESTIMATOR_H
+#define NGIBLUEESTIMATOR_H
 
 #include "../src/stdafx.h"
 #include <EstimatorBase.h>

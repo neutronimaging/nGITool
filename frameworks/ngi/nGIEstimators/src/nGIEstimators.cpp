@@ -1,14 +1,4 @@
-//
-// This file is part of the preprocessing modules recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $Date: 2012-02-18 17:45:40 +0100 (Sat, 18 Feb 2012) $
-// $Rev: 1218 $
-// $Id: StdPreprocModules.cpp 1218 2012-02-18 16:45:40Z kaestner $
-//
+//<LICENSE>
 
 #include "../include/ngiestimators_global.h"
 
@@ -35,9 +25,9 @@
 NGIESTIMATORSSHARED_EXPORT void * GetModule(const char * application, const char * name)
 {
 	if (strcmp(application,"ngitool"))
-		return NULL;
+        return nullptr;
 
-	if (name!=NULL) {
+    if (name!=nullptr) {
 		std::string sName=name;
 
 		if (sName=="standardestimator")
@@ -50,7 +40,7 @@ NGIESTIMATORSSHARED_EXPORT void * GetModule(const char * application, const char
 			return new nGIPenalizedMLEstimator;
 	}
 
-	return NULL;
+    return nullptr;
 }
 
 NGIESTIMATORSSHARED_EXPORT int Destroy(const char * application, void *obj)
@@ -62,7 +52,7 @@ NGIESTIMATORSSHARED_EXPORT int Destroy(const char * application, void *obj)
 	std::ostringstream msg;
 	std::string name="No name";
 	try {
-		if (obj!=NULL) {
+        if (obj!=nullptr) {
 			EstimatorBase *module=reinterpret_cast<EstimatorBase *>(obj);
 			name=module->ModuleName();
 			msg<<"Destroying "<<name;
