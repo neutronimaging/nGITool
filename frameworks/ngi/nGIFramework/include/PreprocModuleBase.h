@@ -1,18 +1,7 @@
-//
-// This file is part of the Inspector library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2011-09-22 10:22:46 +0200 (Thu, 22 Sep 2011) $
-// $Rev: 1074 $
-// $Id: PreprocModuleBase.h 1074 2011-09-22 08:22:46Z kaestner $
-//
+//<LICENSE>
 
-#ifndef __PREPROCMODULEBASE_H
-#define __PREPROCMODULEBASE_H
+#ifndef PREPROCMODULEBASE_H
+#define PREPROCMODULEBASE_H
 #include "nGIFramework_global.h"
 
 #include <logging/logger.h>

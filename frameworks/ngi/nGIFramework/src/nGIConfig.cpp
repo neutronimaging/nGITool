@@ -1,9 +1,5 @@
-/*
- * dpc_config.cpp
- *
- *  Created on: Mar 11, 2010
- *      Author: anders
- */
+//<LICENSE>
+
 #include "stdafx.h"
 #include <cstring>
 #include <string>
@@ -430,4 +426,14 @@ void nGIConfig::ParseProcessChain(xmlTextReaderPtr reader)
 		if (xmlTextReaderDepth(reader)<depth)
     		ret=0;
 	}
+}
+
+std::string nGIConfig::SanitySlicesCheck()
+{
+    return "";
+}
+
+std::string nGIConfig::SanityMessage(bool msg)
+{
+    return "";
 }

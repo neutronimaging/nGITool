@@ -1,3 +1,4 @@
+//<LICENSE>
 #include "stdafx.h"
 #include "../include/InteractionBase.h"
 

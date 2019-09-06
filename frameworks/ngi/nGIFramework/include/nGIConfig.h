@@ -1,12 +1,7 @@
-/*
- * dpc_config.h
- *
- *  Created on: Mar 11, 2010
- *      Author: anders
- */
+//<LICENSE>
 
-#ifndef DPC_CONFIG_H_
-#define DPC_CONFIG_H_
+#ifndef DPC_CONFIG_H
+#define DPC_CONFIG_H
 
 #include "nGIFramework_global.h"
 #include <string>
@@ -77,6 +72,8 @@ public:
 
 	virtual std::string WriteXML();
 protected:
+        virtual std::string SanitySlicesCheck();
+        virtual std::string SanityMessage(bool msg);
 	virtual void ParseConfig(xmlTextReaderPtr reader, std::string cName);
 	void ParseProjections(xmlTextReaderPtr reader);
 	void ParseProcess(xmlTextReaderPtr reader);

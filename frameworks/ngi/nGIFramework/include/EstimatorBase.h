@@ -1,18 +1,7 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2011-12-06 17:38:48 +0100 (Tue, 06 Dec 2011) $
-// $Rev: 1136 $
-// $Id: EstimatorBase.h 1136 2011-12-06 16:38:48Z kaestner $
-//
+//<LICENSE>
 
-#ifndef __EstimatorBase_H
-#define __EstimatorBase_H
+#ifndef ESTIMATORBASE_H
+#define ESTIMATORBASE_H
 #include "nGIFramework_global.h"
 #include <string>
 
@@ -29,7 +18,7 @@ class NGIFRAMEWORKSHARED_EXPORT EstimatorBase
 protected:
 	kipl::logging::Logger logger;
 public:
-	EstimatorBase(std::string name, InteractionBase *interactor=NULL);
+    EstimatorBase(std::string name, InteractionBase *interactor=nullptr);
 	virtual ~EstimatorBase(void);
 
 	virtual size_t Process(kipl::base::TImage<float,3> proj, std::map<std::string, std::string> parameters);
@@ -44,7 +33,7 @@ public:
 			kipl::base::TImage<float,2> & phase,
 			kipl::base::TImage<float,2> &darkfield);
 	kipl::base::TImage<float,2> ComputeVisibilityMap();
-    float ComputeVisibility(size_t *roi=NULL);
+        float ComputeVisibility(size_t *roi=nullptr);
 
 	double ExecTime() {return timer.ElapsedSeconds(); }
 protected:

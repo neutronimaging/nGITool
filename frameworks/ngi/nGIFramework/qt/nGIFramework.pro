@@ -64,16 +64,16 @@ unix:!symbian {
         QMAKE_CXXFLAGS += -fopenmp
         QMAKE_LFLAGS += -lgomp
         LIBS += -lgomp
+       INCLUDEPATH += /usr/include/libxml2
     }
 
     unix:macx {
-     #   QMAKE_MAC_SDK = macosx10.11
-        INCLUDEPATH += /opt/local/include
+        INCLUDEPATH += /opt/local/include/ /opt/local/include/libxml2
         QMAKE_LIBDIR += /opt/local/lib
     }
 
     LIBS += -lxml2 -ltiff -lcfitsio
-    INCLUDEPATH += /usr/include/libxml2
+
 
     maemo5 {
         target.path = /opt/usr/lib
@@ -106,10 +106,10 @@ else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../lib/deb
 win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Release/release -lkipl
 else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Debug/debug -lkipl
 
-INCLUDEPATH += $$PWD/../../../../../kipl/trunk/kipl/include
-DEPENDPATH += $$PWD/../../../../../kipl/trunk/kipl/include
+INCLUDEPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/include
+DEPENDPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/src
 
-INCLUDEPATH += $$PWD/../../../../../modules/trunk/ModuleConfig/include
-DEPENDPATH += $$PWD/../../../../../modules/trunk/ModuleConfig/src
+INCLUDEPATH += $$PWD/../../../../../imagingsuite/core/modules/ModuleConfig/include
+DEPENDPATH += $$PWD/../../../../../imagingsuite/core/modules/ModuleConfig/src
 
 

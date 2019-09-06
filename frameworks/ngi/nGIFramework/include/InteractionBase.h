@@ -1,18 +1,7 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2011-09-24 19:34:07 +0200 (Sa, 24 Sep 2011) $
-// $Rev: 1076 $
-// $Id: BackProjectorBase.h 1076 2011-09-24 17:34:07Z kaestner $
-//
+//<LICENSE>
 
-#ifndef __INTERACTIONBASE_H
-#define __INTERACTIONBASE_H
+#ifndef INTERACTIONBASE_H
+#define INTERACTIONBASE_H
 
 #include "nGIFramework_global.h"
 #include <string>

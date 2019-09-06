@@ -1,15 +1,4 @@
-//
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// This file is part of the recon2 library by Anders Kaestner
-// $File$
-// $Date: 2012-02-18 17:45:40 +0100 (Sat, 18 Feb 2012) $
-// $Rev: 1218 $
-// $Id: nGIEngine.cpp 1218 2012-02-18 16:45:40Z kaestner $
-//
+//<LICENSE>
 
 #include "stdafx.h"
 #include <iostream>
@@ -30,11 +19,11 @@
 nGIEngine::nGIEngine(std::string name, InteractionBase *interactor) :
 	logger(name),
 	m_ProjectionReader(interactor),
-    m_Estimator(NULL),
+    m_Estimator(nullptr),
     m_Interactor(interactor)
 {
 	logger(kipl::logging::Logger::LogMessage,"C'tor BackProjBase");
-	if (m_Interactor!=NULL) {
+    if (m_Interactor!=nullptr) {
 		logger(kipl::logging::Logger::LogMessage,"Got an interactor");
 	}
 	else {
@@ -50,7 +39,7 @@ nGIEngine::~nGIEngine(void)
 		msg.str("");
 		msg<<"Removing "<<m_PreprocList.front()->GetModule()->ModuleName()<<" from the module list ("<<m_PreprocList.size()<<")";
 		logger(kipl::logging::Logger::LogVerbose,msg.str());
-		if (m_PreprocList.front()!=NULL) {
+        if (m_PreprocList.front()!=nullptr) {
 			delete m_PreprocList.front();
 		}
 		msg.str("");

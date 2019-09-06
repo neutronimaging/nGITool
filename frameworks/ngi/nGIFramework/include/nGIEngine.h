@@ -1,18 +1,7 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2012-02-18 17:45:40 +0100 (Sat, 18 Feb 2012) $
-// $Rev: 1218 $
-// $Id: ReconEngine.h 1218 2012-02-18 16:45:40Z kaestner $
-//
+//<LICENSE>
 
-#ifndef __RECONENGINE_H
-#define __RECONENGINE_H
+#ifndef NGIENGINE_H
+#define NGIENGINE_H
 #include "nGIFramework_global.h"
 #include <list>
 #include "PreprocModuleBase.h"
@@ -31,7 +20,7 @@ protected:
 	kipl::logging::Logger logger;
 
 public:
-	nGIEngine(std::string name="nGIEngine", InteractionBase *interactor=NULL);
+    nGIEngine(std::string name="nGIEngine", InteractionBase *interactor=nullptr);
 
 	size_t AddPreProcModule(ModuleItem *module);
 	void SetEstimator(EstimatorItem *module);

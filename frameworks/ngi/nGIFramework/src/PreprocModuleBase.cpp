@@ -1,15 +1,4 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2011-12-11 11:02:54 +0100 (Sun, 11 Dec 2011) $
-// $Rev: 1147 $
-// $Id: PreprocModuleBase.cpp 1147 2011-12-11 10:02:54Z kaestner $
-//
+//<LICENSE>
 
 #include "stdafx.h"
 #include "../include/nGIConfig.h"
@@ -19,7 +8,6 @@
 #include <sstream>
 #include <cstdlib>
 #include <string.h>
-
 
 PreprocModuleBase::PreprocModuleBase(std::string name) :
 	ProcessModuleBase(name)

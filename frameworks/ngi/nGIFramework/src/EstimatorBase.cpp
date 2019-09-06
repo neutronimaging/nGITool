@@ -1,15 +1,5 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2012-01-18 14:55:51 +0100 (Wed, 18 Jan 2012) $
-// $Rev: 1186 $
-// $Id: EstimatorBase.cpp 1186 2012-01-18 13:55:51Z kaestner $
-//
+//<LICENSE>
+
 #include "stdafx.h"
 #include "../include/EstimatorBase.h"
 #include "../include/nGIException.h"
@@ -29,7 +19,7 @@ EstimatorBase::EstimatorBase(std::string name, InteractionBase *interactor) :
 	m_Interactor(interactor)
 {
 	logger(kipl::logging::Logger::LogVerbose,"C'tor EstimatorBase");
-	if (m_Interactor!=NULL) {
+    if (m_Interactor!=nullptr) {
 		logger(kipl::logging::Logger::LogVerbose,"Got an interactor");
 	}
 	else {

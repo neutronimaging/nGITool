@@ -1,15 +1,4 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2011-12-06 17:38:48 +0100 (Tue, 06 Dec 2011) $
-// $Rev: 1136 $
-// $Id: ModuleItem.cpp 1136 2011-12-06 16:38:48Z kaestner $
-//
+//<LICENSE>
 #include "stdafx.h"
 #include <string>
 #include <sstream>

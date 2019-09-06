@@ -1,15 +1,5 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2011-12-10 21:19:12 +0100 (Sat, 10 Dec 2011) $
-// $Rev: 1145 $
-// $Id: ProjectionReader.cpp 1145 2011-12-10 20:19:12Z kaestner $
-//
+//<LICENSE>
+
 #include "stdafx.h"
 
 #include <map>

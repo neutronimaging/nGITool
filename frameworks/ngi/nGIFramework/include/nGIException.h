@@ -1,9 +1,4 @@
-/*
- * DpcException.h
- *
- *  Created on: Mar 11, 2010
- *      Author: anders
- */
+//<LICENSE>
 
 #ifndef NGIEXCEPTION_H_
 #define NGIEXCEPTION_H_
@@ -18,8 +13,6 @@ public:
 	nGIException(std::string msg);
 	nGIException(std::string msg, std::string filename, size_t line);
 	virtual ~nGIException();
-
-	virtual std::string what();
 };
 
 #endif /* NGIEXCEPTION_H_ */

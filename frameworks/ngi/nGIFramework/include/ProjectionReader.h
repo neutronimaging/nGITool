@@ -1,18 +1,7 @@
-//
-// This file is part of the recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $File$
-// $Date: 2011-12-07 08:57:09 +0100 (Wed, 07 Dec 2011) $
-// $Rev: 1141 $
-// $Id: ProjectionReader.h 1141 2011-12-07 07:57:09Z kaestner $
-//
+//<LICENSE>
 
-#ifndef _PROJECTIONREADER_H_
-#define _PROJECTIONREADER_H_
+#ifndef PROJECTIONREADER_H
+#define PROJECTIONREADER_H
 
 #include "nGIFramework_global.h"
 #include <string>
@@ -29,7 +18,7 @@ class NGIFRAMEWORKSHARED_EXPORT ProjectionReader
 	kipl::logging::Logger logger;
 
 public:
-	ProjectionReader(InteractionBase *interactor=NULL);
+    ProjectionReader(InteractionBase *interactor=nullptr);
 	~ProjectionReader(void);
 
 	kipl::base::TImage<float,3> Read(nGIConfig config,std::string filemask, size_t firstindex, size_t stride,size_t index, std::map<std::string, std::string>  &parameters);
@@ -44,10 +33,10 @@ public:
 	kipl::base::TImage<float,2> Read(std::string filename, size_t const * const nCrop);
 protected:
 
-	kipl::base::TImage<float,2> ReadMAT(std::string filename,  size_t const * const nCrop=NULL);
-	kipl::base::TImage<float,2> ReadFITS(std::string filename, size_t const * const nCrop=NULL);
-	kipl::base::TImage<float,2> ReadTIFF(std::string filename, size_t const * const nCrop=NULL);
-	kipl::base::TImage<float,2> ReadPNG(std::string filename,  size_t const * const nCrop=NULL);
+    kipl::base::TImage<float,2> ReadMAT(std::string filename,  size_t const * const nCrop=nullptr);
+    kipl::base::TImage<float,2> ReadFITS(std::string filename, size_t const * const nCrop=nullptr);
+    kipl::base::TImage<float,2> ReadTIFF(std::string filename, size_t const * const nCrop=nullptr);
+    kipl::base::TImage<float,2> ReadPNG(std::string filename,  size_t const * const nCrop=nullptr);
 	bool UpdateStatus(float val, std::string msg);
 	bool Aborted();
 

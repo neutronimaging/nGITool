@@ -1,3 +1,5 @@
+//<LICENSE>
+
 #include "../include/ngigenerator.h"
 
 nGIGenerator::nGIGenerator()

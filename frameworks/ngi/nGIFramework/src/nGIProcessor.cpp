@@ -1,9 +1,5 @@
-/*
- * DpcProcessor.cpp
- *
- *  Created on: Mar 12, 2010
- *      Author: anders
- */
+//<LICENSE>
+
 #include "stdafx.h"
 #include "../include/nGIProcessor.h"
 #include "../include/nGIException.h"
