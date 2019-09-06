@@ -609,8 +609,10 @@ void nGIMainWindow::ShowResults()
     float ref_osc[2048];
 
     m_pEngine->OscillationPlot(axis,proj_osc,ref_osc);
-    ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps,QColor("blue"),QtAddons::PlotGlyph_Plus);
-    ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps,QColor("green"),QtAddons::PlotGlyph_Plus);
+    ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps,"Sample oscillation");
+    ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps,"Reference oscillation");
+//    ui->plotOscillation->setCurveData(0,axis,proj_osc,m_Config.projections.nPhaseSteps,QColor("blue"),QtAddons::PlotGlyph_Plus);
+//    ui->plotOscillation->setCurveData(1,axis,ref_osc,m_Config.projections.nPhaseSteps,QColor("green"),QtAddons::PlotGlyph_Plus);
 
     QRect rect;
     if (m_Config.projections.bUseROI==true) {
