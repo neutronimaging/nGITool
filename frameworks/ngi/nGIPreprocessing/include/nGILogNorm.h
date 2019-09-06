@@ -1,9 +1,4 @@
-/*
- * nGILogNorm.h
- *
- *  Created on: Mar 15, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
 #ifndef NGILOGNORM_H_
 #define NGILOGNORM_H_

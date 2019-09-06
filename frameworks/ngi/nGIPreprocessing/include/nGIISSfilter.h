@@ -1,12 +1,7 @@
-/*
- * ISSfilter.h
- *
- *  Created on: Aug 5, 2011
- *      Author: kaestner
- */
+//<LICENSE>
 
-#ifndef nGIISSFILTER_H_
-#define nGIISSFILTER_H_
+#ifndef nGIISSFILTER_H
+#define nGIISSFILTER_H
 #include "ngipreprocessing_global.h"
 #include <PreprocModuleBase.h>
 

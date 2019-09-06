@@ -1,17 +1,7 @@
-//
-// This file is part of the preprocessing modules recon2 library by Anders Kaestner
-// (c) 2011 Anders Kaestner
-// Distribution is only allowed with the permission of the author.
-//
-// Revision information
-// $Author: kaestner $
-// $Date: 2011-09-22 10:22:46 +0200 (Thu, 22 Sep 2011) $
-// $Rev: 1074 $
-// $Id: StdPreprocModules.h 1074 2011-09-22 08:22:46Z kaestner $
-//
+//<LICENSE>
 
-#ifndef _NGIPREPROCMODULES_H
-#define _NGIPREPROCMODULES_H
+#ifndef NGIPREPROCMODULES_H
+#define NGIPREPROCMODULES_H
 // The following ifdef block is the standard way of creating macros which make exporting
 // from a DLL simpler. All files within this DLL are compiled with the MOREDUMMIES_EXPORTS
 // symbol defined on the command line. this symbol should not be defined on any project

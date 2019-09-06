@@ -1,9 +1,4 @@
-/*
- * nGILogNorm.cpp
- *
- *  Created on: Mar 15, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
 #include "../include/nGILogNorm.h"
 #include <strings/filenames.h>

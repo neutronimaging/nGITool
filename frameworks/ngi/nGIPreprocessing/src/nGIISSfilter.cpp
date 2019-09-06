@@ -1,9 +1,4 @@
-/*
- * nGIISSfilter.cpp
- *
- *  Created on: Aug 5, 2011
- *      Author: kaestner
- */
+//<LICENSE>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -27,7 +22,7 @@ nGIISSfilter::nGIISSfilter() :
 	m_fSlope(1.0f),
 	m_fIntercept(0.0f),
 	m_bErrorCurve(false),
-	m_fErrorCurve(NULL)
+    m_fErrorCurve(nullptr)
 {
 }
 

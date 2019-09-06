@@ -1,9 +1,4 @@
-/*
- * nGISpotClean.h
- *
- *  Created on: Mar 15, 2012
- *      Author: kaestner
- */
+//<LICENSE>
 
 #ifndef NGISPOTCLEAN_H_
 #define NGISPOTCLEAN_H_
