@@ -33,83 +33,11 @@ int main(int argc, char *argv[])
     std::ostringstream msg;
     QApplication app(argc, argv);
 
-    std::string homedir = QDir::homePath().toStdString();
+    if (app.arguments().size()==1)
+        return RunGUI(&app);
+    else
+        return RunOffline(&app);
 
-    kipl::strings::filenames::CheckPathSlashes(homedir,true);
-
-    std::string application_path=app.applicationDirPath().toStdString();
-
-    kipl::strings::filenames::CheckPathSlashes(application_path,true);
-
-    kipl::utilities::NodeLocker license(homedir);
-//#ifndef __APPLE__
-#ifndef NEVER
-
-    int res;
-    do {
-        bool licensefail=false;
-        std::string errormsg;
-        try {
-            std::list<std::string> liclist;
-            liclist.push_back(homedir+".imagingtools/license_ngitool.dat");
-            liclist.push_back(application_path+"license_ngitool.dat");
-            liclist.push_back(application_path+"license.dat");
-            liclist.push_back(homedir+"license_ngitool.dat");
-
-            license.Initialize(liclist,"ngitool");
-        }
-        catch (kipl::base::KiplException &e) {
-            errormsg=e.what();
-            licensefail=true;
-        }
-
-        if (licensefail || !license.AccessGranted()) {
-            msg.str("");
-            if (licensefail)
-                msg<<"Could not locate the license file\n"<<errormsg<<"\n";
-            else
-                msg<<"nGITool is not registered on this computer\n";
-
-            msg<<"\nPlease activate nGITool by entering the registration information.\n";
-            msg<<"\nActivation code: "<<*license.GetNodeString().begin();
-            logger(kipl::logging::Logger::LogError,msg.str());
-            QMessageBox mbox;
-
-            QPushButton *registerbutton=mbox.addButton("Register",QMessageBox::AcceptRole);
-            mbox.addButton(QMessageBox::Save);
-            mbox.addButton(QMessageBox::Abort);
-            mbox.setText(QString::fromStdString(msg.str()));
-            mbox.setWindowTitle("License error");
-            mbox.setDetailedText(QString::fromStdString(license.GetLockerMessage()));
-            res=mbox.exec();
-            std::cout<<"Res ="<<res<<std::endl;
-            if (res==QMessageBox::Save) {
-                QDir dir;
-                QString fname=QFileDialog::getOpenFileName(&mbox,"Select the license file",dir.homePath(),"*.dat");
-
-                if (!fname.isEmpty()) {
-                    if (!dir.exists(dir.homePath()+"/.imagingtools")) {
-                        dir.mkdir(QDir::homePath()+"/.imagingtools");
-                    }
-                    std::cout<<(dir.homePath()+"/.imagingtools/license_ngitool.dat").toStdString()<<std::endl;
-                    QFile::copy(fname,dir.homePath()+"/.imagingtools/license_ngitool.dat");
-                }
-
-            }
-            if (mbox.clickedButton() == registerbutton) {
-                logger(kipl::logging::Logger::LogMessage,"Opening default web browser.");
-                QDesktopServices::openUrl(QUrl("http://www.imagingscience.ch/usermanager/index.php?nodekey="+QString::fromStdString(*license.GetNodeString().begin())));
-            }
-        }
-    } while (!license.AccessGranted() && res!=QMessageBox::Abort);
-#endif
-
-    if (license.AccessGranted()) {
-        if (app.arguments().size()==1)
-            return RunGUI(&app);
-        else
-            return RunOffline(&app);
-    }
     return 0;
 }
 
@@ -173,8 +101,8 @@ int RunOffline(QApplication *app)
                   nGIConfig config;
                   config.LoadConfigFile(args[2].toStdString(),"ngi");
                   config.process.bSerialize=true;
-                  nGIEngine *pEngine=factory.BuildEngine(config,NULL);
-                  if (pEngine!=NULL) {
+                  nGIEngine *pEngine=factory.BuildEngine(config,nullptr);
+                  if (pEngine!=nullptr) {
                           logger(kipl::logging::Logger::LogMessage, "Starting processing");
                           pEngine->Run();
                           logger(kipl::logging::Logger::LogMessage, "Processing done");

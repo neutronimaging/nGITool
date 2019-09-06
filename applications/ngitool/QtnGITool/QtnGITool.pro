@@ -4,14 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core widgets printsupport
+QT       += core widgets printsupport charts concurrent
 
 TARGET = QtnGITool
 TEMPLATE = app
 CONFIG += c++11
 
-CONFIG(release, debug|release): DESTDIR = $$PWD/../../../../../Applications
-else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../../../Applications/debug
+CONFIG(release, debug|release): DESTDIR = $$PWD/../../../../Applications
+else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../../Applications/debug
 
 SOURCES += main.cpp\
         ngimainwindow.cpp \
