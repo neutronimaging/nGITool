@@ -6,7 +6,7 @@
 
 QT       += core widgets printsupport charts concurrent
 
-TARGET = QtnGITool
+TARGET = nGITool
 TEMPLATE = app
 CONFIG += c++11
 
