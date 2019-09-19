@@ -1,0 +1,1935 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>nGIMainWindow</class>
+ <widget class="QMainWindow" name="nGIMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1457</width>
+    <height>1059</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>nGITool</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../Resources/ngi_icon.icns</normaloff>../Resources/ngi_icon.icns</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>800</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Project information</string>
+           </attribute>
+           <widget class="QLabel" name="label_4">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>30</y>
+              <width>62</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Project</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_5">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>60</y>
+              <width>62</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Operator</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_6">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>90</y>
+              <width>71</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Instrument</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_7">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>120</y>
+              <width>62</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Sample</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_8">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>160</y>
+              <width>62</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Comment</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="editProjectName">
+            <property name="geometry">
+             <rect>
+              <x>110</x>
+              <y>30</y>
+              <width>251</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="editSample">
+            <property name="geometry">
+             <rect>
+              <x>110</x>
+              <y>120</y>
+              <width>251</width>
+              <height>22</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="editInstrument">
+            <property name="geometry">
+             <rect>
+              <x>110</x>
+              <y>90</y>
+              <width>251</width>
+              <height>22</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="editOperator">
+            <property name="geometry">
+             <rect>
+              <x>110</x>
+              <y>60</y>
+              <width>251</width>
+              <height>22</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="textComment">
+            <property name="geometry">
+             <rect>
+              <x>110</x>
+              <y>150</y>
+              <width>251</width>
+              <height>251</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>Data</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QGroupBox" name="groupBox_2">
+              <property name="title">
+               <string>Data description</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <item>
+                <widget class="QToolBox" name="toolBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>420</height>
+                  </size>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
+                 </property>
+                 <property name="currentIndex">
+                  <number>0</number>
+                 </property>
+                 <widget class="QWidget" name="page">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>746</width>
+                    <height>327</height>
+                   </rect>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <attribute name="label">
+                   <string>Data files</string>
+                  </attribute>
+                  <layout class="QVBoxLayout" name="verticalLayout_19">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_17">
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_21">
+                       <item>
+                        <widget class="QPushButton" name="buttonBrowseProjection">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>125</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>Projections</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="editProjectionMask">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>320</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="cursorPosition">
+                          <number>0</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_4">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_12">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>Count</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinImageCount">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Number of phase step sets to process</string>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_23">
+                       <item>
+                        <spacer name="horizontalSpacer">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>550</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_14">
+                         <property name="text">
+                          <string>First index</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinProjectionFirst">
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Index of the first raw data file</string>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_13">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>Stride</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinProjectionStride">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Index distance between two adjacent phase steps</string>
+                         </property>
+                         <property name="minimum">
+                          <number>1</number>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_11">
+                         <property name="text">
+                          <string>Files per step</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spin_FilesPerStep">
+                         <property name="toolTip">
+                          <string>[not implemented] Number of files to accumulate per phase step.</string>
+                         </property>
+                         <property name="minimum">
+                          <number>1</number>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_24">
+                       <item>
+                        <widget class="QPushButton" name="buttonReferenceBrowse">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>125</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>References</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="editReferenceMask">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>320</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_5">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_15">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>First index</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinReferenceFirst">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Index of the first open beam file</string>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_16">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>Stride</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinReferenceStride">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Index distance between two adjacent phase steps</string>
+                         </property>
+                         <property name="minimum">
+                          <number>1</number>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_25">
+                       <item>
+                        <widget class="QPushButton" name="buttonDarkBrowse">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>125</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>Dark current</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="editDarkMask">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>320</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_2">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_18">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>First index</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinDarkFirst">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>First file index of te dark current files</string>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_17">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>50</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string>Count</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinDarkCount">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>60</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="toolTip">
+                          <string>Number of dark current files</string>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_24">
+                       <item>
+                        <layout class="QHBoxLayout" name="horizontalLayout_12">
+                         <item>
+                          <widget class="QLabel" name="label_37">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>Number of phase steps</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QSpinBox" name="spinPhaseSteps">
+                           <property name="toolTip">
+                            <string>Number of phase steps to complete a phase stepping data set</string>
+                           </property>
+                           <property name="maximum">
+                            <number>256</number>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_15">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QHBoxLayout" name="horizontalLayout_30">
+                         <item>
+                          <widget class="QLabel" name="label_38">
+                           <property name="text">
+                            <string>Number of periods in the phase scan</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spinPeriods">
+                           <property name="toolTip">
+                            <string>Number of phase step periods in the data set. This is usually an integer but floating point values are valid</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_16">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <widget class="QCheckBox" name="checkCompletePeriod">
+                         <property name="toolTip">
+                          <string>Complete period means that the first and the last image in the data set represent the same condition</string>
+                         </property>
+                         <property name="text">
+                          <string>Complete period</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_27"/>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_26">
+                       <item>
+                        <widget class="QPushButton" name="buttonDestinationBrowse">
+                         <property name="text">
+                          <string>Destination</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="editDestinationPath">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>400</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="editDestinationMask">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>150</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_6">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                 <widget class="QWidget" name="page_3">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>516</width>
+                    <height>160</height>
+                   </rect>
+                  </property>
+                  <attribute name="label">
+                   <string>Region of interest</string>
+                  </attribute>
+                  <layout class="QVBoxLayout" name="verticalLayout_23">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_16">
+                     <item>
+                      <widget class="QCheckBox" name="checkCropImages">
+                       <property name="font">
+                        <font>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Crop the images</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="layoutImageCropParameters">
+                       <item>
+                        <widget class="QLabel" name="labelCrop0">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>x0</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinCrop0">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelCrop1">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>y0</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinCrop1">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelCrop2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>x1</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinCrop2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelCrop3">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>y1</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinCrop3">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="buttonGetCropROI">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="toolTip">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mark the crop region in the projection viewer and click here to transfer the region.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                         <property name="text">
+                          <string>Get ROI</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_13">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="checkDoseRegion">
+                       <property name="font">
+                        <font>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Region for dose correction</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_11">
+                       <item>
+                        <widget class="QLabel" name="labelDose0">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>x0</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinDose0">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelDose1">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>y0</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinDose1">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelDose2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>x1</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinDose2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelDose3">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="text">
+                          <string>y1</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spinDose3">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximum">
+                          <number>10000</number>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="buttonGetDoseROI">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="toolTip">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mark the dose correction region in the projection viewer and click here to transfer the region. The dose region does not have to be within the crop region.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                         <property name="text">
+                          <string>Get ROI</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_14">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer_4">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="title">
+               <string>Information to compute</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_28">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_20">
+                   <item>
+                    <widget class="QCheckBox" name="checkTransmission">
+                     <property name="font">
+                      <font>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Transmission</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_13">
+                     <item>
+                      <widget class="QCheckBox" name="checkClampTransmission">
+                       <property name="text">
+                        <string>Clamp</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="labelClampTransLow">
+                       <property name="text">
+                        <string>Low</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QDoubleSpinBox" name="dspinClampTransLow"/>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="labelClampTransHigh">
+                       <property name="text">
+                        <string>High</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QDoubleSpinBox" name="dspinClampTransHigh"/>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_2">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_21">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_15">
+                     <item>
+                      <widget class="QCheckBox" name="checkDPC">
+                       <property name="font">
+                        <font>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Differential phase</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_22">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_8">
+                     <item>
+                      <widget class="QCheckBox" name="checkDarkField">
+                       <property name="font">
+                        <font>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Dark field</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_14">
+                       <item>
+                        <widget class="QCheckBox" name="checkClampDFI">
+                         <property name="text">
+                          <string>Clamp</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelClampDFILow">
+                         <property name="text">
+                          <string>Low</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="dspinClampDFILow"/>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="labelClampDFIHigh">
+                         <property name="text">
+                          <string>High</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QDoubleSpinBox" name="dspinClampDFIHigh"/>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <property name="topMargin">
+               <number>3</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="buttonCreateReport">
+                <property name="text">
+                 <string>Create report</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="buttonProcessAll">
+                <property name="text">
+                 <string>Process all</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="buttonPreview">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Preview</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkPreviewCropped">
+                <property name="text">
+                 <string>Preview cropped</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_5">
+           <attribute name="title">
+            <string>Processing</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_14">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_13">
+              <item>
+               <widget class="QLabel" name="label_9">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Preprocessing modules</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ModuleChainConfiguratorWidget" name="ModuleConfPreproc" native="true"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_10">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Estimator module</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="SingleModuleConfiguratorWidget" name="ModuleConfEstimator" native="true"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_6">
+           <attribute name="title">
+            <string>Messages</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="QtAddons::QtLogViewer" name="logger" native="true"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="currentIndex">
+           <number>2</number>
+          </property>
+          <widget class="QWidget" name="tabVisibility">
+           <attribute name="title">
+            <string>Visibility</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_26">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_18">
+              <item>
+               <widget class="QtAddons::ImageViewerWidget" name="imageVisibility" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>400</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QLabel" name="label_22">
+                  <property name="text">
+                   <string>Window</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_23">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>x0</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinVisROI0">
+                  <property name="maximum">
+                   <number>10000</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_24">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>y0</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinVisROI1">
+                  <property name="maximum">
+                   <number>10000</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_19">
+                  <property name="text">
+                   <string>x1</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinVisROI2">
+                  <property name="maximum">
+                   <number>10000</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_20">
+                  <property name="text">
+                   <string>y1</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spinVisROI3">
+                  <property name="maximum">
+                   <number>10000</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="buttonGetVisROI">
+                  <property name="text">
+                   <string>Get ROI</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelVisibility">
+                <property name="text">
+                 <string>Visibility unknown</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tabProjections">
+           <attribute name="title">
+            <string>Projections</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_28">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_27">
+              <item>
+               <widget class="QtAddons::ImageViewerWidget" name="imageProjections" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>250</width>
+                  <height>400</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QSlider" name="sliderProjections">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tabOscillation">
+           <attribute name="title">
+            <string>Oscillation</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_29">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QtAddons::PlotWidget" name="plotOscillation" native="true"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Transmission</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QtAddons::ImageViewerWidget" name="imageTransmission" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>250</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Diffferential phase contrast</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QtAddons::ImageViewerWidget" name="imageDPC" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>250</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Dark field</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QtAddons::ImageViewerWidget" name="imageDFI" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>250</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1457</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="actionPrint"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="text">
+    <string>Print</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QtAddons::ImageViewerWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">imageviewerwidget.h</header>
+   <container>1</container>
+   <slots>
+    <signal>levelsChanged(float,float)</signal>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>ModuleChainConfiguratorWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">modulechainconfiguratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QtAddons::QtLogViewer</class>
+   <extends>QWidget</extends>
+   <header>qtlogviewer.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SingleModuleConfiguratorWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">singlemoduleconfiguratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QtAddons::PlotWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">plotwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

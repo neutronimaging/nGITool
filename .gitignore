@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Prerequisites
 *.d
 
@@ -30,3 +31,11 @@
 *.exe
 *.out
 *.app
+=======
+.DS_Store
+.DS-Store
+*.user
+build*
+Build*
+*.pdf
+>>>>>>> e89302bbc7ca38fc0a515ed2b48d95e78768c5b5
