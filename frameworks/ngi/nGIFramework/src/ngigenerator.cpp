@@ -13,7 +13,7 @@ kipl::base::TImage<float,3> nGIGenerator::GeneratePhaseSteps(kipl::base::TImage<
                                                 int periods,
                                                 bool full_osc)
 {
-    size_t dims[3]={size_t(bias.Size(0)), size_t(bias.Size(1)),size_t(steps)};
+    std::vector<size_t> dims={size_t(bias.Size(0)), size_t(bias.Size(1)),size_t(steps)};
     kipl::base::TImage<float,3> phasesteps(dims);
 
     return phasesteps;

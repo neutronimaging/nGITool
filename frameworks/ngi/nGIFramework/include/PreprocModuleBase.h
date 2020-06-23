@@ -17,7 +17,7 @@
 class NGIFRAMEWORKSHARED_EXPORT PreprocModuleBase : public ProcessModuleBase
 {
 public:
-	PreprocModuleBase(std::string name="PreprocModuleBase");
+    PreprocModuleBase(std::string name="PreprocModuleBase");
 	virtual int Configure(nGIConfig config, std::map<std::string, std::string> parameters)=0;
 	virtual bool SetROI(size_t *roi) {return false;}
 	virtual ~PreprocModuleBase(void);

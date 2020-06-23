@@ -23,20 +23,19 @@ public:
 
 	kipl::base::TImage<float,3> Read(nGIConfig config,std::string filemask, size_t firstindex, size_t stride,size_t index, std::map<std::string, std::string>  &parameters);
 
-	void GetImageSize(std::string path, std::string filemask, size_t number, size_t *dims);
-	void GetImageSize(std::string filename, size_t * dims);
-	pair<float,float> GetProjectionDose(std::string filename, size_t const * const nDoseROI);
-	float GetProjectionDose(std::string path, std::string filemask, size_t number, size_t const * const nCrop);
+    std::vector<size_t> GetImageSize(const std::string & path, const std::string & filemask, size_t number);
+    std::vector<size_t> GetImageSize(std::string filename);
+    pair<float,float> GetProjectionDose(std::string filename, const std::vector<size_t> &nDoseROI);
+    float GetProjectionDose(std::string path, std::string filemask, size_t number, std::vector<size_t> & nCrop);
 
-	void Initialize() {timer.Reset();}
-	double ExecTime() {return timer.ElapsedSeconds();}
-	kipl::base::TImage<float,2> Read(std::string filename, size_t const * const nCrop);
+    void Initialize() {timer.reset();}
+    double ExecTime() {return timer.cumulativeTime();}
+    kipl::base::TImage<float,2> Read(std::string filename, const std::vector<size_t> &nCrop);
 protected:
 
-    kipl::base::TImage<float,2> ReadMAT(std::string filename,  size_t const * const nCrop=nullptr);
-    kipl::base::TImage<float,2> ReadFITS(std::string filename, size_t const * const nCrop=nullptr);
-    kipl::base::TImage<float,2> ReadTIFF(std::string filename, size_t const * const nCrop=nullptr);
-    kipl::base::TImage<float,2> ReadPNG(std::string filename,  size_t const * const nCrop=nullptr);
+    kipl::base::TImage<float,2> ReadFITS(std::string filename, const std::vector<size_t> &nCrop={});
+    kipl::base::TImage<float,2> ReadTIFF(std::string filename, const std::vector<size_t> &nCrop={});
+    kipl::base::TImage<float,2> ReadPNG(std::string filename,  const std::vector<size_t> &nCrop={});
 	bool UpdateStatus(float val, std::string msg);
 	bool Aborted();
 

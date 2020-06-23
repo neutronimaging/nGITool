@@ -76,10 +76,10 @@ int nGIBLUEEstimator::ProcessCore(kipl::base::TImage<float,3> proj,
 
 void nGIBLUEEstimator::ComputeHarmonicImage(kipl::base::TImage<float,3> img, kipl::base::TImage<std::complex<float>,2> &H0, kipl::base::TImage<std::complex<float>,2> &H1)
 {
-	size_t dims[2]={img.Size(1),img.Size(2)};
+    std::vector<size_t> dims={img.Size(1),img.Size(2)};
 
-	H0.Resize(dims);
-	H1.Resize(dims);
+    H0.resize(dims);
+    H1.resize(dims);
 	ptrdiff_t N=static_cast<ptrdiff_t>(H0.Size());
 	float *pImg=img.GetDataPtr();
 	float *pVar=m_variance.GetDataPtr();
@@ -89,7 +89,8 @@ void nGIBLUEEstimator::ComputeHarmonicImage(kipl::base::TImage<float,3> img, kip
 
 	ptrdiff_t i=0;
 	#pragma omp parallel for
-	for (i=0; i<N; i++) {
+    for (i=0; i<N; i++)
+    {
 		blue(pImg+i*step,pVar+i*step,step,pH0[i],pH1[i]);
 	}
 }
@@ -99,7 +100,8 @@ void nGIBLUEEstimator::blue(float *data, float *var, int N, complex<float> &H0, 
 	TNT::Array2D<float> HC=m_H.copy();
 	TNT::Array2D<float> x(N,1,data);
 
-	for (int i=0; i<N; i++) {
+    for (int i=0; i<N; i++)
+    {
 		for (int j=0; j<3; j++)
 			HC[i][j]*=var[i];
 
@@ -122,16 +124,13 @@ void nGIBLUEEstimator::blue(float *data, float *var, int N, complex<float> &H0, 
 
 kipl::base::TImage<float,2> nGIBLUEEstimator::BoxFilter(kipl::base::TImage<float,2> img, size_t dim)
 {
-	size_t dimsU[]={dim,1};
-	size_t dimsV[]={1,dim};
+    vector<size_t> dimsU={dim,1};
+    vector<size_t> dimsV={1,dim};
 	size_t N=dim*dim;
-	float *fKernel=new float[N];
-	for (size_t i=0; i<N; i++)
-		fKernel[i]=1.0f;
+    std::vector<float> fKernel(N,1.0f);
 
 	kipl::filters::TFilter<float,2> filterU(fKernel,dimsU);
 	kipl::filters::TFilter<float,2> filterV(fKernel,dimsV);
-    delete [] fKernel; // Dispose of consumed kernel
 
 	kipl::base::TImage<float,2> imgU=filterU(img, kipl::filters::FilterBase::EdgeMirror);
 
@@ -140,11 +139,12 @@ kipl::base::TImage<float,2> nGIBLUEEstimator::BoxFilter(kipl::base::TImage<float
 
 void nGIBLUEEstimator::ComputeVarianceImages(kipl::base::TImage<float,3> img)
 {
-	kipl::base::TImage<float,2> slice(img.Dims());
-	m_variance.Resize(img.Dims());
+    kipl::base::TImage<float,2> slice(img.dims());
+    m_variance.resize(img.dims());
 	// Filter image to compute Variance
 	int N=static_cast<int>(img.Size(2));
-	for (int i=0; i<N; i++) {
+    for (int i=0; i<N; i++)
+    {
 		memcpy(slice.GetDataPtr(),img.GetLinePtr(0,i), slice.Size()*sizeof(float));
 
 		kipl::base::TImage<float,2> img2=kipl::math::sqr(slice);
@@ -164,7 +164,8 @@ void nGIBLUEEstimator::ComputeVarianceImages(kipl::base::TImage<float,3> img)
 		ptrdiff_t j=0;
 		ptrdiff_t N2=static_cast<ptrdiff_t>(img2.Size());
 		#pragma omp parallel for
-		for (j=0; j<N2; j++) {
+        for (j=0; j<N2; j++)
+        {
 			//pRes[j]=sqrt(M1*(pS2[j]-M*pM[j]*pM[j])); // standard deviation
 			pRes[j]=M*(pS2[j]-M*pM[j]*pM[j]);        // Variance
 			pRes[j]= pRes[j] !=0.0f ? 1/pRes[j] :0.0f;
@@ -182,7 +183,8 @@ int nGIBLUEEstimator::PrepareKernel(float fHarmonic, int N, bool bCompletePeriod
 	TNT::Array2D<float> mat(N,3);
 	TNT::Array2D<float> mat2(3,N);
 	float w= 2.0f*fPi*fHarmonic/static_cast<float>(N - 1);
-	for (int i=0; i<N; i++) {
+    for (int i=0; i<N; i++)
+    {
 		mat2[0][i]=mat[i][0]=1.0f;
 		mat2[1][i]=mat[i][1]=cos(i*w);
 		mat2[2][i]=mat[i][2]=sin(i*w);

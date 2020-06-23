@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 #include <base/timage.h>
-#include <io/io_matlab.h>
 #include <io/io_tiff.h>
 #include <io/io_fits.h>
 #include <math/median.h>
@@ -26,19 +25,18 @@ ProjectionReader::~ProjectionReader(void)
 
 }
 
-void ProjectionReader::GetImageSize(std::string path,
-								   std::string filemask,
-								   size_t number,
-								   size_t * dims)
+std::vector<size_t> ProjectionReader::GetImageSize(const string &path,
+                                   const string &filemask,
+                                   size_t number)
 {
 	std::string filename;
 	std::string ext;
 	kipl::strings::filenames::MakeFileName(path+filemask,number,filename,ext,'#','0');
 
-	return GetImageSize(filename, dims);
+    return GetImageSize(filename);
 }
 
-void ProjectionReader::GetImageSize(std::string filename, size_t *dims)
+std::vector<size_t> ProjectionReader::GetImageSize(std::string filename)
 {
 //	throw nGIException("GetImageSize is not implemented",__FILE__,__LINE__);
 
@@ -54,14 +52,14 @@ void ProjectionReader::GetImageSize(std::string filename, size_t *dims)
 
 	size_t extpos=filename.find_last_of(".");
 	std::stringstream msg;
-
+    std::vector<size_t> dims;
 	try {
 		if (extpos!=filename.npos) {
 			std::string ext=filename.substr(extpos);
 			switch (extensions[ext]) {
-			case 0  : kipl::io::GetMATDims(filename.c_str(),dims);  break;
-			case 1  : kipl::io::GetFITSDims(filename.c_str(),dims); break;
-			case 2  : kipl::io::GetTIFFDims(filename.c_str(),dims);  break;
+            case 0  : throw nGIException("Unknown file type",__FILE__, __LINE__); break;
+            case 1  : dims = kipl::io::GetFITSDims(filename); break;
+            case 2  : dims = kipl::io::GetTIFFDims(filename);  break;
 			//case 3  : return GetImageSizePNG(filename.c_str(),dims);  break;
 
 			default : throw nGIException("Unknown file type",__FILE__, __LINE__); break;
@@ -80,19 +78,11 @@ void ProjectionReader::GetImageSize(std::string filename, size_t *dims)
 
 }
 
-
-kipl::base::TImage<float,2> ProjectionReader::ReadMAT(std::string filename, size_t const * const nCrop)
-{
-	kipl::base::TImage<float,2> img;
-	kipl::io::ReadMAT(img,filename.c_str(),nCrop);
-	return img;
-}
-
-kipl::base::TImage<float,2> ProjectionReader::ReadFITS(std::string filename, size_t const * const nCrop)
+kipl::base::TImage<float,2> ProjectionReader::ReadFITS(std::string filename, const std::vector<size_t> & nCrop)
 {
 	kipl::base::TImage<float,2> img;
 	try {
-		kipl::io::ReadFITS(img,filename.c_str(),nCrop);
+        kipl::io::ReadFITS(img,filename,nCrop);
 	}
 	catch (std::exception &e) {
 		throw nGIException(e.what(), __FILE__,__LINE__);
@@ -107,21 +97,21 @@ kipl::base::TImage<float,2> ProjectionReader::ReadFITS(std::string filename, siz
 	return img;
 }
 
-kipl::base::TImage<float,2> ProjectionReader::ReadTIFF(std::string filename, size_t const * const nCrop)
+kipl::base::TImage<float,2> ProjectionReader::ReadTIFF(std::string filename, const std::vector<size_t> &nCrop)
 {
 	kipl::base::TImage<float,2> img;
-	kipl::io::ReadTIFF(img,filename.c_str(),nCrop);
+    kipl::io::ReadTIFF(img,filename,nCrop,0UL);
 	
 	return img;
 }
 
-kipl::base::TImage<float,2> ProjectionReader::ReadPNG(std::string filename, size_t const * const nCrop)
+kipl::base::TImage<float,2> ProjectionReader::ReadPNG(std::string filename, const std::vector<size_t> & nCrop)
 {
 	throw nGIException("ReadPNG is not implemented",__FILE__, __LINE__);
 	return kipl::base::TImage<float,2>();
 }
 
-pair<float,float> ProjectionReader::GetProjectionDose(std::string filename, size_t const * const nDoseROI)
+pair<float,float> ProjectionReader::GetProjectionDose(std::string filename, const std::vector<size_t> & nDoseROI)
 {
 	kipl::base::TImage<float,2> img;
 
@@ -161,7 +151,7 @@ pair<float,float> ProjectionReader::GetProjectionDose(std::string filename, size
 	return dose;
 }
 
-float ProjectionReader::GetProjectionDose(std::string path, std::string filemask, size_t number, size_t const * const nDoseROI)
+float ProjectionReader::GetProjectionDose(std::string path, std::string filemask, size_t number, std::vector<size_t> &nDoseROI)
 {
 	std::string filename;
 	std::string ext;
@@ -175,7 +165,7 @@ kipl::base::TImage<float,3> ProjectionReader::Read(nGIConfig config,std::string 
 {
 	kipl::base::TImage<float,2> proj;
 
-	size_t dims[3];
+    std::vector<size_t> dims(3,0UL);
 
 	kipl::base::TImage<float,3> img;
 
@@ -200,13 +190,13 @@ kipl::base::TImage<float,3> ProjectionReader::Read(nGIConfig config,std::string 
 			proj = Read(filename,config.projections.nROI);
 		}
 		else {
-			proj = Read(filename,NULL);
+            proj = Read(filename,{});
 		}
 		if (i==0) {
 			dims[0]=proj.Size(0);
 			dims[1]=proj.Size(1);
 			dims[2]=config.projections.nPhaseSteps;
-			img.Resize(dims);
+            img.resize(dims);
 		}
 		float *pProj=proj.GetDataPtr();
 		float *pImg=img.GetLinePtr(0,i);
@@ -219,7 +209,7 @@ kipl::base::TImage<float,3> ProjectionReader::Read(nGIConfig config,std::string 
 	return img;
 }
 
-kipl::base::TImage<float,2> ProjectionReader::Read(std::string filename, size_t const * const nCrop)
+kipl::base::TImage<float,2> ProjectionReader::Read(std::string filename, const std::vector<size_t> & nCrop)
 {
 	std::map<std::string, size_t> extensions;
 	extensions[".mat"]=0;
@@ -237,7 +227,7 @@ kipl::base::TImage<float,2> ProjectionReader::Read(std::string filename, size_t 
 	if (extpos!=filename.npos) {
 		std::string ext=filename.substr(extpos);
 		switch (extensions[ext]) {
-		case 0  : return ReadMAT(filename,nCrop);  break;
+        case 0  : throw nGIException("Unknown file type",__FILE__, __LINE__); break;
 		case 1  : return ReadFITS(filename,nCrop); break;
 		case 2  : return ReadTIFF(filename,nCrop);  break;
 		case 3  : return ReadPNG(filename,nCrop);  break;

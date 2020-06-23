@@ -90,14 +90,14 @@ int nGIStandardEstimator::ProcessCore(kipl::base::TImage<float,3> proj,
 
 kipl::base::TImage<complex<float> ,2> nGIStandardEstimator::ComputeHarmonicImage(kipl::base::TImage<float,3> imagestack)
 {
-	size_t const * const dims=imagestack.Dims();
+    auto dims=imagestack.dims();
 
 	std::ostringstream msg;
 	msg<<"Stack size="<<imagestack;
 	logger(kipl::logging::Logger::LogMessage,msg.str());
 
 	// Todo Transpose is needed
-	kipl::base::TImage<complex<float>, 2> result(dims+1);
+    kipl::base::TImage<complex<float>, 2> result({dims[1],dims[2]});
 	ptrdiff_t N=static_cast<ptrdiff_t>(result.Size());
 	#pragma omp parallel
 	{

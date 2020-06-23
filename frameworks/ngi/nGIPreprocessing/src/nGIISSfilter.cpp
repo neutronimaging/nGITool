@@ -73,14 +73,18 @@ int nGIISSfilter::ProcessCore(kipl::base::TImage<float,2> & img, std::map<std::s
 	ScaleData(img);
 	filter.Process(img,m_fTau,m_fLambda,m_fAlpha,m_nN);
 	RescaleData(img);
-	if (m_bErrorCurve) {
-		if (m_fErrorCurve!=NULL)
+
+    if (m_bErrorCurve)
+    {
+        if (m_fErrorCurve!=nullptr)
 			delete [] m_fErrorCurve;
+
 		m_fErrorCurve=new float[m_nN];
 		for (int i=0; i<m_nN; i++)
 			m_fErrorCurve[i]=static_cast<float>(filter.ErrorCurve()[i]);
 
 	}
+
 	return 0;
 }
 
@@ -89,12 +93,13 @@ int nGIISSfilter::ProcessCore(kipl::base::TImage<float,3> & img, std::map<std::s
     #pragma omp parallel
 	{
 		akipl::scalespace::ISSfilter<float> filter;
-
-		kipl::base::TImage<float,2> slice(img.Dims());
+        auto dims = img.dims();
+        kipl::base::TImage<float,2> slice({dims[0],dims[1]});
 
 		int N=static_cast<int>(img.Size(2));
 		#pragma omp for
-		for (int i=0; i<N; i++) {
+        for (int i=0; i<N; i++)
+        {
 			memcpy(slice.GetDataPtr(),img.GetLinePtr(0,i),sizeof(float)*slice.Size());
 			ScaleData(slice);
 			filter.Process(slice,m_fTau,m_fLambda,m_fAlpha,m_nN);

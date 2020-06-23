@@ -9,7 +9,8 @@
 #include <base/KiplException.h>
 #include <strings/string2array.h>
 
-nGILogNorm::nGILogNorm() {
+nGILogNorm::nGILogNorm() : m_Config("")
+{
 }
 
 nGILogNorm::~nGILogNorm() {
@@ -67,7 +68,10 @@ void nGILogNorm::LoadReferenceImages()
 {
 	ostringstream msg;
 	kipl::base::TImage<float,2> img;
-	size_t *roi=m_Config.projections.bUseROI ? m_Config.projections.nROI : NULL;
+
+    std::vector<size_t> roi = {} ;
+    if (m_Config.projections.bUseROI)
+        roi = m_Config.projections.nROI;
 
 	std::map<std::string, std::string>  parameters;
 	std::string fname;

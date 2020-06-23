@@ -8,7 +8,6 @@
 #include <strings/filenames.h>
 #include <strings/miscstring.h>
 #include <io/io_fits.h>
-#include <io/io_matlab.h>
 #include <io/io_tiff.h>
 #include <math/mathconstants.h>
 #include <math/compleximage.h>
@@ -23,11 +22,12 @@
 #include <cstring>
 
 DpcProcessor::DpcProcessor(size_t lut_size) :
-logger("nGI Processor"),
-nLUTsize(lut_size),
-sin_LUT(new float[nLUTsize]),
-cos_LUT(new float[nLUTsize]),
-fReferenceDose(1.0f)
+    mConfig(""),
+    logger("nGI Processor"),
+    nLUTsize(lut_size),
+    sin_LUT(new float[nLUTsize]),
+    cos_LUT(new float[nLUTsize]),
+    fReferenceDose(1.0f)
 {
 	memset(sin_LUT,0,sizeof(float)*nLUTsize);
 	memset(cos_LUT,0,sizeof(float)*nLUTsize);
@@ -52,7 +52,8 @@ int DpcProcessor::Initialize(nGIConfig config)
 
 	LoadDark();
 
-    if (mConfig.projections.bUseNorm==true) {
+    if (mConfig.projections.bUseNorm==true)
+    {
         std::string path;
         std::string mask;
         std::vector<std::string> ext;
@@ -107,7 +108,7 @@ void DpcProcessor::LoadDark()
 	std::string filename;
 	std::string ext;
 	kipl::base::TImage<float,2> img;
-	size_t *roi=NULL;
+    std::vector<size_t> roi={};
 	if (mConfig.projections.bUseROI==true)
 		roi=mConfig.projections.nROI;
 
@@ -115,8 +116,10 @@ void DpcProcessor::LoadDark()
     std::string filemask=mConfig.projections.sDarkMask;
 	ostringstream msg;
 
-	try {
-		for (size_t i=0; i<mConfig.projections.nDarkCnt; i++) {
+    try
+    {
+        for (size_t i=0; i<mConfig.projections.nDarkCnt; i++)
+        {
 	//		img=reader.Read(mConfig.projections.sDarkPath,mConfig.projections.sDarkMask,mConfig.projections.nDarkFirstIndex+i,roi);
 			
 			if (i==0)
@@ -125,15 +128,18 @@ void DpcProcessor::LoadDark()
 				dark+=img;
 		}
 	}
-	catch (kipl::base::KiplException &e) {
+    catch (kipl::base::KiplException &e)
+    {
 		msg<<"A kipl exception was thrown during dark file reading\n"<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
-	catch (std::exception &e) {
+    catch (std::exception &e)
+    {
 		msg<<"An STL exception was thrown during dark file reading\n"<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
-	catch (...) {
+    catch (...)
+    {
 		msg<<"An unknown exception was thrown during dark file reading\n";
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
@@ -143,19 +149,22 @@ void DpcProcessor::LoadDark()
 
 void DpcProcessor::ComputeOscillationPlot(kipl::base::TImage<float,3> stack)
 {
-	size_t const * const dims=stack.Dims();
+    auto dims=stack.dims();
 
 	size_t start_x = (dims[0]>>1)-5;
 	size_t end_x   = (dims[0]>>1)+5;
 	size_t start_y = (dims[1]>>1)-5;
 	size_t end_y   = (dims[1]>>1)+5;
 
-	float *pLine=NULL;
-	for (size_t z=0; z<dims[2]; z++) {
+    float *pLine=nullptr;
+    for (size_t z=0; z<dims[2]; z++)
+    {
 		oscillation[z]=0.0f;
-		for (size_t y=start_y; y<end_y; y++) {
+        for (size_t y=start_y; y<end_y; y++)
+        {
 			pLine=stack.GetLinePtr(y,z);
-			for (size_t x=start_x; y<end_x; x++) {
+            for (size_t x=start_x; y<end_x; x++)
+            {
 				oscillation[z]+=pLine[x];
 			}
 		}
@@ -176,7 +185,8 @@ void DpcProcessor::PrepareLUT(size_t nHarmonic)
 	else
 		inc=inc/static_cast<float>(mConfig.projections.nPhaseSteps+1);
 
-	for (size_t i=0; i<mConfig.projections.nPhaseSteps; i++) { // todo check this...
+    for (size_t i=0; i<mConfig.projections.nPhaseSteps; i++)
+    { // todo check this...
 		sin_LUT[i]=sin(i*inc);
 		cos_LUT[i]=cos(i*inc);
 	}
@@ -191,13 +201,14 @@ kipl::base::TImage<float,3> DpcProcessor::LoadImageStack(std::string mask, size_
 	std::string filename;
 	std::string ext;
 
-	size_t *roi=NULL;
+    std::vector<size_t> roi = {};
 	if (mConfig.projections.bUseROI==true)
 		roi=mConfig.projections.nROI;
 
 	float fDose=1.0f;
 
-	for (size_t i=0; i<mConfig.projections.nPhaseSteps; i++) {
+    for (size_t i=0; i<mConfig.projections.nPhaseSteps; i++)
+    {
 //		slice=reader.Read("",mask,first+i*stride,roi);
 
 		if (mConfig.projections.bUseNorm==true)
@@ -208,10 +219,11 @@ kipl::base::TImage<float,3> DpcProcessor::LoadImageStack(std::string mask, size_
 		msg<<"Dose="<<fDose;
 		logger(kipl::logging::Logger::LogVerbose,msg.str());
 
-		if (stack.Size()==0) {
-			size_t dims[]={mConfig.projections.nPhaseSteps, slice.Size(0),slice.Size(1)};
+        if (stack.Size()==0)
+        {
+            std::vector<size_t> dims={mConfig.projections.nPhaseSteps, slice.Size(0),slice.Size(1)};
 
-			stack.Resize(dims);
+            stack.resize(dims);
 		}
 
 		float *pSlice=slice.GetDataPtr();
@@ -226,7 +238,8 @@ kipl::base::TImage<float,3> DpcProcessor::LoadImageStack(std::string mask, size_
 		pSlice=slice.GetDataPtr(); // Re-get the pointer since it has changed during spotcleaning;
 		ptrdiff_t k=0;
 		
-		for (j=0 ; j<slice.Size(); j++) {
+        for (j=0 ; j<slice.Size(); j++)
+        {
 			pStack[k]=pSlice[j];
 			k+=mConfig.projections.nPhaseSteps;
 		}
@@ -237,25 +250,27 @@ kipl::base::TImage<float,3> DpcProcessor::LoadImageStack(std::string mask, size_
 
 kipl::base::TImage<complex<float> ,2> DpcProcessor::ComputeHarmonicImage(kipl::base::TImage<float,3> imagestack)
 {
-	size_t const * const dims=imagestack.Dims();
+    auto dims=imagestack.dims();
 
-	kipl::base::TImage<complex<float>, 2> result(dims+1);
+    kipl::base::TImage<complex<float>, 2> result({dims[1],dims[2]});
 
 #pragma omp parallel 
 	{
-	complex<float> * pResult=result.GetDataPtr();
-	float *pStack= imagestack.GetDataPtr();
-	#pragma omp for
-	for (int i=0; i<result.Size(); i++) {
-		float real=0.0f;
-		float imag=0.0f;
-		size_t sidx=i*mConfig.projections.nPhaseSteps;
-		for (size_t j=0; j<mConfig.projections.nPhaseSteps; j++, sidx++) {
-			real+=cos_LUT[j] * pStack[sidx];
-			imag-=sin_LUT[j] * pStack[sidx];
-		}
-		pResult[i]=complex<float>(real,imag);
-	}
+        complex<float> * pResult=result.GetDataPtr();
+        float *pStack= imagestack.GetDataPtr();
+        #pragma omp for
+        for (int i=0; i<static_cast<int>(result.Size()); i++)
+        {
+            float real=0.0f;
+            float imag=0.0f;
+            size_t sidx=i*mConfig.projections.nPhaseSteps;
+            for (size_t j=0; j<mConfig.projections.nPhaseSteps; j++, sidx++)
+            {
+                real+=cos_LUT[j] * pStack[sidx];
+                imag-=sin_LUT[j] * pStack[sidx];
+            }
+            pResult[i]=complex<float>(real,imag);
+        }
 	}
 	return result;
 }
@@ -270,15 +285,16 @@ void DpcProcessor::ComputeResultImages()
 	complex<float> *pOpenBeamH = openbeamH.GetDataPtr();
 	complex<float> *pSampleH   = sampleH.GetDataPtr();
 
-	transmision.Resize(sampleDC.Dims());
-	phasecontrast.Resize(sampleDC.Dims());
-	darkfield.Resize(sampleDC.Dims());
+    transmision.resize(sampleDC.dims());
+    phasecontrast.resize(sampleDC.dims());
+    darkfield.resize(sampleDC.dims());
 
 	float *pTransmision=transmision.GetDataPtr();
 	float *pPhaseContrast=phasecontrast.GetDataPtr();
 	float *pDarkField=darkfield.GetDataPtr();
 	#pragma omp parallel for
-    for (ptrdiff_t i=0; i<N; i++) {
+    for (ptrdiff_t i=0; i<N; i++)
+    {
 		pTransmision[i]=abs(pSampleDC[i])/abs(pOpenBeamDC[i]);
 		if (mConfig.process.bUseAmplLimits) {
 			if (mConfig.process.fAmplLimits[1]<pTransmision[i]) pTransmision[i]=mConfig.process.fAmplLimits[1];
@@ -310,7 +326,7 @@ float DpcProcessor::WrapDifference(float a, float b)
 
 kipl::base::TImage<float,2> DpcProcessor::ComputeVisibilityMap()
 {
-	kipl::base::TImage<float,2> vismap(openbeamDC.Dims());
+    kipl::base::TImage<float,2> vismap(openbeamDC.dims());
 
     const int N=static_cast<int>(vismap.Size());
 

@@ -12,6 +12,7 @@
 #include <strings/string2array.h>
 
 nGIConfig::cProjections::cProjections() :
+    nDims(2,0UL),
     sProjectionMask("./fs_####.fits"),
     sReferenceMask("./ob_####.fits"),
     sDarkMask("./dc_####.fits"),
@@ -29,14 +30,14 @@ nGIConfig::cProjections::cProjections() :
 	bCompletePeriod(true),
 	fPeriods(1.0f),
 	bUseROI(false),
-	bUseNorm(false)
+    nROI(4,0UL),
+    bUseNorm(false),
+    nNormROI(4,0UL)
 {
-	nDims[0]=0; nDims[1]=0;
-	memset(nNormROI,0,4*sizeof(size_t));
-	memset(nROI,0,4*sizeof(size_t));
 }
 
 nGIConfig::cProjections::cProjections(const nGIConfig::cProjections & a) :
+    nDims(a.nDims),
     sProjectionMask(a.sProjectionMask),
     sReferenceMask(a.sReferenceMask),
 	sDarkMask(a.sDarkMask),
@@ -54,37 +55,35 @@ nGIConfig::cProjections::cProjections(const nGIConfig::cProjections & a) :
 	bCompletePeriod(a.bCompletePeriod),
 	fPeriods(a.fPeriods),
 	bUseROI(a.bUseROI),
-	bUseNorm(a.bUseNorm)
+    nROI(a.nROI),
+    bUseNorm(a.bUseNorm),
+    nNormROI(a.nNormROI)
 {
-	memcpy(nDims,a.nDims,2*sizeof(size_t));
-	memcpy(nNormROI,a.nNormROI,4*sizeof(size_t));
-	memcpy(nROI,a.nROI,4*sizeof(size_t));
 }
 
 nGIConfig::cProjections & nGIConfig::cProjections::operator=(const nGIConfig::cProjections &a)
 {
-    sProjectionMask=a.sProjectionMask;
-    sReferenceMask=a.sReferenceMask;
-	sDarkMask=a.sDarkMask;
-	nDarkCnt=a.nDarkCnt;
-	sDestPath=a.sDestPath;
-	sDestMask=a.sDestMask;
-	nPhaseSteps=a.nPhaseSteps;
-	nFilesCnt=a.nFilesCnt;
-    nFilesPerStep=a.nFilesPerStep;
-	nFileStride=a.nFileStride;
-	nRefFileStride=a.nRefFileStride;
-	nFirstIndex=a.nFirstIndex;
-	nRefFirstIndex=a.nRefFirstIndex;
-	nDarkFirstIndex=a.nDarkFirstIndex;
-	bCompletePeriod=a.bCompletePeriod;
-	fPeriods=a.fPeriods;
-	bUseROI=a.bUseROI;
-	bUseNorm=a.bUseNorm;
-
-	memcpy(nDims,a.nDims,2*sizeof(size_t));
-	memcpy(nNormROI,a.nNormROI,4*sizeof(size_t));
-	memcpy(nROI,a.nROI,4*sizeof(size_t));
+    nDims           = a.nDims;
+    sProjectionMask = a.sProjectionMask;
+    sReferenceMask  = a.sReferenceMask;
+    sDarkMask       = a.sDarkMask;
+    nDarkCnt        = a.nDarkCnt;
+    sDestPath       = a.sDestPath;
+    sDestMask       = a.sDestMask;
+    nPhaseSteps     = a.nPhaseSteps;
+    nFilesCnt       = a.nFilesCnt;
+    nFilesPerStep   = a.nFilesPerStep;
+    nFileStride     = a.nFileStride;
+    nRefFileStride  = a.nRefFileStride;
+    nFirstIndex     = a.nFirstIndex;
+    nRefFirstIndex  = a.nRefFirstIndex;
+    nDarkFirstIndex = a.nDarkFirstIndex;
+    bCompletePeriod = a.bCompletePeriod;
+    fPeriods        = a.fPeriods;
+    bUseROI         = a.bUseROI;
+    nROI            = a.nROI;
+    bUseNorm        = a.bUseNorm;
+    nNormROI        = a.nNormROI;
 
 	return *this;
 }
@@ -121,37 +120,31 @@ std::string nGIConfig::cProjections::WriteXML(size_t indent)
 }
 
 nGIConfig::cProcessing::cProcessing() :
-bComputeAmplitude(true),
-bComputeDPC(true),
-bComputeDFI(true),
-bComputeVisibilty(false),
-bUseAmplLimits(false),
-bUseDFILimits(false),
-bSerialize(false)
+    bComputeAmplitude(true),
+    bComputeDPC(true),
+    bComputeDFI(true),
+    bComputeVisibilty(false),
+    nVisibilityROI(4,0UL),
+    bUseAmplLimits(false),
+    fAmplLimits({-0.1f, 1.25f}),
+    bUseDFILimits(false),
+    fDFILimits({0.0f,1.0f}),
+    bSerialize(false)
 {
-	fAmplLimits[0]=-0.1f; fAmplLimits[1]=1.25f;
-	fDFILimits[0]=0.0f;  fDFILimits[1]=1.0f;
-    nVisibilityROI[0]=0;
-    nVisibilityROI[1]=0;
-    nVisibilityROI[2]=0;
-    nVisibilityROI[3]=0;
 }
 
 nGIConfig::cProcessing::cProcessing(const cProcessing & a) :
-bComputeAmplitude(a.bComputeAmplitude),
-bComputeDPC(a.bComputeDPC),
-bComputeDFI(a.bComputeDFI),
-bComputeVisibilty(a.bComputeVisibilty),
-bUseAmplLimits(a.bUseAmplLimits),
-bUseDFILimits(a.bUseDFILimits),
-bSerialize(a.bSerialize)
+    bComputeAmplitude(a.bComputeAmplitude),
+    bComputeDPC(a.bComputeDPC),
+    bComputeDFI(a.bComputeDFI),
+    bComputeVisibilty(a.bComputeVisibilty),
+    nVisibilityROI(a.nVisibilityROI),
+    bUseAmplLimits(a.bUseAmplLimits),
+    fAmplLimits(a.fAmplLimits),
+    bUseDFILimits(a.bUseDFILimits),
+    fDFILimits(a.fDFILimits),
+    bSerialize(a.bSerialize)
 {
-	fAmplLimits[0]=a.fAmplLimits[0]; fAmplLimits[1]=a.fAmplLimits[1];
-	fDFILimits[0]=a.fDFILimits[0];  fDFILimits[1]=a.fDFILimits[1];
-    nVisibilityROI[0]=a.nVisibilityROI[0];
-    nVisibilityROI[1]=a.nVisibilityROI[1];
-    nVisibilityROI[2]=a.nVisibilityROI[2];
-    nVisibilityROI[3]=a.nVisibilityROI[3];
 }
 
 nGIConfig::cProcessing & nGIConfig::cProcessing::operator=(const cProcessing &a)
@@ -160,17 +153,12 @@ nGIConfig::cProcessing & nGIConfig::cProcessing::operator=(const cProcessing &a)
 	bComputeDPC       = a.bComputeDPC;
 	bComputeDFI       = a.bComputeDFI;
 	bComputeVisibilty = a.bComputeVisibilty;
+    nVisibilityROI    = a.nVisibilityROI;
 	bUseAmplLimits    = a.bUseAmplLimits;
+    fAmplLimits       = a.fAmplLimits;
 	bUseDFILimits     = a.bUseDFILimits;
+    fDFILimits        = a.fDFILimits;
 	bSerialize        = a.bSerialize;
-
-	fAmplLimits[0]=a.fAmplLimits[0]; fAmplLimits[1]=a.fAmplLimits[1];
-	fDFILimits[0]=a.fDFILimits[0];  fDFILimits[1]=a.fDFILimits[1];
-    nVisibilityROI[0]=a.nVisibilityROI[0];
-    nVisibilityROI[1]=a.nVisibilityROI[1];
-    nVisibilityROI[2]=a.nVisibilityROI[2];
-    nVisibilityROI[3]=a.nVisibilityROI[3];
-
 
 	return *this;
 }
@@ -202,16 +190,20 @@ void nGIConfig::ParseProcess(xmlTextReaderPtr reader)
     std::string sName, sValue;
     int depth=xmlTextReaderDepth(reader);
 
-    while (ret == 1) {
-    	if (xmlTextReaderNodeType(reader)==1) {
+    while (ret == 1)
+    {
+        if (xmlTextReaderNodeType(reader)==1)
+        {
 	        name = xmlTextReaderConstName(reader);
 	        ret=xmlTextReaderRead(reader);
 
 	        value = xmlTextReaderConstValue(reader);
-	        if (name==NULL) {
+            if ( name==nullptr )
+            {
 	            throw nGIException("Unexpected contents in parameter file",__FILE__,__LINE__);
 	        }
-	        if (value!=NULL)
+
+            if ( value!=nullptr )
 	        	sValue=reinterpret_cast<const char *>(value);
 	        else
 	        	sValue="Empty";
@@ -235,8 +227,10 @@ void nGIConfig::ParseProcess(xmlTextReaderPtr reader)
 
 }
 
-nGIConfig::nGIConfig() :
-    ConfigBase("nGIConfig")
+nGIConfig::nGIConfig(const std::string &appPath) :
+    ConfigBase("nGIConfig",appPath),
+    estimator(appPath)
+
 {
 #ifdef _MSCVER_
 	estimator.m_sSharedObject="nGIEstimators.dll";
@@ -284,12 +278,14 @@ std::string nGIConfig::WriteXML()
 		str<<process.WriteXML(indent);
 
 		str<<std::setw(indent)<<" "<<"<processchain>\n";
-		if (!modules.empty()) {
+        if (!modules.empty())
+        {
 			str<<std::setw(indent+4)<<" "<<"<preprocessing>\n";
 			std::list<ModuleConfig>::iterator it;
 
-			for (it=modules.begin(); it!=modules.end(); it++) {
-				str<<it->WriteXML(indent+8);
+            for (auto &module : modules)
+            {
+                str<<module.WriteXML(indent+8);
 			}
 			str<<std::setw(indent+4)<<" "<<"</preprocessing>\n";
 		}
@@ -322,42 +318,45 @@ void nGIConfig::ParseProjections(xmlTextReaderPtr reader)
     int ret = xmlTextReaderRead(reader);
     std::string sName, sValue;
     int depth=xmlTextReaderDepth(reader);
-    while (ret == 1) {
-    	if (xmlTextReaderNodeType(reader)==1) {
+    while (ret == 1)
+    {
+        if (xmlTextReaderNodeType(reader)==1)
+        {
 	        name = xmlTextReaderConstName(reader);
 	        ret=xmlTextReaderRead(reader);
 
 	        value = xmlTextReaderConstValue(reader);
-	        if (name==NULL) {
+            if ( name==nullptr )
+            {
 	            throw nGIException("Unexpected contents in parameter file",__FILE__,__LINE__);
 	        }
-	        if (value!=NULL)
+            if ( value!=nullptr )
 	        	sValue=reinterpret_cast<const char *>(value);
 	        else
 	        	sValue="Empty";
 
 	        sName=reinterpret_cast<const char *>(name);
 
-            if (sName=="refmask")       projections.sReferenceMask = sValue;
-            if (sName=="projmask")      projections.sProjectionMask= sValue;
-            if (sName=="darkmask")      projections.sDarkMask      = sValue;
-            if (sName=="destpath")      projections.sDestPath      = sValue;
-			if (sName=="destmask")      projections.sDestMask      = sValue;
-			if (sName=="phasesteps")    projections.nPhaseSteps    = atoi(sValue.c_str());
-			if (sName=="filescnt")      projections.nFilesCnt      = atoi(sValue.c_str());
-            if (sName=="filesperstep")  projections.nFilesPerStep  = atoi(sValue.c_str());
-			if (sName=="filestride")    projections.nFileStride    = atoi(sValue.c_str());
-			if (sName=="firstindex")    projections.nFirstIndex    = atoi(sValue.c_str());
-			if (sName=="reffirstindex") projections.nRefFirstIndex = atoi(sValue.c_str());
-			if (sName=="reffilestride") projections.nRefFileStride = atoi(sValue.c_str());
+            if (sName=="refmask")        projections.sReferenceMask = sValue;
+            if (sName=="projmask")       projections.sProjectionMask= sValue;
+            if (sName=="darkmask")       projections.sDarkMask      = sValue;
+            if (sName=="destpath")       projections.sDestPath      = sValue;
+            if (sName=="destmask")       projections.sDestMask      = sValue;
+            if (sName=="phasesteps")     projections.nPhaseSteps    = atoi(sValue.c_str());
+            if (sName=="filescnt")       projections.nFilesCnt      = atoi(sValue.c_str());
+            if (sName=="filesperstep")   projections.nFilesPerStep  = atoi(sValue.c_str());
+            if (sName=="filestride")     projections.nFileStride    = atoi(sValue.c_str());
+            if (sName=="firstindex")     projections.nFirstIndex    = atoi(sValue.c_str());
+            if (sName=="reffirstindex")  projections.nRefFirstIndex = atoi(sValue.c_str());
+            if (sName=="reffilestride")  projections.nRefFileStride = atoi(sValue.c_str());
 			if (sName=="darkfirstindex") projections.nDarkFirstIndex = atoi(sValue.c_str());
-			if (sName=="darkcnt")		projections.nDarkCnt = atoi(sValue.c_str());
+            if (sName=="darkcnt")		 projections.nDarkCnt = atoi(sValue.c_str());
 			if (sName=="completeperiod") projections.bCompletePeriod = kipl::strings::string2bool(sValue);
-			if (sName=="periods")       projections.fPeriods       = atof(sValue.c_str());
-			if (sName=="useroi")        projections.bUseROI        = kipl::strings::string2bool(sValue);
-			if (sName=="roi")           kipl::strings::String2Array(sValue,projections.nROI,4);
-			if (sName=="usenorm")       projections.bUseNorm       = kipl::strings::string2bool(sValue);
-			if (sName=="normroi")       kipl::strings::String2Array(sValue,projections.nNormROI,4);
+            if (sName=="periods")        projections.fPeriods       = atof(sValue.c_str());
+            if (sName=="useroi")         projections.bUseROI        = kipl::strings::string2bool(sValue);
+            if (sName=="roi")            kipl::strings::String2Array(sValue,projections.nROI,4);
+            if (sName=="usenorm")        projections.bUseNorm       = kipl::strings::string2bool(sValue);
+            if (sName=="normroi")        kipl::strings::String2Array(sValue,projections.nNormROI,4);
 
     	}
 		ret = xmlTextReaderRead(reader);
@@ -373,40 +372,48 @@ void nGIConfig::ParseProcessChain(xmlTextReaderPtr reader)
     std::string sName, sValue;
     int depth=xmlTextReaderDepth(reader);
 
-    while (ret == 1) {
-    	if (xmlTextReaderNodeType(reader)==1) {
+    while (ret == 1)
+    {
+        if (xmlTextReaderNodeType(reader)==1)
+        {
 	        name = xmlTextReaderConstName(reader);
 	        ret=xmlTextReaderRead(reader);
 
 	        value = xmlTextReaderConstValue(reader);
-	        if (name==NULL) {
+            if ( name==nullptr )
+            {
 	            throw nGIException("Unexpected contents in parameter file",__FILE__,__LINE__);
 	        }
-	        if (value!=NULL)
+
+            if ( value!=nullptr )
 	        	sValue=reinterpret_cast<const char *>(value);
 	        else
 	        	sValue="Empty";
 	        sName=reinterpret_cast<const char *>(name);
 
-	        if (sName=="preprocessing") {
+            if (sName=="preprocessing")
+            {
 				logger(kipl::logging::Logger::LogVerbose,"Parsing pre-processing modules");
 				int depth2=xmlTextReaderDepth(reader);
-			    while (ret == 1) {
-					if (xmlTextReaderNodeType(reader)==1) {
+                while (ret == 1)
+                {
+                    if (xmlTextReaderNodeType(reader)==1)
+                    {
 						name = xmlTextReaderConstName(reader);
 						ret=xmlTextReaderRead(reader);
 
 						value = xmlTextReaderConstValue(reader);
-						if (name==NULL) {
+                        if ( name==nullptr )
+                        {
 							throw nGIException("Unexpected contents in parameter file",__FILE__,__LINE__);
 						}
-						if (value!=NULL)
+                        if ( value!=nullptr )
         					sValue=reinterpret_cast<const char *>(value);
 						else
         					sValue="Empty";
 						sName=reinterpret_cast<const char *>(name);
 						if (sName=="module") {
-							ModuleConfig module;
+                            ModuleConfig module(m_sApplicationPath);
 							module.ParseModule(reader);
 							modules.push_back(module);
 						}
@@ -416,7 +423,8 @@ void nGIConfig::ParseProcessChain(xmlTextReaderPtr reader)
 						ret=0;
 				}
 			}
-			if (sName=="estimator") {
+            if (sName=="estimator")
+            {
 				logger(kipl::logging::Logger::LogVerbose,"Parsing the estimator");
 				estimator.ParseModule(reader);
 			}

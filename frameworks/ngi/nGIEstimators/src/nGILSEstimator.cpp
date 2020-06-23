@@ -65,10 +65,10 @@ int nGILSEstimator::ProcessCore(kipl::base::TImage<float,3> proj,
 
 void nGILSEstimator::ComputeHarmonicImage(kipl::base::TImage<float,3> img, kipl::base::TImage<std::complex<float>,2> &H0, kipl::base::TImage<std::complex<float>,2> &H1)
 {
-	size_t dims[2]={img.Size(1),img.Size(2)};
+    std::vector<size_t> dims={img.Size(1),img.Size(2)};
 
-	H0.Resize(dims);
-	H1.Resize(dims);
+    H0.resize(dims);
+    H1.resize(dims);
 	ptrdiff_t N=static_cast<ptrdiff_t>(H0.Size());
 	float *pImg=img.GetDataPtr();
 

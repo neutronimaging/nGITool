@@ -11,7 +11,7 @@
 class NGIFRAMEWORKSHARED_EXPORT nGIConfig : public ConfigBase
 {
 public:
-	nGIConfig();
+    nGIConfig(const std::string &appPath);
 	nGIConfig(nGIConfig &c);
 	virtual ~nGIConfig();
 
@@ -21,7 +21,7 @@ public:
 		cProjections();
 		cProjections(const cProjections & a);
 		cProjections & operator=(const cProjections &a);
-		size_t nDims[2];
+        std::vector<size_t> nDims;
         std::string sProjectionMask;
         std::string sReferenceMask;
 		std::string sDarkMask;
@@ -40,9 +40,9 @@ public:
 		bool   bCompletePeriod;
 		float fPeriods;
 		bool bUseROI;
-		size_t nROI[4];
+        std::vector<size_t> nROI;
 		bool bUseNorm;
-		size_t nNormROI[4];
+        std::vector<size_t> nNormROI;
 		std::string WriteXML(size_t indent=0);
 	};
 
@@ -55,11 +55,11 @@ public:
 		bool bComputeDPC;
 		bool bComputeDFI;
 		bool bComputeVisibilty;
-        size_t nVisibilityROI[4];
+        std::vector<size_t> nVisibilityROI;
 		bool bUseAmplLimits;
-		float fAmplLimits[2];
+        std::vector<float> fAmplLimits;
 		bool bUseDFILimits;
-		float fDFILimits[2];
+        std::vector<float> fDFILimits;
 		bool bSerialize;
 		std::string WriteXML(size_t indent=0);
 	};

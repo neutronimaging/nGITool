@@ -18,6 +18,7 @@
 
 nGIEngine::nGIEngine(std::string name, InteractionBase *interactor) :
 	logger(name),
+    m_Config(""),
 	m_ProjectionReader(interactor),
     m_Estimator(nullptr),
     m_Interactor(interactor)
@@ -150,7 +151,7 @@ int nGIEngine::Run()
 	totalTimer.Toc();
 	msg.str("");
 	msg<<"Totals for "<<m_Config.projections.nFilesCnt<<" slices"<<endl
-		<<totalTimer<<" ("<<totalTimer.ElapsedSeconds()/static_cast<double>(m_Config.projections.nFilesCnt)<<" s/slice)";
+        <<totalTimer<<" ("<<totalTimer.cumulativeTime()/static_cast<double>(m_Config.projections.nFilesCnt)<<" s/slice)";
 
 	logger(kipl::logging::Logger::LogMessage,msg.str());
 
@@ -210,10 +211,13 @@ void nGIEngine::LoadReferences(std::string sLastModule)
 	{
 		kipl::base::TImage<float,2> dctmp;
 		std::string fname,ext;
-		size_t *roi= m_Config.projections.bUseROI ? m_Config.projections.nROI : NULL;
+        std::vector<size_t> roi = {};
+        if (m_Config.projections.bUseROI)
+            roi = m_Config.projections.nROI;
 
         // Load dark current images
-		for (size_t i=0; i<m_Config.projections.nDarkCnt; i++) {
+        for (size_t i=0; i<m_Config.projections.nDarkCnt; i++)
+        {
             kipl::strings::filenames::MakeFileName(m_Config.projections.sDarkMask,
                     static_cast<int>(i+m_Config.projections.nDarkFirstIndex),
 					fname,
@@ -221,14 +225,16 @@ void nGIEngine::LoadReferences(std::string sLastModule)
 					'#','0');
 
 			dctmp=m_ProjectionReader.Read(fname,roi);
-			if (i==0) {
-				darkcurrent.Resize(dctmp.Dims());
+            if (i==0)
+            {
+                darkcurrent.resize(dctmp.dims());
 				darkcurrent=0.0f;
 			}
 
 			darkcurrent+=dctmp;
 		}
-		if (darkcurrent.Size()!=0) {
+        if (darkcurrent.Size()!=0)
+        {
 			darkcurrent/=m_Config.projections.nDarkCnt;
 			darkdose=m_ProjectionReader.GetProjectionDose(fname,m_Config.projections.nNormROI).first;
 		}
@@ -250,17 +256,20 @@ void nGIEngine::LoadReferences(std::string sLastModule)
 		m_Estimator->GetModule()->ProcessReferences(references,m_ProcCoefficients);
 
 	}
-	catch (nGIException &e) {
+    catch (nGIException &e)
+    {
 		msg.str("");
 		msg<<"The reconstruction failed with "<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
-	catch (kipl::base::KiplException &e) {
+    catch (kipl::base::KiplException &e)
+    {
 		msg.str("");
 		msg<<"The reconstruction failed with "<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
-	catch (std::exception &e) {
+    catch (std::exception &e)
+    {
 		msg.str("");
 		msg<<"The reconstruction failed with "<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
@@ -287,8 +296,10 @@ void nGIEngine::Preprocess(kipl::base::TImage<float,3> &img, std::string sLastMo
 	msg.str("");
 
 	logger(kipl::logging::Logger::LogVerbose,"Starting preprocessing");
-	try {
-		for (it_Module=m_PreprocList.begin(); (it_Module!=m_PreprocList.end()) && (*it_Module)->GetModule()->ModuleName()!=sLastModule; it_Module++) {
+    try
+    {
+        for (it_Module=m_PreprocList.begin(); (it_Module!=m_PreprocList.end()) && (*it_Module)->GetModule()->ModuleName()!=sLastModule; it_Module++)
+        {
 			msg.str("");
 			msg<<"Processing: "<<(*it_Module)->GetModule()->ModuleName();
 			logger(kipl::logging::Logger::LogVerbose,msg.str());
@@ -298,23 +309,28 @@ void nGIEngine::Preprocess(kipl::base::TImage<float,3> &img, std::string sLastMo
 				break;
 		}
 	}
-	catch (nGIException &e) {
+    catch (nGIException &e)
+    {
 		msg<<"Preprocessing failed with a nGI exception: "<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
-	catch (kipl::base::KiplException &e) {
+    catch (kipl::base::KiplException &e)
+    {
 		msg<<"Preprocessing failed with a kipl exception: "<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
-	catch (std::exception &e) {
+    catch (std::exception &e)
+    {
 		msg<<"Preprocessing failed with an STL exception: "<<e.what();
 		throw nGIException(msg.str(),__FILE__,__LINE__);
 	}
 
-	if (m_bCancel==true) {
+    if (m_bCancel==true)
+    {
 		logger(kipl::logging::Logger::LogVerbose,"Preprocessing was canceled by the user.");
 	}
-	else {
+    else
+    {
 		logger(kipl::logging::Logger::LogVerbose,"Preprocessing finished");
 	}
 
@@ -340,32 +356,36 @@ bool nGIEngine::Serialize(size_t index)
 
 	std::string fname,ext;
 
-	if (m_Config.process.bComputeAmplitude) {
+    if (m_Config.process.bComputeAmplitude)
+    {
 		kipl::strings::filenames::MakeFileName(m_Config.projections.sDestPath+"TI_"+m_Config.projections.sDestMask,
                 static_cast<int>(index),fname,ext,'#','0');
-		kipl::io::WriteTIFF32(trans,fname.c_str());
+        kipl::io::WriteTIFF(trans,fname,kipl::base::Float32);
 	}
 
-	if (m_Config.process.bComputeDPC) {
+    if (m_Config.process.bComputeDPC)
+    {
 		kipl::strings::filenames::MakeFileName(m_Config.projections.sDestPath+"DPC_"+m_Config.projections.sDestMask,
                 static_cast<int>(index),fname,ext,'#','0');
-		kipl::io::WriteTIFF32(phase,fname.c_str());
+        kipl::io::WriteTIFF(phase,fname,kipl::base::Float32);
 	}
 
-	if (m_Config.process.bComputeDFI) {
+    if (m_Config.process.bComputeDFI)
+    {
 		kipl::strings::filenames::MakeFileName(m_Config.projections.sDestPath+"DFI_"+m_Config.projections.sDestMask,
 				index,fname,ext,'#','0');
-		kipl::io::WriteTIFF32(dark,fname.c_str());
+        kipl::io::WriteTIFF(dark,fname,kipl::base::Float32);
 	}
 
-	if (m_Config.process.bComputeVisibilty) {
+    if (m_Config.process.bComputeVisibilty)
+    {
 		kipl::base::TImage<float> visibility;
 
 		visibility=m_Estimator->GetModule()->ComputeVisibilityMap();
 
 		kipl::strings::filenames::MakeFileName(m_Config.projections.sDestPath+"Visibility_"+m_Config.projections.sDestMask,
 						index,fname,ext,'#','0');
-		kipl::io::WriteTIFF32(visibility,fname.c_str());
+        kipl::io::WriteTIFF(visibility,fname,kipl::base::Float32);
 	}
 
 	return false;
@@ -373,7 +393,7 @@ bool nGIEngine::Serialize(size_t index)
 
 bool nGIEngine::UpdateProgress(float val, std::string msg)
 {
-	if (m_Interactor!=NULL)
+    if (m_Interactor!=nullptr)
 		return m_Interactor->SetProgress(val, msg);
 
 	return false;

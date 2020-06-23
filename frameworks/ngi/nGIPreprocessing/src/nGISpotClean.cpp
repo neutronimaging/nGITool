@@ -12,7 +12,6 @@
 #include <iterator>
 
 #include <base/timage.h>
-#include <io/io_matlab.h>
 #include <filters/filter.h>
 #include <filters/medianfilter.h>
 #include <math/mathfunctions.h>
@@ -33,15 +32,17 @@
 #include <base/KiplException.h>
 #include <strings/string2array.h>
 
-nGISpotClean::nGISpotClean() : 	PreprocModuleBase("nGISpotClean"),
-mark(std::numeric_limits<float>::max()),
-m_fGamma(0.1f),
-m_fSigma(0.001f),
-m_nIterations(1),
-m_fMaxLevel(2.0f),
-m_fMinLevel(-0.1f),
-m_nMaxArea(100),
-eEdgeProcessingStyle(kipl::filters::FilterBase::EdgeMirror)
+nGISpotClean::nGISpotClean() :
+    PreprocModuleBase("nGISpotClean"),
+    mark(std::numeric_limits<float>::max()),
+    m_Config(""),
+    m_fGamma(0.1f),
+    m_fSigma(0.001f),
+    m_nIterations(1),
+    m_fMaxLevel(2.0f),
+    m_fMinLevel(-0.1f),
+    m_nMaxArea(100),
+    eEdgeProcessingStyle(kipl::filters::FilterBase::EdgeMirror)
 {
 
 }

@@ -35,7 +35,7 @@ public:
 	kipl::base::TImage<float,2> ComputeVisibilityMap();
         float ComputeVisibility(size_t *roi=nullptr);
 
-	double ExecTime() {return timer.ElapsedSeconds(); }
+    double ExecTime() {return timer.elapsedTime(); }
 protected:
 	virtual int ProcessCore(kipl::base::TImage<float,3> proj,
 			std::map<std::string, std::string> parameters,
