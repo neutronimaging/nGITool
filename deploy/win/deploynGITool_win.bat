@@ -56,3 +56,12 @@ copy Qt5Charts.dll %DEST%
 
 popd
 
+for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 2^>NUL`) do if '.%%i.'=='.LocalDateTime.' set ldt=%%j
+set ldt=%ldt:~0,8%
+FOR /F "tokens=*" %%g IN ('git rev-parse --short HEAD') do (set tag=%%g)
+
+if exist "C:\Program Files\7-Zip\7z.exe" (
+    "C:\Program Files\7-Zip\7z.exe" a %DEST%\..\nGITool_build%tag%-%ldt%.zip %DEST%
+) else (
+    echo 7zip doesn't exist
+)
