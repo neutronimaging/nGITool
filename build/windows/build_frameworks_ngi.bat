@@ -32,3 +32,4 @@ cd %DEST%\build-nGIPreprocessing
 %QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom.exe -f Makefile mocables all
 %QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom.exe -f Makefile release
 
+popd 
