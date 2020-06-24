@@ -414,7 +414,7 @@ void nGIEngine::GetResults(kipl::base::TImage<float,2> & trans,
 	vis=m_Estimator->GetModule()->ComputeVisibilityMap();
 }
 
-float nGIEngine::Visibility(size_t roi[4])
+float nGIEngine::Visibility(const std::vector<size_t> &roi)
 {
     return m_Estimator->GetModule()->ComputeVisibility(roi);
 }

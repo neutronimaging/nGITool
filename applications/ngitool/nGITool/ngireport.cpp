@@ -9,10 +9,10 @@
 
 void test_nGIReport()
 {
-    nGIConfig config;
+    nGIConfig config("");
     nGIReport report;
 
-    size_t imgdims[]={100,50};
+    std::vector<size_t> imgdims={100,50};
 
     kipl::base::TImage<float,2> img=kipl::generators::Sine2D::SineRings(imgdims,0.5f);
 
@@ -158,17 +158,21 @@ void nGIReport::ProcessingModules(nGIConfig *config)
     msg.str("");
 
     Print("Preprocessing modules:",11.0);
-    if (config->modules.empty()) {
+    if (config->modules.empty())
+    {
         Print("No pre-processing modules were used.");
     }
-    else {
+    else
+    {
         msg<<"Used "<<config->modules.size()<<" pre processing modules";
         Print(msg.str());
         std::list<ModuleConfig>::iterator it;
-        for (it=config->modules.begin(); it!=config->modules.end(); it++) {
-            if (it->m_bActive) {
+        for (const auto &module : config->modules)
+        {
+            if (module.m_bActive)
+            {
                 msg.str("");
-                msg<<it->m_sModule<<" ["<<it->m_sSharedObject<<"]";
+                msg<<module.m_sModule<<" ["<<module.m_sSharedObject<<"]";
                 Print(msg.str());
             }
         }

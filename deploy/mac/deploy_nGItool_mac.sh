@@ -6,6 +6,7 @@ DEST="$DIRECTORY/nGITool.app"
 
 GITVER=`git rev-parse --short HEAD`
 echo $DIRECTORY
+echo $QTBINPATH
 echo $QTPATH
 echo $DEST
 echo $REPOSPATH

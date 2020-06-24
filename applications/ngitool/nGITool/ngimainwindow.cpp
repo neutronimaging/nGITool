@@ -32,6 +32,7 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     m_CurrentDoseROI(0,0,1,1),
     m_sApplicationName("ngitool"),
     m_bNewResult(true),
+    m_Config(app->applicationDirPath().toStdString()),
     m_pEngine(nullptr)
 {
     ui->setupUi(this);
@@ -103,26 +104,26 @@ void nGIMainWindow::LoadDefaults()
         m_Config.projections.sReferenceMask        = QDir::homePath().toStdString();
         m_Config.projections.sDestPath             = QDir::homePath().toStdString();
 
-        std::list<ModuleConfig>::iterator it;
-
         std::string sSearchStr = "@executable_path";
         std::string sModulePath=m_QtApp->applicationDirPath().toStdString();
         size_t pos=0;
-        for (it=m_Config.modules.begin(); it!=m_Config.modules.end(); it++) {
-            pos=it->m_sSharedObject.find(sSearchStr);
-            logger(kipl::logging::Logger::LogMessage,it->m_sSharedObject);
+        for (auto & module : m_Config.modules)
+        {
+            pos=module.m_sSharedObject.find(sSearchStr);
+            logger(kipl::logging::Logger::LogMessage,module.m_sSharedObject);
             if (pos!=std::string::npos)
-                it->m_sSharedObject.replace(pos,sSearchStr.size(),sModulePath);
-            logger(kipl::logging::Logger::LogMessage,it->m_sSharedObject);
+                module.m_sSharedObject.replace(pos,sSearchStr.size(),sModulePath);
+            logger(kipl::logging::Logger::LogMessage,module.m_sSharedObject);
         }
     }
 
     UpdateDialog();
 }
 
-void nGIMainWindow::on_actionNew_triggered() {
+void nGIMainWindow::on_actionNew_triggered()
+{
     logger(kipl::logging::Logger::LogMessage,"Requested new config");
-    nGIConfig conf;
+    nGIConfig conf(m_QtApp->applicationDirPath().toStdString());
     m_Config=conf;
     UpdateDialog();
 }
@@ -138,28 +139,33 @@ void nGIMainWindow::on_actionOpen_triggered()
     msgbox.setWindowTitle(tr("Config file error"));
     msgbox.setText(tr("Failed to load the configuration file"));
 
-    try {
+    try
+    {
         m_Config.LoadConfigFile(fileName.toStdString(),"ngi");
     }
-    catch (nGIException & e) {
+    catch (nGIException & e)
+    {
         msg<<"Failed to load the configuration file :\n"<<
              e.what();
         msgbox.setDetailedText(QString::fromStdString(msg.str()));
         msgbox.exec();
     }
-    catch (ModuleException & e) {
+    catch (ModuleException & e)
+    {
         msg<<"Failed to load the configuration file :\n"<<
              e.what();
         msgbox.setDetailedText(QString::fromStdString(msg.str()));
         msgbox.exec();
     }
-    catch (kipl::base::KiplException & e) {
+    catch (kipl::base::KiplException & e)
+    {
         msg<<"Failed to load the configuration file :\n"<<
              e.what();
         msgbox.setDetailedText(QString::fromStdString(msg.str()));
         msgbox.exec();
     }
-    catch (std::exception & e) {
+    catch (std::exception & e)
+    {
         msg<<"Failed to load the configuration file :\n"<<
              e.what();
         msgbox.setDetailedText(QString::fromStdString(msg.str()));
@@ -173,7 +179,8 @@ void nGIMainWindow::on_actionSave_triggered()
     logger(kipl::logging::Logger::LogMessage,"Save configuration");
     if (m_sConfigFilename=="noname.xml")
         on_actionSave_as_triggered();
-    else {
+    else
+    {
         std::ofstream conffile(m_sConfigFilename.c_str());
 
         conffile<<m_Config.WriteXML();
@@ -590,9 +597,9 @@ void nGIMainWindow::ShowResults()
         exit(-1);
     }
 
-    ui->imageTransmission->set_image(trans.GetDataPtr(),trans.Dims());
-    ui->imageDPC->set_image(phase.GetDataPtr(),phase.Dims());
-    ui->imageDFI->set_image(dark.GetDataPtr(),dark.Dims());
+    ui->imageTransmission->set_image(trans.GetDataPtr(),trans.dims());
+    ui->imageDPC->set_image(phase.GetDataPtr(),phase.dims());
+    ui->imageDFI->set_image(dark.GetDataPtr(),dark.dims());
 
     const size_t nBins=2048;
     float axis[nBins];
@@ -638,10 +645,11 @@ void nGIMainWindow::ShowResults()
         ui->imageDFI->clear_rectangle(0);
     }
 
-    ui->imageVisibility->set_image(vis.GetDataPtr(),vis.Dims());
+    ui->imageVisibility->set_image(vis.GetDataPtr(),vis.dims());
 
     if ((m_Config.process.nVisibilityROI[2]-m_Config.process.nVisibilityROI[0])<1 ||
-        (m_Config.process.nVisibilityROI[3]-m_Config.process.nVisibilityROI[1])<1  ) {
+        (m_Config.process.nVisibilityROI[3]-m_Config.process.nVisibilityROI[1])<1  )
+    {
         m_Config.process.nVisibilityROI[0]=vis.Size(0)/2-10;
         m_Config.process.nVisibilityROI[1]=vis.Size(1)/2-10;
         m_Config.process.nVisibilityROI[2]=vis.Size(0)/2+10;
@@ -658,7 +666,8 @@ void nGIMainWindow::ShowResults()
 void nGIMainWindow::Draw_VisibilityWindow()
 {
     if ((m_Config.process.nVisibilityROI[2] - m_Config.process.nVisibilityROI[0]) &&
-         (m_Config.process.nVisibilityROI[3] - m_Config.process.nVisibilityROI[1])) {
+         (m_Config.process.nVisibilityROI[3] - m_Config.process.nVisibilityROI[1]))
+    {
 //		int w2=mConfig.process.nVisibilityWindow>>1;
 
 //		Gtk_addons::ImageViewerRectangle rect;
@@ -691,7 +700,7 @@ void nGIMainWindow::DisplayNewProjection(int slice)
 
         float *pSlice=projections.GetLinePtr(0,slice);
 
-        ui->imageProjections->set_image(pSlice, projections.Dims(), lo, hi);
+        ui->imageProjections->set_image(pSlice, projections.dims(), lo, hi);
     }
 }
 
@@ -834,6 +843,7 @@ void nGIMainWindow::UpdateDialog()
     ui->spinVisROI1->setValue(m_Config.process.nVisibilityROI[1]);
     ui->spinVisROI2->setValue(m_Config.process.nVisibilityROI[2]);
     ui->spinVisROI3->setValue(m_Config.process.nVisibilityROI[3]);
+
 
     ui->ModuleConfEstimator->SetModule(m_Config.estimator);
     ui->ModuleConfPreproc->SetModules(m_Config.modules);

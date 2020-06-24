@@ -180,9 +180,9 @@ kipl::base::TImage<float,2> EstimatorBase::ComputeVisibilityMap()
 	return vismap;
 }
 
-float EstimatorBase::ComputeVisibility(size_t *roi)
+float EstimatorBase::ComputeVisibility(const std::vector<size_t> &roi)
 {
-    if (roi==NULL)
+    if (roi.empty())
         return -1.0f;
 
 	std::ostringstream msg;

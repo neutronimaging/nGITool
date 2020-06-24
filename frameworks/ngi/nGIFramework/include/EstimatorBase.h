@@ -33,7 +33,7 @@ public:
 			kipl::base::TImage<float,2> & phase,
 			kipl::base::TImage<float,2> &darkfield);
 	kipl::base::TImage<float,2> ComputeVisibilityMap();
-        float ComputeVisibility(size_t *roi=nullptr);
+    float ComputeVisibility(const std::vector<size_t> &roi={});
 
     double ExecTime() {return timer.elapsedTime(); }
 protected:

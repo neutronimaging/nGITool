@@ -37,13 +37,14 @@ public:
 			kipl::base::TImage<float,2> & dark,
 			kipl::base::TImage<float,2> & vis);
 
-	void Progress(size_t *blocks, float *blockProgress, float *overallProgress) {// todo
+    void Progress(size_t *blocks, float *blockProgress, float *overallProgress)
+    {// todo
 	}
 
 	kipl::base::TImage<float,3> & GetProjections() {return projections;}
 
 	void OscillationPlot(float *axis, float *proj, float *ref);
-    float Visibility(size_t roi[4]);
+    float Visibility(const std::vector<size_t> &roi);
 
 	virtual ~nGIEngine(void);
 protected:
