@@ -8,7 +8,7 @@
 
 #include "ngimainwindow.h"
 #include "ui_ngimainwindow.h"
-#include "ngireport.h"
+//#include "ngireport.h"
 #include <nGIException.h>
 #include <nGIFactory.h>
 #include <base/KiplException.h>
@@ -209,57 +209,59 @@ void nGIMainWindow::on_actionQuit_triggered()
 
 void nGIMainWindow::on_actionPrint_triggered()
 {
-    logger(kipl::logging::Logger::LogMessage,"Printing report");
-    ostringstream msg;
+    logger(kipl::logging::Logger::LogMessage,"Printing report is not supported");
+    QMessageBox::warning(this,"Not supported","Report printing is not supported in the current version.");
+    return ;
+//    ostringstream msg;
 
-    QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
+//    QString fname=QFileDialog::getSaveFileName(this,"Save configuration file",QDir::homePath());
 
-    if (fname.isEmpty()) {
-        QMessageBox dlg;
+//    if (fname.isEmpty()) {
+//        QMessageBox dlg;
 
-        dlg.setText("You have to provide a filename to create a report");
-        dlg.exec();
+//        dlg.setText("You have to provide a filename to create a report");
+//        dlg.exec();
 
-        return ;
-    }
+//        return ;
+//    }
 
-    nGIReport report;
-    kipl::base::TImage<float,2> trans;
-    kipl::base::TImage<float,2> phase;
-    kipl::base::TImage<float,2> dark;
-    kipl::base::TImage<float,2> vis;
+//    nGIReport report;
+//    kipl::base::TImage<float,2> trans;
+//    kipl::base::TImage<float,2> phase;
+//    kipl::base::TImage<float,2> dark;
+//    kipl::base::TImage<float,2> vis;
 
-    if (m_pEngine!=nullptr) {
-        m_pEngine->GetResults(trans,phase,dark,vis);
-        float axis[1024],ref_osc[1024],sample_osc[1024];
-        m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
+//    if (m_pEngine!=nullptr) {
+//        m_pEngine->GetResults(trans,phase,dark,vis);
+//        float axis[1024],ref_osc[1024],sample_osc[1024];
+//        m_pEngine->OscillationPlot(axis,sample_osc,ref_osc);
 
-        try {
-        report.CreateReport(fname,
-                            m_Config.UserInformation.sProjectNumber,
-                            &m_Config,
-                            trans,phase,dark,
-                            0.0f,
-                            axis,ref_osc,sample_osc);
-        }
-        catch (kipl::base::KiplException &e) {
-            msg.str(""); msg<<"A kipl exception was thrown while creating a report: "<<e.what();
-            logger(logger.LogError,msg.str());
-        }
-        catch (nGIException &e) {
-            msg.str(""); msg<<"A nGI exception was thrown while creating a report: "<<e.what();
-            logger(logger.LogError,msg.str());
-        }
-        catch (std::exception & e) {
-            msg.str(""); msg<<"A STL exception was thrown while creating a report: "<<e.what();
-            logger(logger.LogError,msg.str());
-        }
-    }
-    else {
-        QMessageBox msgdlg;
-        msgdlg.setText("Please run the preview once before requesting a report.");
-        msgdlg.exec();
-    }
+//        try {
+//        report.CreateReport(fname,
+//                            m_Config.UserInformation.sProjectNumber,
+//                            &m_Config,
+//                            trans,phase,dark,
+//                            0.0f,
+//                            axis,ref_osc,sample_osc);
+//        }
+//        catch (kipl::base::KiplException &e) {
+//            msg.str(""); msg<<"A kipl exception was thrown while creating a report: "<<e.what();
+//            logger(logger.LogError,msg.str());
+//        }
+//        catch (nGIException &e) {
+//            msg.str(""); msg<<"A nGI exception was thrown while creating a report: "<<e.what();
+//            logger(logger.LogError,msg.str());
+//        }
+//        catch (std::exception & e) {
+//            msg.str(""); msg<<"A STL exception was thrown while creating a report: "<<e.what();
+//            logger(logger.LogError,msg.str());
+//        }
+//    }
+//    else {
+//        QMessageBox msgdlg;
+//        msgdlg.setText("Please run the preview once before requesting a report.");
+//        msgdlg.exec();
+//    }
 }
 
 

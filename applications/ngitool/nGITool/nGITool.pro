@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core widgets printsupport charts concurrent
+QT       += core widgets charts concurrent # printsupport
 
 TARGET = nGITool
 TEMPLATE = app
@@ -14,11 +14,11 @@ CONFIG(release, debug|release): DESTDIR = $$PWD/../../../../Applications
 else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../../Applications/debug
 
 SOURCES += main.cpp\
-        ngimainwindow.cpp \
-    ngireport.cpp
+        ngimainwindow.cpp #\
+#    ngireport.cpp
 
-HEADERS  += ngimainwindow.h \
-    ngireport.h
+HEADERS  += ngimainwindow.h #\
+#    ngireport.h
 
 FORMS    += ngimainwindow.ui
 
@@ -46,7 +46,7 @@ unix {
 
         INCLUDEPATH += /opt/local/include/libxml2
         QMAKE_LIBDIR += /opt/local/lib $$PWD/../../../../../lib
-        DEFINES += QT_NO_PRINTER
+#        DEFINES += QT_NO_PRINTER
         ICON = $$PWD/ngi_icon.icns
     }
     else {
