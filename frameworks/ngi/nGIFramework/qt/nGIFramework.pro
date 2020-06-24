@@ -87,24 +87,17 @@ win32 {
     contains(QMAKE_HOST.arch, x86_64):{
     QMAKE_LFLAGS += /MACHINE:X64
     }
-    INCLUDEPATH += ../../../../../external/src/linalg ../../../../../external/include ../../../../../external/include/cfitsio
-    QMAKE_LIBDIR += ../../../../../external/lib64
+    INCLUDEPATH  += ../../../../../imagingsuite/external/src/linalg
+    INCLUDEPATH  += ../../../../../imagingsuite/external/include
+    INCLUDEPATH  += ../../../../../imagingsuite/external/include/cfitsio
+    QMAKE_LIBDIR += $$PWD/../../../../../imagingsuite/external/lib64
 
     LIBS += -llibxml2_dll -llibtiff -lcfitsio
     QMAKE_CXXFLAGS += /openmp /O2
 }
 
-
-
-win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Release/release -lModuleConfig
-else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../../../modules/trunk/ModuleConfig/build-ModuleConfig-Qt5-Debug/debug -lModuleConfig
-else:symbian: LIBS += - lkipl -lModuleConfig
-else:unix:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../lib -lkipl -lModuleConfig
-else:unix:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../lib/debug -lkipl -lModuleConfig
-
-# To adopt when I'm on a windows system
-win32:CONFIG(release, debug|release):     LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Release/release -lkipl
-else:win32:CONFIG(debug, debug|release):  LIBS += -L$$PWD/../../../../../kipl/trunk/kipl/build-kipl-Qt5-Debug/debug -lkipl
+CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../lib -lkipl -lModuleConfig
+else:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../lib/debug -lkipl -lModuleConfig
 
 INCLUDEPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/include
 DEPENDPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/src
