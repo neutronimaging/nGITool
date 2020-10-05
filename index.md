@@ -1,37 +1,14 @@
-## Welcome to GitHub Pages
+## nGITool
 
-You can use the [editor on GitHub](https://github.com/neutronimaging/nGITool/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+The nGITool is a reduction tool for grating interferometry imaging. It was developed for neutron imaging to reduce the data obtained using the Talbot-Lau interferometer that was implemented at Paul Scherrer Institut [A. Kaestner et al. (2011)](http://dx.doi.org/10.1016/j.nima.2011.08.022). The tool was long time cloased source and also had a node locking protection. Now it is released as open source under the GNU 3.x licence.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+The tool is implemeted in C++ and uses [Qt 5.x](https://www.qt.io/) for the GUI
 
-### Markdown
+### Download
+There is currently not official release of nGITool. 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+We do however use a build server that provides builds of the latest development version for download. 
+- [Windows](https://jenkins.esss.dk/imaging/job/ImagingSuite_Win10/)
+- [MacOS](https://jenkins.esss.dk/imaging/job/ImagingSuite_OSX_10.14/)
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/neutronimaging/nGITool/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Disclaimer: Even though we a making our best efforts to provide as stable code as possible, there is no guarantee of the versions on the build server will work flawlessly.
