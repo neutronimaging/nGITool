@@ -20,3 +20,10 @@ In a future version it is also foreseen to implement double indexing which is us
 The basic indexing is used for single file scan. Here, you can use the parameters step to jump over some phase step images to speed up processing during tuning
 
 ![BasicIndexing](figures/basicindexing.svg)
+
+## Tomography
+A nGI tomography can be done in two ways:
+1. Perform a phase scan before moving to the next angle.
+2. Perform a tomography scan before moving the grating to the next phase step.
+
+The _stride_ parameter helps to index the phase steps in the second case and is set to the number of projections in the tomography.
