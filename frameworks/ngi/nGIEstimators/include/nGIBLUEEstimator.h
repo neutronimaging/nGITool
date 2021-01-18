@@ -5,7 +5,7 @@
 
 #include "../src/stdafx.h"
 #include <EstimatorBase.h>
-#include <tnt.h>
+#include <armadillo>
 
 class nGIBLUEEstimator: public EstimatorBase {
 public:
@@ -32,8 +32,8 @@ protected:
 	int PrepareKernel(float fHarmonic, int N, bool bCompletePeriod);
 
 	size_t m_nFilterSize;
-	TNT::Array2D<float> m_H;
-	TNT::Array2D<float> m_Ht;
+    arma::mat m_H;
+    arma::mat m_Ht;
 
 	kipl::base::TImage<float,3> m_variance;
 };

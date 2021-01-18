@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 #include "../include/nGILSEstimator.h"
-#include <tnt.h>
+#include <armadillo>
 #include <strings/miscstring.h>
 #include <filters/filter.h>
 #include <filters/filterbase.h>
@@ -16,14 +16,11 @@
 #endif
 
 nGILSEstimator::nGILSEstimator() :
-	EstimatorBase("nGILSEstimator",NULL),
-	m_LU(NULL)
+    EstimatorBase("nGILSEstimator",nullptr)
 {
 }
 
 nGILSEstimator::~nGILSEstimator() {
-	if (m_LU!=NULL)
-		delete m_LU;
 }
 
 int nGILSEstimator::Configure(nGIConfig config, std::map<std::string, std::string> parameters)
@@ -86,37 +83,31 @@ void nGILSEstimator::ComputeHarmonicImage(kipl::base::TImage<float,3> img, kipl:
 void nGILSEstimator::leastsquare(float *data, int N, complex<float> &H0, complex<float> &H1)
 {
 
-	TNT::Array2D<float> x(N,1,data);
-	TNT::Array2D<float> m1=TNT::matmult(m_Ht,x);
+    arma::mat x(N,1);
+    std::copy_n(data,N,x.memptr());
+    arma::mat m1=m_Ht*x;
 
-	TNT::Array2D<float> m2=m_LU->solve(m1);
+    arma::vec m2=arma::solve(m_H,m1);
 
-	H0=complex<float>(m2[0][0],0.0f);
-	H1=complex<float>(m2[2][0],m2[1][0]);
+    H0=complex<float>(m2.at(0),0.0f);
+    H1=complex<float>(m2.at(2),m2.at(1));
 }
 
 int nGILSEstimator::PrepareKernel(float fHarmonic, int N, bool bCompletePeriod)
 {
-	TNT::Array2D<float> mat(N,3);
-	TNT::Array2D<float> mat2(3,N);
+    arma::mat mat(N,3);
+    arma::mat mat2(3,N);
 	float w= 2.0f*fPi*fHarmonic/static_cast<float>(N - 1);
 	for (int i=0; i<N; i++) {
-		mat2[0][i]=mat[i][0]=1;
-		mat2[1][i]=mat[i][1]=cos(i*w);
-		mat2[2][i]=mat[i][2]=sin(i*w);
+        mat2.at(0,i)=mat.at(i,0)=1;
+        mat2.at(1,i)=mat.at(i,1)=cos(i*w);
+        mat2.at(2,i)=mat.at(i,2)=sin(i*w);
 	}
 
-	m_H=mat.copy();
-	m_Ht=mat2.copy();
+    m_H=mat;
+    m_Ht=mat2;
 
-	TNT::Array2D<float> m;
-
-	m=TNT::matmult(m_Ht,m_H);
-
-	if (m_LU!=NULL)
-		delete m_LU;
-
-	m_LU=new JAMA::LU<float>(m);
+    arma::mat m=m_Ht*m_H;
 
 	return 0;
 }

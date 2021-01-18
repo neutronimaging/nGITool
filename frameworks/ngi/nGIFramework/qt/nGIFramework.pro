@@ -87,7 +87,6 @@ win32 {
     contains(QMAKE_HOST.arch, x86_64):{
     QMAKE_LFLAGS += /MACHINE:X64
     }
-    INCLUDEPATH  += ../../../../../imagingsuite/external/src/linalg
     INCLUDEPATH  += ../../../../../imagingsuite/external/include
     INCLUDEPATH  += ../../../../../imagingsuite/external/include/cfitsio
     QMAKE_LIBDIR += $$PWD/../../../../../imagingsuite/external/lib64

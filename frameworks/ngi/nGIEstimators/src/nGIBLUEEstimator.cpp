@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 #include "../include/nGIBLUEEstimator.h"
-#include <tnt.h>
+#include <armadillo>
 #include <strings/miscstring.h>
 #include <filters/filter.h>
 #include <filters/filterbase.h>
@@ -11,7 +11,6 @@
 #include <io/io_tiff.h>
 #include <strings/filenames.h>
 #include <math/compleximage.h>
-#include <jama_lu.h>
 #include <ParameterHandling.h>
 #ifdef _OPENMP
 #include <omp.h>
@@ -97,29 +96,28 @@ void nGIBLUEEstimator::ComputeHarmonicImage(kipl::base::TImage<float,3> img, kip
 
 void nGIBLUEEstimator::blue(float *data, float *var, int N, complex<float> &H0, complex<float> &H1)
 {
-	TNT::Array2D<float> HC=m_H.copy();
-	TNT::Array2D<float> x(N,1,data);
+    arma::mat HC=m_H;
+    arma::mat x(N,1);
+
+    std::copy_n(data,N,x.memptr());
 
     for (int i=0; i<N; i++)
     {
 		for (int j=0; j<3; j++)
-			HC[i][j]*=var[i];
+            HC.at(i,j) *= var[i];
 
-		x[i][0]*=var[i];
+        x.at(i,0) *= var[i];
 	}
 
-	TNT::Array2D<float> m1,m2;
+    arma::mat m1,m2;
 
-	m2=TNT::matmult(m_Ht,HC);
+    m2=m_Ht * HC;
+    m1=m_Ht * x;
 
-	JAMA::LU<float> lu(m2);
+    m2=arma::solve(m2,m1);
 
-	m1=TNT::matmult(m_Ht,x);
-
-	m2=lu.solve(m1);
-
-	H0=complex<float>(m2[0][0],0.0f);
-	H1=complex<float>(m2[2][0],m2[1][0]);
+    H0=complex<float>(m2.at(0,0),0.0f);
+    H1=complex<float>(m2.at(2,0),m2.at(1,0));
 }
 
 kipl::base::TImage<float,2> nGIBLUEEstimator::BoxFilter(kipl::base::TImage<float,2> img, size_t dim)
@@ -180,17 +178,17 @@ void nGIBLUEEstimator::ComputeVarianceImages(kipl::base::TImage<float,3> img)
 
 int nGIBLUEEstimator::PrepareKernel(float fHarmonic, int N, bool bCompletePeriod)
 {
-	TNT::Array2D<float> mat(N,3);
-	TNT::Array2D<float> mat2(3,N);
+    arma::mat mat(N,3);
+    arma::mat mat2(3,N);
 	float w= 2.0f*fPi*fHarmonic/static_cast<float>(N - 1);
     for (int i=0; i<N; i++)
     {
-		mat2[0][i]=mat[i][0]=1.0f;
-		mat2[1][i]=mat[i][1]=cos(i*w);
-		mat2[2][i]=mat[i][2]=sin(i*w);
+        mat2.at(0,i)=mat.at(i,0)=1.0f;
+        mat2.at(1,i)=mat.at(i,1)=cos(i*w);
+        mat2.at(2,i)=mat.at(i,2)=sin(i*w);
 	}
 
-	m_H=mat.copy();
-	m_Ht=mat2.copy();
+    m_H=mat;
+    m_Ht=mat2;
 	return 0;
 }

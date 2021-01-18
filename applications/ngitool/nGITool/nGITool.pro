@@ -26,7 +26,6 @@ win32 {
     contains(QMAKE_HOST.arch, x86_64):{
     QMAKE_LFLAGS += /MACHINE:X64
     }
-    INCLUDEPATH  += $$PWD/../../../../imagingsuite/external/src/linalg
     INCLUDEPATH  += $$PWD/../../../../imagingsuite/external/include
     INCLUDEPATH  += $$PWD/../../../../imagingsuite/external/include/cfitsio
     QMAKE_LIBDIR += $$PWD/../../../../imagingsuite/external/lib64
@@ -38,7 +37,6 @@ win32 {
 }
 
 unix {
-    INCLUDEPATH += "../../../../external/src/linalg"
     QMAKE_CXXFLAGS += -fPIC -O2
 
     INCLUDEPATH += /usr/include/libxml2

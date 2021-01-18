@@ -29,7 +29,6 @@ unix {
         QMAKE_LIBDIR += /opt/local/lib
     }
 
-    INCLUDEPATH += $$PWD/../../../../../imagingsuite/external/src/linalg
     INCLUDEPATH += $$PWD/../../../../../imagingsuite/external/include
     INCLUDEPATH += $$PWD/../../../../../imagingsuite/external/include/cfitsio
     LIBS +=  -lxml2 -ltiff
@@ -80,21 +79,21 @@ win32 {
     contains(QMAKE_HOST.arch, x86_64):{
     QMAKE_LFLAGS += /MACHINE:X64
     }
-    INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/src/linalg
+
     INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/include
     INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/include/cfitsio
     QMAKE_LIBDIR += $$PWD/../../../../../imagingsuite/external/lib64
+    QMAKE_LIBDIR += $$PWD/../../../../../ExternalDependencies/windows/lib
 
     LIBS += -llibxml2_dll -llibtiff -lcfitsio
+    LIBS += -lopenblas
+
     QMAKE_CXXFLAGS += /openmp /O2
 }
 else {
-    LIBS += -L/usr/lib -lxml2 -ltiff
+    LIBS += -L/usr/lib -lxml2 -ltiff -larmadillo
     INCLUDEPATH += /usr/include/libxml2
 }
-
-INCLUDEPATH += $$PWD/../../../../../external/src/linalg
-
 
 CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../lib
 else:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../lib/debug
