@@ -10,8 +10,9 @@ TARGET = nGIEstimators
 TEMPLATE = lib
 CONFIG += c++11
 
-CONFIG(release, debug|release): DESTDIR = $$PWD/../../../../../lib
-else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../../../../lib/debug
+REPOS = $$PWD/../../../../..
+CONFIG(release, debug|release): DESTDIR = $$REPOS/lib
+else:CONFIG(debug, debug|release): DESTDIR = $$REPOS/lib/debug
 
 unix {
     QMAKE_CXXFLAGS += -fPIC -O2
@@ -29,9 +30,8 @@ unix {
         QMAKE_LIBDIR += /opt/local/lib
     }
 
-    INCLUDEPATH += $$PWD/../../../../../imagingsuite/external/src/linalg
-    INCLUDEPATH += $$PWD/../../../../../imagingsuite/external/include
-    INCLUDEPATH += $$PWD/../../../../../imagingsuite/external/include/cfitsio
+    INCLUDEPATH += $$REPOS/imagingsuite/external/include
+    INCLUDEPATH += $$REPOS/imagingsuite/external/include/cfitsio
     LIBS +=  -lxml2 -ltiff
 
 }
@@ -81,35 +81,33 @@ win32 {
     QMAKE_LFLAGS += /MACHINE:X64
     }
 
-    QMAKE_LIBDIR += $$PWD/../../../../../ExternalDependencies/windows/lib
-    INCLUDEPATH  += $$PWD/../../../../../ExternalDependencies/windows/include/cfitsio
-    INCLUDEPATH  += $$PWD/../../../../../ExternalDependencies/windows/include/libxml2
+    QMAKE_LIBDIR += $$REPOS/ExternalDependencies/windows/lib
+    INCLUDEPATH  += $$REPOS/ExternalDependencies/windows/include/cfitsio
+    INCLUDEPATH  += $$REPOS/ExternalDependencies/windows/include/libxml2
 
-    INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/src/linalg
-    INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/include
-    QMAKE_LIBDIR += $$PWD/../../../../../imagingsuite/external/lib64
+    INCLUDEPATH  += $$REPOS/imagingsuite/external/include
+    QMAKE_LIBDIR += $$REPOS/imagingsuite/external/lib64
 
     LIBS += -llibxml2 -llibtiff -lcfitsio
+    LIBS += -llibopenblas
+
     QMAKE_CXXFLAGS += /openmp /O2
 }
 else {
-    LIBS += -L/usr/lib -lxml2 -ltiff
+    LIBS += -L/usr/lib -lxml2 -ltiff -larmadillo
     INCLUDEPATH += /usr/include/libxml2
 }
 
-INCLUDEPATH += $$PWD/../../../../../external/src/linalg
-
-
-CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../lib
-else:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../../lib/debug
+CONFIG(release, debug|release): LIBS += -L$$REPOS/lib
+else:CONFIG(debug, debug|release): LIBS += -L$$REPOS/lib/debug
 
 LIBS += -lkipl -lModuleConfig -lnGIFramework
 
-INCLUDEPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/include
-DEPENDPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/include
+INCLUDEPATH += $$REPOS/imagingsuite/core/kipl/kipl/include
+DEPENDPATH += $$REPOS/imagingsuite/core/kipl/kipl/include
 
 INCLUDEPATH += $$PWD/../../nGIFramework/include
 DEPENDPATH += $$PWD/../../nGIFramework/include
 
-INCLUDEPATH += $$PWD/../../../../../imagingsuite/core/modules/ModuleConfig/include
-DEPENDPATH += $$PWD/../../../../../imagingsuite/core/modules/ModuleConfig/src
+INCLUDEPATH += $$REPOS/imagingsuite/core/modules/ModuleConfig/include
+DEPENDPATH += $$REPOS/imagingsuite/core/modules/ModuleConfig/src

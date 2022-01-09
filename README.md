@@ -1,5 +1,7 @@
 # nGITool
-A tool to perform reduction of nGI data
+A tool to perform reduction of nGI data.
+
+You find more information on how to use the tool the [documentation](https://neutronimaging.github.io/nGITool/) pages.
 
 
 ## Build instructions
