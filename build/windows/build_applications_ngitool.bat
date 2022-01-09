@@ -9,8 +9,8 @@ mkdir %DEST%\build-nGITool
 cd %DEST%\build-nGITool
 
 %QTBINPATH%\qmake.exe -makefile -r %SPECSTR% %REPOSPATH%\applications\ngitool\nGITool\nGITool.pro -o Makefile
-%QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom.exe -f Makefile clean
-%QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom.exe -f Makefile mocables all
-%QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom.exe -f Makefile release
+%QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom\jom.exe -f Makefile.release clean
+%QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom\jom.exe -f Makefile.release mocables all
+%QTBINPATH%\..\..\..\Tools\QtCreator\bin\jom\jom.exe -f Makefile.release
 
 popd

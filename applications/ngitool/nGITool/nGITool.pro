@@ -10,8 +10,9 @@ TARGET = nGITool
 TEMPLATE = app
 CONFIG += c++11
 
-CONFIG(release, debug|release): DESTDIR = $$PWD/../../../../Applications
-else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../../Applications/debug
+REPOS = $$PWD/../../../..
+CONFIG(release, debug|release): DESTDIR = $$REPOS/Applications
+else:CONFIG(debug, debug|release): DESTDIR = $$REPOS/Applications/debug
 
 SOURCES += main.cpp\
         ngimainwindow.cpp #\
@@ -26,11 +27,15 @@ win32 {
     contains(QMAKE_HOST.arch, x86_64):{
     QMAKE_LFLAGS += /MACHINE:X64
     }
-    INCLUDEPATH  += $$PWD/../../../../imagingsuite/external/include
-    INCLUDEPATH  += $$PWD/../../../../imagingsuite/external/include/cfitsio
-    QMAKE_LIBDIR += $$PWD/../../../../imagingsuite/external/lib64
 
-    LIBS += -llibxml2_dll -llibtiff -lcfitsio
+    QMAKE_LIBDIR += $$REPOS/ExternalDependencies/windows/lib
+    INCLUDEPATH  += $$REPOS/ExternalDependencies/windows/include/cfitsio
+    INCLUDEPATH  += $$REPOS/ExternalDependencies/windows/include/libxml2
+
+    INCLUDEPATH  += $$REPOS/imagingsuite/external/include
+    QMAKE_LIBDIR += $$REPOS/imagingsuite/external/lib64
+
+    LIBS += -llibxml2 -llibtiff -lcfitsio
     QMAKE_CXXFLAGS += /openmp /O2
 
     DEFINES += NOMINMAX
@@ -45,8 +50,7 @@ unix {
         INCLUDEPATH += /opt/local/include
 
         INCLUDEPATH += /opt/local/include/libxml2
-        QMAKE_LIBDIR += /opt/local/lib $$PWD/../../../../../lib
-#        DEFINES += QT_NO_PRINTER
+        QMAKE_LIBDIR += /opt/local/lib $$REPOS/lib
         ICON = $$PWD/ngi_icon.icns
     }
     else {
@@ -56,25 +60,24 @@ unix {
         INCLUDEPATH += /usr/include/libxml2
     }
     LIBS +=  -lxml2 -ltiff
-
 }
 
 ICON = ../Resources/ngi_icon.icns
 RC_ICONS = ../Resources/ngi_icon.ico
 
-CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../lib/
-else:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../lib/debug
+CONFIG(release, debug|release): LIBS += -L$$REPOS/lib/
+else:CONFIG(debug, debug|release): LIBS += -L$$REPOS/lib/debug
 
 LIBS += -lkipl -lQtAddons -lModuleConfig -lQtModuleConfigure -lnGIFramework
 
-INCLUDEPATH += $$PWD/../../../../imagingsuite/GUI/qt/QtAddons/
-DEPENDPATH += $$PWD/../../../../imagingsuite/GUI/qt/QtAddons/
+INCLUDEPATH += $$REPOS/imagingsuite/GUI/qt/QtAddons/
+DEPENDPATH += $$REPOS/imagingsuite/GUI/qt/QtAddons/
 
 INCLUDEPATH += $$PWD/../../../frameworks/ngi/nGIFramework/include/
 DEPENDPATH += $$PWD/../../../frameworks/ngi/nGIFramework/src
 
-INCLUDEPATH += $$PWD/../../../../imagingsuite/GUI/qt/QtModuleConfigure
-DEPENDPATH += $$PWD/../../../../imagingsuite/GUI/qt/QtModuleConfigure
+INCLUDEPATH += $$REPOS/imagingsuite/GUI/qt/QtModuleConfigure
+DEPENDPATH += $$REPOS/imagingsuite/GUI/qt/QtModuleConfigure
 
 INCLUDEPATH += $$PWD/../../../../imagingsuite/core/modules/ModuleConfig/include
 DEPENDPATH += $$PWD/../../../../imagingsuite/core/modules/ModuleConfig/src

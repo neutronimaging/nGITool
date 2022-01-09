@@ -10,8 +10,10 @@ TARGET = nGIFramework
 TEMPLATE = lib
 CONFIG += c++11
 
-CONFIG(release, debug|release): DESTDIR = $$PWD/../../../../../lib
-else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../../../../lib/debug
+REPOS = $$PWD/../../../../../
+
+CONFIG(release, debug|release): DESTDIR = $$REPOS/lib
+else:CONFIG(debug, debug|release): DESTDIR = $$REPOS/lib/debug
 
 DEFINES += NGIFRAMEWORK_LIBRARY
 
@@ -87,21 +89,27 @@ win32 {
     contains(QMAKE_HOST.arch, x86_64):{
     QMAKE_LFLAGS += /MACHINE:X64
     }
-    INCLUDEPATH  += ../../../../../imagingsuite/external/include
-    INCLUDEPATH  += ../../../../../imagingsuite/external/include/cfitsio
-    QMAKE_LIBDIR += $$PWD/../../../../../imagingsuite/external/lib64
 
-    LIBS += -llibxml2_dll -llibtiff -lcfitsio
+    QMAKE_LIBDIR += $$REPOS/ExternalDependencies/windows/lib
+    INCLUDEPATH  += $$REPOS/ExternalDependencies/windows/include/cfitsio
+    INCLUDEPATH  += $$REPOS/ExternalDependencies/windows/include/libxml2
+
+    INCLUDEPATH  += $$REPOS/imagingsuite/external/include
+    QMAKE_LIBDIR += $$REPOS/imagingsuite/external/lib64
+
+    LIBS += -llibxml2 -llibtiff -lcfitsio
     QMAKE_CXXFLAGS += /openmp /O2
 }
 
-CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../../lib -lkipl -lModuleConfig
-else:CONFIG(debug, debug|release):   LIBS += -L$$PWD/../../../../../lib/debug -lkipl -lModuleConfig
+CONFIG(release, debug|release): LIBS += -L$$REPOS/lib
+else:CONFIG(debug, debug|release):   LIBS += -L$$REPOS/lib/debug
 
-INCLUDEPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/include
-DEPENDPATH += $$PWD/../../../../../imagingsuite/core/kipl/kipl/src
+LIBS += -lkipl -lModuleConfig
 
-INCLUDEPATH += $$PWD/../../../../../imagingsuite/core/modules/ModuleConfig/include
-DEPENDPATH += $$PWD/../../../../../imagingsuite/core/modules/ModuleConfig/src
+INCLUDEPATH += $$REPOS/imagingsuite/core/kipl/kipl/include
+DEPENDPATH += $$REPOS/imagingsuite/core/kipl/kipl/src
+
+INCLUDEPATH += $$REPOS/imagingsuite/core/modules/ModuleConfig/include
+DEPENDPATH += $$REPOS/imagingsuite/core/modules/ModuleConfig/src
 
 
