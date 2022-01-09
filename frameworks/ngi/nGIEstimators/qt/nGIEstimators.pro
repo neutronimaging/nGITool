@@ -80,12 +80,16 @@ win32 {
     contains(QMAKE_HOST.arch, x86_64):{
     QMAKE_LFLAGS += /MACHINE:X64
     }
+
+    QMAKE_LIBDIR += $$PWD/../../../../../ExternalDependencies/windows/lib
+    INCLUDEPATH  += $$PWD/../../../../../ExternalDependencies/windows/include/cfitsio
+    INCLUDEPATH  += $$PWD/../../../../../ExternalDependencies/windows/include/libxml2
+
     INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/src/linalg
     INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/include
-    INCLUDEPATH  += $$PWD/../../../../../imagingsuite/external/include/cfitsio
     QMAKE_LIBDIR += $$PWD/../../../../../imagingsuite/external/lib64
 
-    LIBS += -llibxml2_dll -llibtiff -lcfitsio
+    LIBS += -llibxml2 -llibtiff -lcfitsio
     QMAKE_CXXFLAGS += /openmp /O2
 }
 else {
