@@ -97,6 +97,7 @@ if (APPLE)
             ReaderConfig
             LibXml2::LibXml2
             TIFF::TIFF
+            ${CFITSIO_LIBRARIES}
     )
 endif()
 

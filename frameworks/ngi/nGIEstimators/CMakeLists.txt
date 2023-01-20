@@ -7,42 +7,43 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (APPLE)
 include_directories(
     ../../../../imagingsuite/core/kipl/kipl/include
     ../../../../imagingsuite/core/algorithms/ImagingAlgorithms/include
     ../../../../imagingsuite/core/modules/ModuleConfig/include
-    ../../../../ExternalDependencies/macos/include
+    ../nGIFramework/include
+)
+
+if (APPLE)
+    include_directories(
+        ../../../../ExternalDependencies/macos/include
     )
 endif()
 
 if (WIN32)
-include_directories(
-    ../../../../imagingsuite/core/kipl/kipl/include
-    ../../../../imagingsuite/core/algorithms/ImagingAlgorithms/include
-    ../../../../imagingsuite/core/modules/ModuleConfig/include
-    ../../../../imagingsuite/external/include/
+    include_directories(
+        ../../../../imagingsuite/external/include/
     )
 endif()
 
 link_directories(../../../../install/lib)
 
 set(INC_FILES
-    nGIBLUEEstimator.h
-    nGILSEstimator.h
-    nGIStandardEstimator.h
-    nGIEstimators.h
-    nGIPenalizedMLEstimator.h
-    ngiestimators_global.h
+    include/nGIBLUEEstimator.h
+    include/nGILSEstimator.h
+    include/nGIStandardEstimator.h
+    include/nGIEstimators.h
+    include/nGIPenalizedMLEstimator.h
+    include/ngiestimators_global.h
     # stdafx.h
 )
 
 set(SRC_FILES
-    nGIEstimators.cpp
-    nGIPenalizedMLEstimator.cpp
-    nGIBLUEEstimator.cpp
-    nGILSEstimator.cpp
-    nGIStandardEstimator.cpp
+    src/nGIEstimators.cpp
+    src/nGIPenalizedMLEstimator.cpp
+    src/nGIBLUEEstimator.cpp
+    src/nGILSEstimator.cpp
+    src/nGIStandardEstimator.cpp
     # stdafx.h
     # stdafx.cpp
     # dllmain.cpp
@@ -57,7 +58,7 @@ add_library(${TARGET_NAME} SHARED
 
 set_target_properties(${TARGET_NAME} PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
-target_compile_definitions(${TARGET_NAME} PRIVATE PROCESSFRAMEWORK_LIBRARY HAVE_NEXUS)
+target_compile_definitions(${TARGET_NAME} PRIVATE NGIESTIMATORS_LIBRARY HAVE_NEXUS)
 
 add_definitions(-DHAVE_NEXUS)
 
@@ -66,7 +67,7 @@ message(${CMAKE_HOST_SYSTEM_PROCESSOR})
 if (WIN32)
     
     target_link_libraries(${TARGET_NAME}
-    PRIVATE
+    PUBLIC
         kipl
         ModuleConfig
         ImagingAlgorithms
@@ -83,14 +84,24 @@ if (APPLE)
             ImagingAlgorithms
             ModuleConfig
             ReaderConfig
+            nGIFramework
             LibXml2::LibXml2
             TIFF::TIFF
+            # ${LAPACK_LIBRARIES}
+            # # LAPACK::LAPACK
+            # ${BLAS_LIBRARIES}
+            # # BLAS::BLAS
+            ${ARMADILLO_LIBRARIES}
+            # FFTW::Double
+            # FFTW::Float
+            ${CFITSIO_LIBRARIES}
+            # ${NEXUS_LIBRARIES}
     )
 endif()
 
 if (LINUX)
     target_link_libraries(${TARGET_NAME}
-        PRIVATE
+        PUBLIC
         kipl
         ImagingAlgorithms
         ModuleConfig

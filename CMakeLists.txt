@@ -113,9 +113,6 @@ else()
   set(CMAKE_INSTALL_RPATH @loader_path/../Frameworks)
 endif()
 
-## Core libraries
-add_subdirectory(frameworks/imageprocessing/ProcessFramework)
-
 ## modules
 add_subdirectory(frameworks/ngi/nGIFramework)
 add_subdirectory(frameworks/ngi/nGIEstimators)

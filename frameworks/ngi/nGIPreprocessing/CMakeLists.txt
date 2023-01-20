@@ -7,20 +7,21 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (APPLE)
 include_directories(
     ../../../../imagingsuite/core/kipl/kipl/include
     ../../../../imagingsuite/core/algorithms/ImagingAlgorithms/include
     ../../../../imagingsuite/core/modules/ModuleConfig/include
+    ../nGIFramework/include
+)
+
+if (APPLE)
+include_directories(
     ../../../../ExternalDependencies/macos/include
     )
 endif()
 
 if (WIN32)
 include_directories(
-    ../../../../imagingsuite/core/kipl/kipl/include
-    ../../../../imagingsuite/core/algorithms/ImagingAlgorithms/include
-    ../../../../imagingsuite/core/modules/ModuleConfig/include
     ../../../../imagingsuite/external/include/
     )
 endif()
@@ -63,10 +64,11 @@ message(${CMAKE_HOST_SYSTEM_PROCESSOR})
 if (WIN32)
     
     target_link_libraries(${TARGET_NAME}
-    PRIVATE
+    PUBLIC
         kipl
         ModuleConfig
         ImagingAlgorithms
+        nGIFramework
         LibXml2::LibXml2
         TIFF::TIFF
         cfitsio::cfitsio
@@ -80,6 +82,7 @@ if (APPLE)
             ImagingAlgorithms
             ModuleConfig
             ReaderConfig
+            nGIFramework
             LibXml2::LibXml2
             TIFF::TIFF
     )
@@ -91,6 +94,7 @@ if (LINUX)
         kipl
         ImagingAlgorithms
         ModuleConfig
+        nGIFramework
         xml2
         fftw3
         fftw3f

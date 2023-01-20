@@ -12,54 +12,29 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets Charts)
 
+include_directories(
+    ../../../imagingsuite/core/kipl/kipl/include
+    ../../../imagingsuite/core/modules/ModuleConfig/include
+    ../../../imagingsuite/core/modules/ReaderConfig
+    ../../../imagingsuite/core/algorithms/ImagingAlgorithms/include
+    ../../../imagingsuite/GUI/qt/QtAddons
+    ../../../imagingsuite/GUI/qt/QtImaging
+    ../../../imagingsuite/GUI/qt/QtModuleConfigure
+    ../../../imagingsuite/core/modules/ReaderGUI
+    ../../../imagingsuite/core/algorithms/ImagingAlgorithms/include
+    ../../frameworks/ngi/nGIFramework/include/
+    Qt6Widgets_INCLUDE_DIRS/QtCharts
+)
+
 if (APPLE)
 include_directories(
-    ../../core/kipl/kipl/include
-    ../../core/modules/ModuleConfig/include
-    ../../core/modules/ReaderConfig
-    ../../core/algorithms/ImagingAlgorithms/include
-    ../../GUI/qt/QtAddons
-    ../../GUI/qt/QtImaging
-    ../../GUI/qt/QtModuleConfigure
-    ../../core/modules/ReaderGUI
-    ../../frameworks/tomography/Framework/ReconFramework/include/
-    ../../core/algorithms/ImagingAlgorithms/include
     ../../../ExternalDependencies/macos/include
-    Qt6Widgets_INCLUDE_DIRS/QtCharts
     )
 endif()
 
 if (WIN32)
 include_directories(
-    ../../core/kipl/kipl/include
-    ../../core/modules/ModuleConfig/include
-    ../../core/modules/ReaderConfig
-    ../../core/algorithms/ImagingAlgorithms/include
-    ../../GUI/qt/QtAddons
-    ../../GUI/qt/QtImaging
-    ../../GUI/qt/QtModuleConfigure
-    ../../core/modules/ReaderGUI
-    ../../frameworks/tomography/Framework/ReconFramework/include/
-    ../../core/algorithms/ImagingAlgorithms/include
     ../../external/include/
-    Qt6Widgets_INCLUDE_DIRS/QtCharts
-    )
-endif()
-
-if (UNIX)
-include_directories(
-    ../../core/kipl/kipl/include
-    ../../core/modules/ModuleConfig/include
-    ../../core/modules/ReaderConfig
-    ../../core/algorithms/ImagingAlgorithms/include
-    ../../GUI/qt/QtAddons
-    ../../GUI/qt/QtImaging
-    ../../GUI/qt/QtModuleConfigure
-    ../../core/modules/ReaderGUI
-    ../../frameworks/tomography/Framework/ReconFramework/include/
-    ../../core/algorithms/ImagingAlgorithms/include
-
-    Qt6Widgets_INCLUDE_DIRS/QtCharts
     )
 endif()
 
@@ -86,8 +61,8 @@ set(UI_FILES
 set(MACOSX_BUNDLE_ICON_FILE ngi_icon.icns)
 
 # And the following tells CMake where to find and install the file itself.
-set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}//ngi_icon.icns")
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/src/muhrec_icon.rc")
+set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/src/ngi_icon.icns")
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/src/ngi_icon.rc")
 set_source_files_properties(${app_icon_macos} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources")
 
@@ -105,12 +80,15 @@ qt_add_executable(${TARGET_NAME}
     ${APP_ICON_RESOURCE_WINDOWS}
 )
 
+target_link_directories(${TARGET_NAME} PUBLIC
+    ../../../install/lib
+    )
+
 if (WIN32)
 
     target_link_libraries(${TARGET_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Widgets
-        # Qt${QT_VERSION_MAJOR}::Concurrent
         kipl
         ModuleConfig
         ImagingAlgorithms
@@ -123,31 +101,10 @@ if (WIN32)
     )
 endif()
 
-# if (APPLE)
-
-#     target_link_libraries(${TARGET_NAME} PUBLIC
-#         Qt${QT_VERSION_MAJOR}::Core
-#         Qt${QT_VERSION_MAJOR}::Widgets
-#         Qt${QT_VERSION_MAJOR}::Concurrent
-#         kipl
-#         ModuleConfig
-#         ImagingAlgorithms
-#         ReaderConfig
-#         QtAddons
-#         ReaderGUI
-#         QtModuleConfigure
-#         ReconFramework
-#         QtImaging
-#     )
-# endif()
-
-
-
 if (UNIX)
     target_link_libraries(${TARGET_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Widgets
-        # Qt${QT_VERSION_MAJOR}::Concurrent
         
         kipl
         ModuleConfig
@@ -156,14 +113,15 @@ if (UNIX)
         QtAddons
         ReaderGUI
         QtModuleConfigure
-        ReconFramework
+        nGIFramework
         QtImaging
+        ${CFITSIO_LIBRARIES}
     )
 endif()
 
 set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE_NAME MuhRec
-    MACOSX_BUNDLE_GUI_IDENTIFIER ch.psi.muhrec
+    MACOSX_BUNDLE_GUI_IDENTIFIER ch.psi.ngitool
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE

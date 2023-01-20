@@ -38,7 +38,7 @@ nGIMainWindow::nGIMainWindow(QApplication *app, QWidget *parent) :
     ui->setupUi(this);
     ui->ModuleConfEstimator->Configure(m_sApplicationName);
     ui->ModuleConfPreproc->configure(m_sApplicationName,m_QtApp->applicationDirPath().toStdString());
-    logger.AddLogTarget(*(ui->logger));
+    kipl::logging::Logger::addLogTarget(dynamic_cast<kipl::logging::LogWriter *>(ui->logger));
     LoadDefaults();
     on_checkCropImages_toggled(ui->checkCropImages->checkState());
     on_checkDoseRegion_toggled(ui->checkDoseRegion->checkState());
