@@ -1,5 +1,5 @@
 set(TARGET_NAME "nGITool")
-project(${TARGET_NAME} VERSION 4.4 LANGUAGES CXX)
+project(${TARGET_NAME} VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -7,7 +7,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets Charts)
 
@@ -25,24 +24,10 @@ include_directories(
     Qt6Widgets_INCLUDE_DIRS/QtCharts
 )
 
-if (APPLE)
-include_directories(
-    ../../../ExternalDependencies/macos/include
-    )
-endif()
-
-if (WIN32)
-include_directories(
-    ../../external/include/
-    )
-endif()
-
 set(SRC_FILES
     src/main.cpp		
     src/ngimainwindow.cpp	
 # ngireport.cpp
-	
-
 )
 
 set(INC_FILES
@@ -67,8 +52,15 @@ set_source_files_properties(${app_icon_macos} PROPERTIES
 
 # qt_add_executable(${TARGET_NAME} MACOSX_BUNDLE  ${app_icon_macos})
 
-message(MuhRec Qt${QT_VERSION_MAJOR})
+message(nGITool Qt${QT_VERSION_MAJOR})
 
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+if(NOT APPLE)
+  set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN/../../../build-imagingsuite/Release/lib")
+else()
+  set(CMAKE_INSTALL_RPATH "@loader_path/../Frameworks:@loader_path/../../../build-imagingsuite/Release/lib")
+endif()
 
 qt_add_executable(${TARGET_NAME}
     MANUAL_FINALIZATION
@@ -80,46 +72,27 @@ qt_add_executable(${TARGET_NAME}
 )
 
 target_link_directories(${TARGET_NAME} PUBLIC
+    ../../../../build-imagingsuite/Release/lib
     ../../../install/lib
     )
 
-if (WIN32)
-
-    target_link_libraries(${TARGET_NAME} PRIVATE
-        Qt${QT_VERSION_MAJOR}::Core
-        Qt${QT_VERSION_MAJOR}::Widgets
-        kipl
-        ModuleConfig
-        ImagingAlgorithms
-        ReaderConfig
-        QtAddons
-        ReaderGUI
-        QtModuleConfigure
-        ReconFramework
-        QtImaging
-    )
-endif()
-
-if (UNIX)
-    target_link_libraries(${TARGET_NAME} PRIVATE
-        Qt${QT_VERSION_MAJOR}::Core
-        Qt${QT_VERSION_MAJOR}::Widgets
+target_link_libraries(${TARGET_NAME} PRIVATE
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Widgets
+    kipl
+    ModuleConfig
+    ImagingAlgorithms
+    ReaderConfig
+    QtAddons
+    ReaderGUI
+    QtModuleConfigure
+    nGIFramework
+    QtImaging
         
-        kipl
-        ModuleConfig
-        ImagingAlgorithms
-        ReaderConfig
-        QtAddons
-        ReaderGUI
-        QtModuleConfigure
-        nGIFramework
-        QtImaging
-        ${CFITSIO_LIBRARIES}
     )
-endif()
 
 set_target_properties(${TARGET_NAME} PROPERTIES
-    MACOSX_BUNDLE_NAME MuhRec
+    MACOSX_BUNDLE_NAME ${TARGET_NAME}
     MACOSX_BUNDLE_GUI_IDENTIFIER ch.psi.ngitool
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}

@@ -29,19 +29,7 @@ if(NOT CMAKE_BUILD_TYPE)
   )
 endif(NOT CMAKE_BUILD_TYPE)
 
-# set(CMAKE_MODULE_PATH "lib" )
-# for testing we will need the python interpreter
 
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/applications)
-# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-
-# if("${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" VERSION_LESS "3.5")
-#   message(
-#     FATAL_ERROR
-#       "Python v3 interpreter must be greater than or equal to 3.5. Found ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}"
-#   )
-# endif()
 
 file(TO_CMAKE_PATH "$ENV{QTPATH}/lib/cmake/;${CMAKE_BINARY_DIR}/generators" PREFIX_PATH)
 file(TO_CMAKE_PATH "${PROJECT_SOURCE_DIR}/cmake/;${CMAKE_BINARY_DIR}/generators" MODULE_PATH)
@@ -90,6 +78,27 @@ if("${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}" VERSION_LESS "3.5")
       "Python v3 interpreter must be greater than or equal to 3.5. Found ${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}"
   )
 endif()
+
+# Set path to imagingsuite build/install directory
+set(IMAGINGSUITE_INSTALL_DIR "${CMAKE_SOURCE_DIR}/../build-imagingsuite/Release" CACHE PATH "Path to imagingsuite installation")
+
+# Add imagingsuite library path
+list(APPEND CMAKE_PREFIX_PATH "${IMAGINGSUITE_INSTALL_DIR}/lib")
+link_directories("${IMAGINGSUITE_INSTALL_DIR}/lib")
+
+# Add imagingsuite include paths
+include_directories(
+    ${IMAGINGSUITE_INSTALL_DIR}/include
+    ../imagingsuite/core/kipl/kipl/include
+    ../imagingsuite/core/modules/ModuleConfig/include
+    ../imagingsuite/core/modules/ReaderConfig
+    ../imagingsuite/core/algorithms/ImagingAlgorithms/include
+    ../imagingsuite/GUI/qt/QtAddons
+    ../imagingsuite/GUI/qt/QtImaging
+    ../imagingsuite/GUI/qt/QtModuleConfigure
+    ../imagingsuite/core/modules/ReaderGUI
+)
+
 
 execute_process(
   COMMAND git describe --tag
