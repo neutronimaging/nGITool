@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.5)
 set(TARGET_NAME "nGITool")
 project(${TARGET_NAME} VERSION 4.4 LANGUAGES CXX)
 

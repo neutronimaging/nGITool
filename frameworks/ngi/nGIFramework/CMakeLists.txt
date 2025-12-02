@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 3.14)
-
 set(TARGET_NAME "nGIFramework")
 project(nGITool LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (APPLE)
@@ -40,8 +37,6 @@ set(INC_FILES
     include/nGIException.h
     include/nGIFramework_global.h
     include/ngigenerator.h
-    # stdafx.h
-    # targetver.h
 )
 
 set(SRC_FILES
@@ -56,8 +51,6 @@ set(SRC_FILES
     src/nGIConfig.cpp
     src/nGIException.cpp
     src/nGIProcessor.cpp
-    # src/stdafx.h
-    # stdafx.cpp
 )
 
 
@@ -71,7 +64,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
 target_compile_definitions(${TARGET_NAME} PRIVATE NGIFRAMEWORK_LIBRARY HAVE_NEXUS)
 
-add_definitions(-DHAVE_NEXUS)
+# add_definitions(-DHAVE_NEXUS)
 
 message(${CMAKE_HOST_SYSTEM_PROCESSOR})
 
@@ -97,7 +90,7 @@ if (APPLE)
             ReaderConfig
             LibXml2::LibXml2
             TIFF::TIFF
-            ${CFITSIO_LIBRARIES}
+            cfitsio::cfitsio
     )
 endif()
 

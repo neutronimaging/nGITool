@@ -1,22 +1,19 @@
 # define minimum cmake version
-cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.30 FATAL_ERROR)
 
-#if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-#message(FATAL_ERROR “In-source_build_detected!_Create_a_build_folder_and_call_CMake_there”)
-#endif()
+# execute_process(
+#   COMMAND git describe --tags --abbrev=0 | cut -d'v' -f 2
+#   WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+#   OUTPUT_VARIABLE KIPTOOL_VERSION
+#   OUTPUT_STRIP_TRAILING_WHITESPACE
+# )
 
-execute_process(
-  COMMAND git describe --tags --abbrev=0 | cut -d'v' -f 2
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  OUTPUT_VARIABLE KIPTOOL_VERSION
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+project(nGITool VERSION 1.0 LANGUAGES CXX)
 
-project(nGItool VERSION 1.0 LANGUAGES CXX)
+set(CMAKE_FIND_DEBUG_MODE OFF)
 
-# require C++17
 if(NOT DEFINED CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 20)
+
 endif(NOT DEFINED CMAKE_CXX_STANDARD)
 
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -32,54 +29,104 @@ if(NOT CMAKE_BUILD_TYPE)
   )
 endif(NOT CMAKE_BUILD_TYPE)
 
-#set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
-
-set(CMAKE_MODULE_PATH "lib" )
+# set(CMAKE_MODULE_PATH "lib" )
 # for testing we will need the python interpreter
-find_package(PythonInterp REQUIRED)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/applications)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/applications)
+# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-if("${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" VERSION_LESS "3.5")
-  message(
-    FATAL_ERROR
-      "Python v3 interpreter must be greater than or equal to 3.5. Found ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}"
-  )
+# if("${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}" VERSION_LESS "3.5")
+#   message(
+#     FATAL_ERROR
+#       "Python v3 interpreter must be greater than or equal to 3.5. Found ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}"
+#   )
+# endif()
+
+file(TO_CMAKE_PATH "$ENV{QTPATH}/lib/cmake/;${CMAKE_BINARY_DIR}/generators" PREFIX_PATH)
+file(TO_CMAKE_PATH "${PROJECT_SOURCE_DIR}/cmake/;${CMAKE_BINARY_DIR}/generators" MODULE_PATH)
+
+# Set environment variables so that CMAKE can find the packages
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PREFIX_PATH})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${MODULE_PATH})
+message("CMAKE_PREFIX_PATH is: ${CMAKE_PREFIX_PATH}")
+message("CMAKE_MODULE_PATH is: ${CMAKE_MODULE_PATH}")
+message("QTPATH is: $ENV{QTPATH}")
+set(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
+find_package(Python3 COMPONENTS Interpreter Development)
+
+find_package(Armadillo REQUIRED)
+find_package(pybind11 REQUIRED)
+find_package(libxml2 REQUIRED)
+find_package(OpenBLAS REQUIRED)
+find_package(TIFF REQUIRED)
+find_package(FFTW3 REQUIRED)
+find_package(cfitsio REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(HDF5 REQUIRED)
+
+if (WIN32)
+  find_package(dirent)
 endif()
 
 if (WIN32)
-  set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../build-kiptool) # needs to be fixed 
-
-  find_package(PythonInterp REQUIRED)
-  find_package(LibXml2 REQUIRED)
-  find_package(armadillo REQUIRED)
-  find_package(ZLIB REQUIRED)
-  find_package(TIFF REQUIRED)
-  find_package(FFTW3 REQUIRED)
-  find_package(OpenBLAS REQUIRED)
-  find_package(pybind11 REQUIRED)
-  find_package(cfitsio REQUIRED)
-  # find_package(Nexus REQUIRED)
-else()
-  set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-  
-  # for testing we will need the python interpreter
-  find_package(PythonInterp REQUIRED)
-  find_package(LibXml2 REQUIRED)
-  find_package(Armadillo REQUIRED)
-  find_package(ZLIB REQUIRED)
-  find_package(TIFF REQUIRED)
-  find_package(FFTW REQUIRED)
-  find_package(LAPACK REQUIRED)
-  find_package(BLAS REQUIRED)
-  find_package(pybind11 REQUIRED)
-  find_package(CFITSIO REQUIRED)
-  find_package(Nexus REQUIRED)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/Release)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib/Release)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/Release)
+elseif (LINUX)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+elseif (APPLE)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+  include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 endif()
 
-if(NOT WIN32)
+if("${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}" VERSION_LESS "3.5")
+  message(
+    FATAL_ERROR
+      "Python v3 interpreter must be greater than or equal to 3.5. Found ${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}"
+  )
+endif()
+
+execute_process(
+  COMMAND git describe --tag
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  RESULT_VARIABLE HAVE_GIT_VERSION_INFO
+  OUTPUT_VARIABLE GIT_VERSION_INFO
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_QUIET
+)
+if(${HAVE_GIT_VERSION_INFO} EQUAL 0)
+  message(STATUS "Got version from Git: ${GIT_VERSION_INFO}")
+  add_definitions(-DVERSION="${GIT_VERSION_INFO}")
+else()
+  set(GIT_VERSION_INFO "${PROJECT_VERSION}")
+  message(WARNING "Could not get version from Git, using project version: ${GIT_VERSION_INFO}")
+  add_definitions(-DVERSION="${GIT_VERSION_INFO}")
+endif()
+
+include(CTest)
+
+execute_process(
+  COMMAND git describe --tag
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  RESULT_VARIABLE HAVE_GIT_VERSION_INFO
+  OUTPUT_VARIABLE GIT_VERSION_INFO OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+if(${HAVE_GIT_VERSION_INFO} EQUAL 0)
+  message(STATUS "Got version from Git: ${GIT_VERSION_INFO}")
+  add_definitions(-DIMGSUITE_VERSION="${GIT_VERSION_INFO}")
+endif()
+
+if(WIN32)
+add_compile_options(
+  /openmp 
+  /O2
+  )
+else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-omit-frame-pointer")
   add_compile_options(
     -Wall
@@ -98,7 +145,7 @@ if(NOT WIN32)
     $<$<COMPILE_LANGUAGE:CXX>:-Woverloaded-virtual>
     $<$<COMPILE_LANGUAGE:CXX>:-fno-operator-names>
   )
-endif(NOT WIN32)
+endif()
 
 set(PYTHONDIR kipl)
 set(INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR})
@@ -106,12 +153,17 @@ set(INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR})
 set(EXPORT_NAME ${PROJECT_NAME}-targets)
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+SET(CMAKE_SKIP_BUILD_RPATH FALSE)
+SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+set(CMAKE_BUILD_RPATH_USE_ORIGIN TRUE)
 
 if(NOT APPLE)
   set(CMAKE_INSTALL_RPATH $ORIGIN/../lib)
 else()
-  set(CMAKE_INSTALL_RPATH @loader_path/../Frameworks)
+  set(CMAKE_INSTALL_RPATH @loader_path/../Frameworks @loader_path/../../../lib @loader_path/lib @loader_path)
 endif()
+# turn on testing
+enable_testing()
 
 ## modules
 add_subdirectory(frameworks/ngi/nGIFramework)
@@ -121,109 +173,3 @@ add_subdirectory(frameworks/ngi/nGIPreprocessing)
 ## applications
 add_subdirectory(applications/nGItool)
 
-
-if(DYNAMIC_LIB)
-  # install(
-  #   EXPORT ${EXPORT_NAME}
-  #   DESTINATION "lib/cmake/kipl"
-  #   NAMESPACE kipl::
-  # )
-
-  # include(CMakePackageConfigHelpers)
-  # configure_package_config_file(
-  #   ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in
-  #   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-  #   INSTALL_DESTINATION lib/cmake/kipl
-  # )
-  # write_basic_package_version_file(
-  #   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
-  #   VERSION "${CMAKE_PROJECT_VERSION}"
-  #   COMPATIBILITY SameMinorVersion # switch to SameMajorVersion after 1.0
-  #                                  # release
-  # )
-  # install(
-  #   FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-  #         "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
-  #   DESTINATION lib/cmake/kipl
-  # )
-  if (LINUX)
-    print('Linux')
-    install(FILES 
-      ../lib/libkipl.so.1.0.0 
-      ../lib/libModuleConfig.so.1.0.0 
-      ../lib/libReconFramework.so.1.0.0
-      ../lib/libStdBackProjectors.so.1.0.0
-      ../lib/libFDKBackProjectors.so.1.0.0
-      ../lib/libImagingAlgorithms.so.1.0.0
-      ../lib/libReaderConfig.so.1.0.0
-      ../lib/libNeXus.so.1.0.0	
-      ../lib/libhdf5_cpp.so.11
-      ../lib/libNeXusCPP.so.1.0.0
-      ../lib/libhdf5_hl.so.10
-      ../lib/libhdf5.so.10	
-      ../lib/libsz.so.2
-
-  #    /opt/local/lib/libxml2.2.dylib 
-  #    /opt/local/lib/libtiff.5.dylib
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-
-    execute_process(
-      COMMAND for f in `ls *.so.1.0.0`; do ln -s $f `basename $f .so.1.0.0`.so.1; done 
-      WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/lib"
-    )
-  endif()
-  if (APPLE)
-    install(FILES 
-#    ../lib/libkipl.1.0.0.dylib
-#    ../lib/libModuleConfig.1.0.0.dylib
-#    ../lib/libReconFramework.1.0.0.dylib
-#    ../lib/libStdBackProjectors.1.0.0.dylib
-#    ../lib/libFDKBackProjectors.1.0.0.dylib
-#    ../lib/libImagingAlgorithms.1.0.0.dylib
-#    ../lib/libReaderConfig.1.0.0.dylib
-    # ../imagingsuite/external/mac/lib/libNeXus.1.0.0.dylib	
-    # ../imagingsuite/external/mac/lib//libhdf5_cpp.11.dylib
-    # ../imagingsuite/external/mac/lib//libNeXusCPP.1.0.0.dylib
-    # ../imagingsuite/external/mac/lib//libhdf5_hl.10.dylib
-    # ../imagingsuite/external/mac/lib//libhdf5.10.dylib	
-    # ../imagingsuite/external/mac/lib//libsz.2.dylib
-    # /opt/local/lib/libxml2.2.dylib 
-    # /opt/local/lib/libtiff.5.dylib
-    # /opt/local/lib/libfftw3.3.dylib
-    # /opt/local/lib/libfftw3f.3.dylib
-    # /opt/local/lib/libcfitsio.dylib
-    # /opt/local/lib/libarmadillo.10.dylib
-
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-
-    execute_process(
-      COMMAND for f in `ls *.1.0.0.*`; do ln -s $f `basename $f .1.0.0.dylib`.1.dylib; done 
-      WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/lib"
-    )
-  endif()
-  
-
-
-endif(DYNAMIC_LIB)
-
-# turn on testing
-#enable_testing()
-
-message(${CMAKE_CURRENT_SOURCE_DIR})
-## define test
-#add_test(
-#  NAME
-#    testBindAverageImage
-#  COMMAND
-#    ${CMAKE_COMMAND} -E env IMAGALG_MODULE_PATH=$<TARGET_FILE_DIR:imagalg>
-#    ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/UnitTests/python/testBindAverageImage.py
-#    ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/UnitTests/python/testBindAverageImage.py
-#)
-#
-#add_test(
-#  NAME
-#    testBindPolynomialCorrection
-#  COMMAND
-#    ${CMAKE_COMMAND} -E env IMAGALG_MODULE_PATH=$<TARGET_FILE_DIR:imagalg>
-#    ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/UnitTests/python/testBindPolynomialCorrection.py
-#)
