@@ -14,7 +14,9 @@ include_directories(
     ../nGIFramework/include
 )
 
-# link_directories(../../../../install/lib)
+if (WIN32)
+    link_directories(../../../../build-imagingsuite/lib/Release)
+endif()
 
 set(INC_FILES
     include/nGIBLUEEstimator.h

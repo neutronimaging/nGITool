@@ -20,6 +20,7 @@ include_directories(
     ../../../../imagingsuite/core/modules/ModuleConfig/include
     ../../../../imagingsuite/external/include/
     )
+    link_directories(../../../../build-imagingsuite/lib/Release)
 endif()
 
 # link_directories(../../../../install/lib)

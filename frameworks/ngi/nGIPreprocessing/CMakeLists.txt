@@ -14,16 +14,8 @@ include_directories(
     ../nGIFramework/include
 )
 
-if (APPLE)
-include_directories(
-    ../../../../ExternalDependencies/macos/include
-    )
-endif()
-
 if (WIN32)
-include_directories(
-    ../../../../imagingsuite/external/include/
-    )
+    link_directories(../../../../build-imagingsuite/lib/Release)
 endif()
 
 # link_directories(../../../../install/lib)
@@ -65,7 +57,7 @@ target_link_libraries(${TARGET_NAME}
         ModuleConfig
         # ReaderConfig
         nGIFramework
-        # LibXml2::LibXml2
+        LibXml2::LibXml2
         # TIFF::TIFF                
         # cfitsio::cfitsio
         # OpenBLAS::OpenBLAS

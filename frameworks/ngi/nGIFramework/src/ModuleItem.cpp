@@ -87,7 +87,7 @@ void EstimatorItem::LoadModuleObject(InteractionBase *interactor)
 	std::wstring so(m_sSharedObject.length(),' ');
 
 	copy(m_sSharedObject.begin(),m_sSharedObject.end(),so.begin());
-	hinstLib = LoadLibrary(so.c_str());
+	hinstLib = LoadLibraryW(so.c_str());
 #else
 	hinstLib = dlopen(m_sSharedObject.c_str(), RTLD_LAZY);
 #endif

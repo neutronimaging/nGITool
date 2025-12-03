@@ -71,12 +71,22 @@ qt_add_executable(${TARGET_NAME}
     ${APP_ICON_RESOURCE_WINDOWS}
 )
 
-target_link_directories(${TARGET_NAME} PUBLIC
-    ../../../build-imagingsuite/Release/lib
-    # ../../install/lib
+if (WIN32)
+    # link_directories(../../../build-imagingsuite/lib/Release)
+    target_link_directories(${TARGET_NAME} PUBLIC
+    ../../../build-imagingsuite/lib/Release
     )
 
+else()
+
+target_link_directories(${TARGET_NAME} PUBLIC
+    ../../../build-imagingsuite/Release/lib
+
+    )
+endif()
+
 target_link_libraries(${TARGET_NAME} PRIVATE
+    LibXml2::LibXml2
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Widgets
     kipl
