@@ -464,12 +464,6 @@ void nGIMainWindow::on_buttonProcessAll_clicked()
         m_pEngine->Run();
         logger(kipl::logging::Logger::LogMessage,"The data was successfully processed.");
     }
-    catch (kipl::base::KiplException & e) {
-        logger(kipl::logging::Logger::LogError,e.what());
-        msgdlg.setDetailedText(QString::fromStdString(e.what()));
-        msgdlg.exec();
-        return;
-    }
     catch (nGIException  &e) {
         logger(kipl::logging::Logger::LogError,e.what());
         msgdlg.setDetailedText(QString::fromStdString(e.what()));
@@ -482,6 +476,12 @@ void nGIMainWindow::on_buttonProcessAll_clicked()
             msgdlg.exec();
             return;
         }
+    catch (kipl::base::KiplException & e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }    
     catch (std::exception & e) {
         logger(kipl::logging::Logger::LogError,e.what());
         msgdlg.setDetailedText(QString::fromStdString(e.what()));
@@ -525,12 +525,6 @@ void nGIMainWindow::on_buttonPreview_clicked()
         m_pEngine->Run();
         logger(kipl::logging::Logger::LogMessage,"The data was successfully processed.");
     }
-    catch (kipl::base::KiplException & e) {
-        logger(kipl::logging::Logger::LogError,e.what());
-        msgdlg.setDetailedText(QString::fromStdString(e.what()));
-        msgdlg.exec();
-        return;
-    }
     catch (nGIException  &e) {
         logger(kipl::logging::Logger::LogError,e.what());
         msgdlg.setDetailedText(QString::fromStdString(e.what()));
@@ -543,6 +537,12 @@ void nGIMainWindow::on_buttonPreview_clicked()
             msgdlg.exec();
             return;
         }
+    catch (kipl::base::KiplException & e) {
+        logger(kipl::logging::Logger::LogError,e.what());
+        msgdlg.setDetailedText(QString::fromStdString(e.what()));
+        msgdlg.exec();
+        return;
+    }
     catch (std::exception & e) {
         logger(kipl::logging::Logger::LogError,e.what());
         msgdlg.setDetailedText(QString::fromStdString(e.what()));
@@ -605,9 +605,10 @@ void nGIMainWindow::ShowResults()
 
     const size_t nBins=2048;
     float axis[nBins];
-    size_t hist[nBins];
-    kipl::base::TImage<float,3> &proj=m_pEngine->GetProjections();
-    size_t nLo=0,nHi=0;
+    // size_t hist[nBins];
+    // kipl::base::TImage<float,3> &proj=m_pEngine->GetProjections();
+    // size_t nLo=0L;
+    // size_t nHi=0L;
 
     ui->sliderProjections->setRange(0,m_Config.projections.nPhaseSteps-1);
     ui->sliderProjections->setValue(0);
@@ -887,7 +888,7 @@ void nGIMainWindow::on_buttonGetVisROI_clicked()
     ui->imageVisibility->set_rectangle(rect,QColor("green"),0);
 }
 
-void nGIMainWindow::on_spinVisROI_changed(int x)
+void nGIMainWindow::on_spinVisROI_changed(int /*x*/)
 {
     QRect rect( ui->spinVisROI0->value(),
                 ui->spinVisROI1->value(),
@@ -917,7 +918,7 @@ void nGIMainWindow::on_spinVisROI3_valueChanged(int arg1)
     on_spinVisROI_changed(arg1);
 }
 
-void nGIMainWindow::on_spinCrop_Changed(int x)
+void nGIMainWindow::on_spinCrop_Changed(int /*x*/)
 {
     m_CurrentCropROI.setCoords(ui->spinCrop0->value(),
                 ui->spinCrop1->value(),
@@ -947,7 +948,7 @@ void nGIMainWindow::on_spinCrop3_valueChanged(int arg1)
     on_spinCrop_Changed(arg1);
 }
 
-void nGIMainWindow::on_spinDose_Changed(int x)
+void nGIMainWindow::on_spinDose_Changed(int /*x*/)
 {
     m_CurrentDoseROI.setCoords(ui->spinDose0->value(),
                 ui->spinDose1->value(),

@@ -22,7 +22,7 @@ nGIStandardEstimator::~nGIStandardEstimator() {
 
 }
 
-int nGIStandardEstimator::Configure(nGIConfig config, std::map<std::string, std::string> parameters)
+int nGIStandardEstimator::Configure(nGIConfig config, std::map<std::string, std::string> /*parameters*/)
 {
 	logger(kipl::logging::Logger::LogVerbose,"module configured");
 	mConfig = config;
@@ -72,7 +72,7 @@ std::map<std::string, std::string> nGIStandardEstimator::GetParameters()
 }
 
 int nGIStandardEstimator::ProcessCore(kipl::base::TImage<float,3> proj,
-		std::map<std::string, std::string> parameters,
+		std::map<std::string, std::string> /*parameters*/,
 		kipl::base::TImage<std::complex<float>,2> & H0,
 		kipl::base::TImage<std::complex<float>,2> &H1)
 {

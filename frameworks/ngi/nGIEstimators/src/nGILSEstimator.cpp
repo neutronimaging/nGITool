@@ -23,7 +23,7 @@ nGILSEstimator::nGILSEstimator() :
 nGILSEstimator::~nGILSEstimator() {
 }
 
-int nGILSEstimator::Configure(nGIConfig config, std::map<std::string, std::string> parameters)
+int nGILSEstimator::Configure(nGIConfig config, std::map<std::string, std::string> /*parameters*/)
 {
 	mConfig=config;
 
@@ -49,7 +49,7 @@ std::map<std::string, std::string> nGILSEstimator::GetParameters()
 
 
 int nGILSEstimator::ProcessCore(kipl::base::TImage<float,3> proj,
-			std::map<std::string, std::string> parameters,
+			std::map<std::string, std::string> /*parameters*/,
 			kipl::base::TImage<std::complex<float>,2> & H0,
 			kipl::base::TImage<std::complex<float>,2> &H1)
 {
@@ -93,7 +93,7 @@ void nGILSEstimator::leastsquare(float *data, int N, complex<float> &H0, complex
     H1=complex<float>(m2.at(2),m2.at(1));
 }
 
-int nGILSEstimator::PrepareKernel(float fHarmonic, int N, bool bCompletePeriod)
+int nGILSEstimator::PrepareKernel(float fHarmonic, int N, bool /*bCompletePeriod*/)
 {
     arma::mat mat(N,3);
     arma::mat mat2(3,N);

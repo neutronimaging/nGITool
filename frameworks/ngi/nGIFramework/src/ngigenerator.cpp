@@ -7,11 +7,11 @@ nGIGenerator::nGIGenerator()
 }
 
 kipl::base::TImage<float,3> nGIGenerator::GeneratePhaseSteps(kipl::base::TImage<float,2> &bias,
-                                                kipl::base::TImage<float,2> &ampl,
-                                                kipl::base::TImage<float,2> &phase,
+                                                kipl::base::TImage<float,2> &/*ampl*/,
+                                                kipl::base::TImage<float,2> &/*phase*/,
                                                 int steps,
-                                                int periods,
-                                                bool full_osc)
+                                                int /*periods*/,
+                                                bool /*full_osc*/)
 {
     std::vector<size_t> dims={size_t(bias.Size(0)), size_t(bias.Size(1)),size_t(steps)};
     kipl::base::TImage<float,3> phasesteps(dims);

@@ -14,18 +14,6 @@ include_directories(
     ../nGIFramework/include
 )
 
-if (APPLE)
-    include_directories(
-        ../../../../ExternalDependencies/macos/include
-    )
-endif()
-
-if (WIN32)
-    include_directories(
-        ../../../../imagingsuite/external/include/
-    )
-endif()
-
 link_directories(../../../../install/lib)
 
 set(INC_FILES
@@ -35,7 +23,6 @@ set(INC_FILES
     include/nGIEstimators.h
     include/nGIPenalizedMLEstimator.h
     include/ngiestimators_global.h
-    # stdafx.h
 )
 
 set(SRC_FILES
@@ -44,9 +31,7 @@ set(SRC_FILES
     src/nGIBLUEEstimator.cpp
     src/nGILSEstimator.cpp
     src/nGIStandardEstimator.cpp
-    # stdafx.h
-    # stdafx.cpp
-    # dllmain.cpp
+
 )
 
 
@@ -87,15 +72,8 @@ if (APPLE)
             nGIFramework
             LibXml2::LibXml2
             TIFF::TIFF
-            # ${LAPACK_LIBRARIES}
-            # # LAPACK::LAPACK
-            # ${BLAS_LIBRARIES}
-            # # BLAS::BLAS
             ${ARMADILLO_LIBRARIES}
-            # FFTW::Double
-            # FFTW::Float
             ${CFITSIO_LIBRARIES}
-            # ${NEXUS_LIBRARIES}
     )
 endif()
 

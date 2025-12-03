@@ -27,7 +27,7 @@ nGIPenalizedMLEstimator::~nGIPenalizedMLEstimator()
 
 }
 
-int nGIPenalizedMLEstimator::Configure(nGIConfig config, std::map<std::string, std::string> parameters)
+int nGIPenalizedMLEstimator::Configure(nGIConfig config, std::map<std::string, std::string> /*parameters*/)
 {
 	mConfig=config;
 
@@ -54,7 +54,7 @@ std::map<std::string, std::string> nGIPenalizedMLEstimator::GetParameters()
 
 
 int nGIPenalizedMLEstimator::ProcessCore(kipl::base::TImage<float,3> proj,
-			std::map<std::string, std::string> parameters,
+			std::map<std::string, std::string> /*parameters*/,
 			kipl::base::TImage<std::complex<float>,2> & H0,
 			kipl::base::TImage<std::complex<float>,2> &H1)
 {
@@ -191,7 +191,7 @@ void nGIPenalizedMLEstimator::PenalizeVariance(float *pData, ptrdiff_t N)
 	}
 }
 
-int nGIPenalizedMLEstimator::PrepareKernel(float fHarmonic, int N, bool bCompletePeriod)
+int nGIPenalizedMLEstimator::PrepareKernel(float fHarmonic, int N, bool /*bCompletePeriod*/)
 {
     arma::mat mat(N,3);
     arma::mat mat2(3,N);

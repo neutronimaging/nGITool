@@ -72,8 +72,8 @@ qt_add_executable(${TARGET_NAME}
 )
 
 target_link_directories(${TARGET_NAME} PUBLIC
-    ../../../../build-imagingsuite/Release/lib
-    ../../../install/lib
+    ../../../build-imagingsuite/Release/lib
+    # ../../install/lib
     )
 
 target_link_libraries(${TARGET_NAME} PRIVATE

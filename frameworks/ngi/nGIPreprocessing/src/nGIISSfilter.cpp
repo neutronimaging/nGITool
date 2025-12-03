@@ -29,12 +29,12 @@ nGIISSfilter::nGIISSfilter() :
 nGIISSfilter::~nGIISSfilter() {
 }
 
-int nGIISSfilter::Configure(nGIConfig config, std::map<std::string, std::string> parameters)
+int nGIISSfilter::Configure(nGIConfig /*config*/, std::map<std::string, std::string> parameters)
 {
-	m_fTau    = GetFloatParameter(parameters,"tau");
-	m_nN      = GetIntParameter(parameters,"N");
-	m_fLambda = GetFloatParameter(parameters,"lambda");
-	m_fAlpha  = GetFloatParameter(parameters,"alpha");
+	m_fTau       = GetFloatParameter(parameters,"tau");
+	m_nN         = GetIntParameter(parameters,"N");
+	m_fLambda    = GetFloatParameter(parameters,"lambda");
+	m_fAlpha     = GetFloatParameter(parameters,"alpha");
 	m_bScaleData = kipl::strings::string2bool(GetStringParameter(parameters,"scaledata"));
 	m_bAutoScale = kipl::strings::string2bool(GetStringParameter(parameters,"autoscale"));
 	m_fSlope     = GetFloatParameter(parameters,"slope");
@@ -47,25 +47,25 @@ std::map<std::string, std::string> nGIISSfilter::GetParameters()
 {
 	std::map<std::string, std::string> parameters;
 
-	parameters["tau"]=kipl::strings::value2string(m_fTau);
-	parameters["N"]=kipl::strings::value2string(m_nN);
-	parameters["lambda"]=kipl::strings::value2string(m_fLambda);
-	parameters["alpha"]=kipl::strings::value2string(m_fAlpha);
+	parameters["tau"]    = kipl::strings::value2string(m_fTau);
+	parameters["N"]      = kipl::strings::value2string(m_nN);
+	parameters["lambda"] = kipl::strings::value2string(m_fLambda);
+	parameters["alpha"]  = kipl::strings::value2string(m_fAlpha);
 
-	parameters["autoscale"]=kipl::strings::bool2string(m_bAutoScale);
-	parameters["slope"]=kipl::strings::value2string(m_fSlope);
-	parameters["intercept"]=kipl::strings::value2string(m_fIntercept);
-	parameters["scaledata"]=kipl::strings::bool2string(m_bScaleData);
+	parameters["autoscale"] = kipl::strings::bool2string(m_bAutoScale);
+	parameters["slope"]     = kipl::strings::value2string(m_fSlope);
+	parameters["intercept"] = kipl::strings::value2string(m_fIntercept);
+	parameters["scaledata"] = kipl::strings::bool2string(m_bScaleData);
 
 	return parameters;
 }
 
-bool nGIISSfilter::SetROI(size_t *roi)
+bool nGIISSfilter::SetROI(size_t * /*roi*/)
 {
 	return false;
 }
 
-int nGIISSfilter::ProcessCore(kipl::base::TImage<float,2> & img, std::map<std::string, std::string> & coeff)
+int nGIISSfilter::ProcessCore(kipl::base::TImage<float,2> & img, std::map<std::string, std::string> & /*coeff*/)
 {
 	akipl::scalespace::ISSfilter<float> filter;
 	filter.ErrorCurve(m_bErrorCurve);
@@ -88,7 +88,7 @@ int nGIISSfilter::ProcessCore(kipl::base::TImage<float,2> & img, std::map<std::s
 	return 0;
 }
 
-int nGIISSfilter::ProcessCore(kipl::base::TImage<float,3> & img, std::map<std::string, std::string> & coeff)
+int nGIISSfilter::ProcessCore(kipl::base::TImage<float,3> & img, std::map<std::string, std::string> & /*coeff*/)
 {
     #pragma omp parallel
 	{

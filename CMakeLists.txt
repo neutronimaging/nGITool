@@ -53,6 +53,20 @@ find_package(cfitsio REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(HDF5 REQUIRED)
 
+# Add imagingsuite install path to CMAKE_PREFIX_PATH
+set(IMGSUITE_BUILD_DIR "${PROJECT_SOURCE_DIR}/../build-imagingsuite/Release")
+list(APPEND CMAKE_PREFIX_PATH "${IMGSUITE_BUILD_DIR}")
+list(APPEND CMAKE_PREFIX_PATH "${IMGSUITE_BUILD_DIR}/lib")
+
+# find_package(kipl REQUIRED CONFIG)
+# find_package(ModuleConfig REQUIRED CONFIG)
+# find_package(ImagingAlgorithms REQUIRED CONFIG)
+# find_package(ReaderConfig REQUIRED CONFIG)
+# find_package(QtAddons REQUIRED CONFIG)
+# find_package(ReaderGUI REQUIRED CONFIG)
+# find_package(QtModuleConfigure REQUIRED CONFIG)
+# find_package(QtImaging REQUIRED CONFIG)
+
 if (WIN32)
   find_package(dirent)
 endif()
@@ -83,12 +97,10 @@ endif()
 set(IMAGINGSUITE_INSTALL_DIR "${CMAKE_SOURCE_DIR}/../build-imagingsuite/Release" CACHE PATH "Path to imagingsuite installation")
 
 # Add imagingsuite library path
-list(APPEND CMAKE_PREFIX_PATH "${IMAGINGSUITE_INSTALL_DIR}/lib")
 link_directories("${IMAGINGSUITE_INSTALL_DIR}/lib")
 
 # Add imagingsuite include paths
 include_directories(
-    ${IMAGINGSUITE_INSTALL_DIR}/include
     ../imagingsuite/core/kipl/kipl/include
     ../imagingsuite/core/modules/ModuleConfig/include
     ../imagingsuite/core/modules/ReaderConfig
@@ -97,6 +109,8 @@ include_directories(
     ../imagingsuite/GUI/qt/QtImaging
     ../imagingsuite/GUI/qt/QtModuleConfigure
     ../imagingsuite/core/modules/ReaderGUI
+
+    link_directories("${IMGSUITE_BUILD_DIR}/lib")
 )
 
 

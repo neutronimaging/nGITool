@@ -441,7 +441,7 @@ std::string nGIConfig::SanitySlicesCheck()
     return "";
 }
 
-std::string nGIConfig::SanityMessage(bool msg)
+std::string nGIConfig::SanityMessage(bool /*msg*/)
 {
     return "";
 }

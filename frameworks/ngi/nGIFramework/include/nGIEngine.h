@@ -37,7 +37,7 @@ public:
 			kipl::base::TImage<float,2> & dark,
 			kipl::base::TImage<float,2> & vis);
 
-    void Progress(size_t *blocks, float *blockProgress, float *overallProgress)
+    void Progress(size_t */*blocks*/, float */*blockProgress*/, float * /*overallProgress*/)
     {// todo
 	}
 

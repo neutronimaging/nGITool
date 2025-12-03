@@ -69,13 +69,14 @@ std::vector<size_t> ProjectionReader::GetImageSize(std::string filename)
 			throw nGIException("Unknown file type",__FILE__, __LINE__);
 		}
 	}
-	catch (std::exception &e) {
-		throw nGIException(e.what(),__FILE__,__LINE__);
-	}
 	catch (kipl::base::KiplException &e) {
 		throw nGIException(e.what(),__FILE__,__LINE__);
 	}
+	catch (std::exception &e) {
+		throw nGIException(e.what(),__FILE__,__LINE__);
+	}
 
+	return dims;
 }
 
 kipl::base::TImage<float,2> ProjectionReader::ReadFITS(std::string filename, const std::vector<size_t> & nCrop)
@@ -84,11 +85,11 @@ kipl::base::TImage<float,2> ProjectionReader::ReadFITS(std::string filename, con
 	try {
         kipl::io::ReadFITS(img,filename,nCrop);
 	}
-	catch (std::exception &e) {
-		throw nGIException(e.what(), __FILE__,__LINE__);
-	}
 	catch (kipl::base::KiplException &e) {
 		throw kipl::base::KiplException(e.what(), __FILE__,__LINE__);
+	}
+	catch (std::exception &e) {
+		throw nGIException(e.what(), __FILE__,__LINE__);
 	}
 	catch (...) {
 		throw nGIException("Unknown exception", __FILE__,__LINE__);
@@ -105,7 +106,7 @@ kipl::base::TImage<float,2> ProjectionReader::ReadTIFF(std::string filename, con
 	return img;
 }
 
-kipl::base::TImage<float,2> ProjectionReader::ReadPNG(std::string filename, const std::vector<size_t> & nCrop)
+kipl::base::TImage<float,2> ProjectionReader::ReadPNG(std::string /*filename*/, const std::vector<size_t> & /*nCrop*/)
 {
 	throw nGIException("ReadPNG is not implemented",__FILE__, __LINE__);
 	return kipl::base::TImage<float,2>();

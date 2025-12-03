@@ -101,7 +101,7 @@ int nGISpotClean::Setup(size_t iterations,
 	return 0;
 }
 
-int nGISpotClean::ProcessCore(kipl::base::TImage<float,2> & img, std::map<std::string, std::string> &coeff)
+int nGISpotClean::ProcessCore(kipl::base::TImage<float,2> & img, std::map<std::string, std::string> &/*coeff*/)
 {
 	std::ostringstream msg;
 	msg.str("");
@@ -113,7 +113,7 @@ int nGISpotClean::ProcessCore(kipl::base::TImage<float,2> & img, std::map<std::s
 	return 0;
 }
 
-int nGISpotClean::ProcessCore(kipl::base::TImage<float,3> &img, std::map<std::string,std::string> &parameters)
+int nGISpotClean::ProcessCore(kipl::base::TImage<float,3> &img, std::map<std::string,std::string> &/*parameters*/)
 {
 	std::ostringstream msg;
 	msg.str("");

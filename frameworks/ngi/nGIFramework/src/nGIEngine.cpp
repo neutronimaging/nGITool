@@ -158,7 +158,7 @@ int nGIEngine::Run()
 	return result;
 }
 
-kipl::base::TImage<float,3> nGIEngine::RunPreprocess(size_t *roi, std::string sLastModule)
+kipl::base::TImage<float,3> nGIEngine::RunPreprocess(size_t * /*roi*/, std::string sLastModule)
 {
 	std::stringstream msg;
 

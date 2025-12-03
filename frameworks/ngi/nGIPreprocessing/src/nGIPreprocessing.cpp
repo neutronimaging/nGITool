@@ -54,27 +54,26 @@ int Destroy(const char * application, void *obj)
 			delete module;
 		}
 	}
-	catch (std::exception & e) {
-		msg<<"Failed to destroy "<<name<<" with STL exception"<<e.what();
-
-		logger(kipl::logging::Logger::LogError,msg.str());
-		return -1;
-	}
-
-	catch (ModuleException & e) {
-		msg<<"Failed to destroy "<<name<<" with Module exception"<<e.what();
-
-		logger(kipl::logging::Logger::LogError,msg.str());
-		return -1;
-	}
 	catch (nGIException & e) {
 		msg<<"Failed to destroy "<<name<<" with Recon exception"<<e.what();
 
 		logger(kipl::logging::Logger::LogError,msg.str());
 		return -1;
 	}
+	catch (ModuleException & e) {
+		msg<<"Failed to destroy "<<name<<" with Module exception"<<e.what();
+
+		logger(kipl::logging::Logger::LogError,msg.str());
+		return -1;
+	}
 	catch (kipl::base::KiplException & e) {
 		msg<<"Failed to destroy "<<name<<" with KIPL exception"<<e.what();
+
+		logger(kipl::logging::Logger::LogError,msg.str());
+		return -1;
+	}
+	catch (std::exception & e) {
+		msg<<"Failed to destroy "<<name<<" with STL exception"<<e.what();
 
 		logger(kipl::logging::Logger::LogError,msg.str());
 		return -1;
