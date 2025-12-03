@@ -14,7 +14,7 @@ include_directories(
     ../nGIFramework/include
 )
 
-link_directories(../../../../install/lib)
+# link_directories(../../../../install/lib)
 
 set(INC_FILES
     include/nGIBLUEEstimator.h
@@ -43,56 +43,25 @@ add_library(${TARGET_NAME} SHARED
 
 set_target_properties(${TARGET_NAME} PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
-target_compile_definitions(${TARGET_NAME} PRIVATE NGIESTIMATORS_LIBRARY HAVE_NEXUS)
+target_compile_definitions(${TARGET_NAME} PRIVATE NGIESTIMATORS_LIBRARY ) #HAVE_NEXUS)
 
-add_definitions(-DHAVE_NEXUS)
+# add_definitions(-DHAVE_NEXUS)
 
 message(${CMAKE_HOST_SYSTEM_PROCESSOR})
 
-if (WIN32)
-    
-    target_link_libraries(${TARGET_NAME}
-    PUBLIC
+target_link_libraries(${TARGET_NAME}
+    PRIVATE
         kipl
+        # ImagingAlgorithms
         ModuleConfig
-        ImagingAlgorithms
+        # ReaderConfig
+        nGIFramework
         LibXml2::LibXml2
-        TIFF::TIFF
+        TIFF::TIFF                
         cfitsio::cfitsio
-        )
-endif()
+        OpenBLAS::OpenBLAS
+        # HDF5::HDF5
+        armadillo::armadillo
+)
 
-if (APPLE)
-    target_link_libraries(${TARGET_NAME}
-        PUBLIC
-            kipl
-            ImagingAlgorithms
-            ModuleConfig
-            ReaderConfig
-            nGIFramework
-            LibXml2::LibXml2
-            TIFF::TIFF
-            ${ARMADILLO_LIBRARIES}
-            ${CFITSIO_LIBRARIES}
-    )
-endif()
-
-if (LINUX)
-    target_link_libraries(${TARGET_NAME}
-        PUBLIC
-        kipl
-        ImagingAlgorithms
-        ModuleConfig
-        xml2
-        fftw3
-        fftw3f
-        cfitsio
-        tiff
-        armadillo
-        lapack
-        blas
-        NeXus
-        NeXusCPP
-    )
-endif()
 install(TARGETS ${TARGET_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

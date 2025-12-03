@@ -26,7 +26,7 @@ include_directories(
     )
 endif()
 
-link_directories(../../../../install/lib)
+# link_directories(../../../../install/lib)
 
 set(INC_FILES
     include/nGIISSfilter.h			
@@ -34,7 +34,6 @@ set(INC_FILES
     include/nGILogNorm.h
     include/ngipreprocessing_global.h
     include/nGIPreprocessing.h
-    # include/stdafx.h
 )
 
 set(SRC_FILES
@@ -42,8 +41,6 @@ set(SRC_FILES
     src/nGIPreprocessing.cpp	
     src/nGILogNorm.cpp		
     src/nGISpotClean.cpp	
-    # src/stdafx.h
-    # src/stdafx.cpp
 )
 
 
@@ -55,56 +52,25 @@ add_library(${TARGET_NAME} SHARED
 
 set_target_properties(${TARGET_NAME} PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
-target_compile_definitions(${TARGET_NAME} PRIVATE NGIPREPROCESSING_LIBRARY HAVE_NEXUS)
+target_compile_definitions(${TARGET_NAME} PRIVATE NGIPREPROCESSING_LIBRARY ) #HAVE_NEXUS)
 
-add_definitions(-DHAVE_NEXUS)
+# add_definitions(-DHAVE_NEXUS)
 
 message(${CMAKE_HOST_SYSTEM_PROCESSOR})
 
-if (WIN32)
-    
-    target_link_libraries(${TARGET_NAME}
-    PUBLIC
-        kipl
-        ModuleConfig
-        ImagingAlgorithms
-        nGIFramework
-        LibXml2::LibXml2
-        TIFF::TIFF
-        cfitsio::cfitsio
-        )
-endif()
-
-if (APPLE)
-    target_link_libraries(${TARGET_NAME}
-        PUBLIC
-            kipl
-            ImagingAlgorithms
-            ModuleConfig
-            ReaderConfig
-            nGIFramework
-            LibXml2::LibXml2
-            TIFF::TIFF
-    )
-endif()
-
-if (LINUX)
-    target_link_libraries(${TARGET_NAME}
-        PRIVATE
+target_link_libraries(${TARGET_NAME}
+    PRIVATE
         kipl
         ImagingAlgorithms
         ModuleConfig
+        # ReaderConfig
         nGIFramework
-        xml2
-        fftw3
-        fftw3f
-        cfitsio
-        tiff
-        armadillo
-        lapack
-        blas
-        NeXus
-        NeXusCPP
-    )
-endif()
+        # LibXml2::LibXml2
+        # TIFF::TIFF                
+        # cfitsio::cfitsio
+        # OpenBLAS::OpenBLAS
+        # HDF5::HDF5
+        # armadillo::armadillo
+)
+
 install(TARGETS ${TARGET_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
