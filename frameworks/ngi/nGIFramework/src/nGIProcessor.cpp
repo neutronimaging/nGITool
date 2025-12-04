@@ -25,7 +25,7 @@ DpcProcessor::DpcProcessor(size_t lut_size) :
     logger("nGI Processor"),
     nLUTsize(lut_size),
     mConfig(""),
-	sin_LUT(new float[nLUTsize]),
+    sin_LUT(new float[nLUTsize]),
     cos_LUT(new float[nLUTsize]),
     fReferenceDose(1.0f)
 {
