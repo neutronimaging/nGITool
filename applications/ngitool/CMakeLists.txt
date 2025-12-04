@@ -57,9 +57,9 @@ message(nGITool Qt${QT_VERSION_MAJOR})
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 if(NOT APPLE)
-  set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib:$ORIGIN/../../../build-imagingsuite/Release/lib")
+  set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
 else()
-  set(CMAKE_INSTALL_RPATH "@loader_path/../Frameworks:@loader_path/../../../build-imagingsuite/Release/lib")
+  set(CMAKE_INSTALL_RPATH "@loader_path/../Frameworks")
 endif()
 
 qt_add_executable(${TARGET_NAME}
