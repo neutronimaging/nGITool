@@ -58,7 +58,7 @@ std::map<std::string, std::string> nGIBLUEEstimator::GetParameters()
 
 
 int nGIBLUEEstimator::ProcessCore(kipl::base::TImage<float,3> proj,
-			std::map<std::string, std::string> parameters,
+			std::map<std::string, std::string> /*parameters*/,
 			kipl::base::TImage<std::complex<float>,2> & H0,
 			kipl::base::TImage<std::complex<float>,2> &H1)
 {
@@ -156,7 +156,7 @@ void nGIBLUEEstimator::ComputeVarianceImages(kipl::base::TImage<float,3> img)
 		float *pM=m.GetDataPtr();
 
 		const float M=1.0f/float(m_nFilterSize*m_nFilterSize);
-		const float M1=1.0f/float(m_nFilterSize*m_nFilterSize-1);
+		// const float M1=1.0f/float(m_nFilterSize*m_nFilterSize-1);
 
 
 		ptrdiff_t j=0;
@@ -176,7 +176,7 @@ void nGIBLUEEstimator::ComputeVarianceImages(kipl::base::TImage<float,3> img)
 	m_variance=PermuteImage(m_variance);
 }
 
-int nGIBLUEEstimator::PrepareKernel(float fHarmonic, int N, bool bCompletePeriod)
+int nGIBLUEEstimator::PrepareKernel(float fHarmonic, int N, bool /*bCompletePeriod*/)
 {
     arma::mat mat(N,3);
     arma::mat mat2(3,N);

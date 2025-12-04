@@ -16,7 +16,7 @@ nGILogNorm::nGILogNorm() : m_Config("")
 nGILogNorm::~nGILogNorm() {
 }
 
-int nGILogNorm::Configure(nGIConfig config, std::map<std::string, std::string> parameters)
+int nGILogNorm::Configure(nGIConfig /*config*/, std::map<std::string, std::string> /*parameters*/)
 {
 
 	return 0;

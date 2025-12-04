@@ -22,9 +22,9 @@
 #include <cstring>
 
 DpcProcessor::DpcProcessor(size_t lut_size) :
-    mConfig(""),
     logger("nGI Processor"),
     nLUTsize(lut_size),
+    mConfig(""),
     sin_LUT(new float[nLUTsize]),
     cos_LUT(new float[nLUTsize]),
     fReferenceDose(1.0f)
@@ -163,7 +163,7 @@ void DpcProcessor::ComputeOscillationPlot(kipl::base::TImage<float,3> stack)
         for (size_t y=start_y; y<end_y; y++)
         {
 			pLine=stack.GetLinePtr(y,z);
-            for (size_t x=start_x; y<end_x; x++)
+            for (size_t x=start_x; x<end_x; x++)
             {
 				oscillation[z]+=pLine[x];
 			}
@@ -230,7 +230,7 @@ kipl::base::TImage<float,3> DpcProcessor::LoadImageStack(std::string mask, size_
 		float *pDark=dark.GetDataPtr();
 		ptrdiff_t j=0;
 		#pragma omp parallel for
-		for (j=0; j<slice.Size(); j++) 
+		for (j=0; j<static_cast<ptrdiff_t>(slice.Size()); j++) 
 			pSlice[j]=(pSlice[j]-pDark[j])*fDose;
 
 
@@ -238,7 +238,7 @@ kipl::base::TImage<float,3> DpcProcessor::LoadImageStack(std::string mask, size_
 		pSlice=slice.GetDataPtr(); // Re-get the pointer since it has changed during spotcleaning;
 		ptrdiff_t k=0;
 		
-        for (j=0 ; j<slice.Size(); j++)
+        for (j=0 ; j<static_cast<ptrdiff_t>(slice.Size()); j++)
         {
 			pStack[k]=pSlice[j];
 			k+=mConfig.projections.nPhaseSteps;
@@ -278,7 +278,7 @@ kipl::base::TImage<complex<float> ,2> DpcProcessor::ComputeHarmonicImage(kipl::b
 void DpcProcessor::ComputeResultImages()
 {
 	// Compute transmission image
-	const size_t N=openbeamDC.Size();
+	const ptrdiff_t N=static_cast<ptrdiff_t>(openbeamDC.Size());
 	complex<float> *pOpenBeamDC = openbeamDC.GetDataPtr();
 	complex<float> *pSampleDC   = sampleDC.GetDataPtr();
 

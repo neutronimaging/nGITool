@@ -114,7 +114,7 @@ void EstimatorBase::GetProcessedImages(kipl::base::TImage<float,2> & transmissio
 
 }
 
-int EstimatorBase::ComputeResidualImage(kipl::base::TImage<float,3> proj)
+int EstimatorBase::ComputeResidualImage(kipl::base::TImage<float,3> /*proj*/)
 {
 	// todo Implement the residual image processing
 	return 0;
@@ -197,17 +197,17 @@ float EstimatorBase::ComputeVisibility(const std::vector<size_t> &roi)
     int window=roi[3]-roi[1];
     float *pVis=new float[window];
 	memset(pVis,0,sizeof(float)*window);
-	float sum=0.0f;
+	// float sum=0.0f;
 
-    for (int y=0; y<window; y++) {
+    for (auto y=0; y<window; y++) {
         complex<float> *pH=m_ReferenceH1.GetLinePtr(y);
         complex<float> *pDC=m_ReferenceH0.GetLinePtr(y);
 
-        for (int x=roi[0]; x<roi[2]; x++)
+        for (auto x=roi[0]; x<roi[2]; x++)
 		{
             float vis=2.0f*abs(pH[x])/abs(pDC[x]);
 			pVis[y]+=vis;
-			sum+=vis;
+			// sum+=vis;
 		}
 	}
 

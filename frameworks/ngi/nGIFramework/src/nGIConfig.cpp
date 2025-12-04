@@ -229,7 +229,7 @@ void nGIConfig::ParseProcess(xmlTextReaderPtr reader)
 
 nGIConfig::nGIConfig(const std::string &appPath) :
     ConfigBase("nGIConfig",appPath),
-    estimator(appPath)
+    estimator(appPath,"estimators")
 
 {
 #ifdef _MSCVER_
@@ -413,7 +413,7 @@ void nGIConfig::ParseProcessChain(xmlTextReaderPtr reader)
         					sValue="Empty";
 						sName=reinterpret_cast<const char *>(name);
 						if (sName=="module") {
-                            ModuleConfig module(m_sApplicationPath);
+                            ModuleConfig module(m_sApplicationPath,"estimators");
 							module.ParseModule(reader);
 							modules.push_back(module);
 						}
@@ -441,7 +441,7 @@ std::string nGIConfig::SanitySlicesCheck()
     return "";
 }
 
-std::string nGIConfig::SanityMessage(bool msg)
+std::string nGIConfig::SanityMessage(bool /*msg*/)
 {
     return "";
 }
