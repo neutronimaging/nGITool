@@ -278,7 +278,7 @@ kipl::base::TImage<complex<float> ,2> DpcProcessor::ComputeHarmonicImage(kipl::b
 void DpcProcessor::ComputeResultImages()
 {
 	// Compute transmission image
-	const ptrdiff_t N=static_cast<ptrdiff_t>(openbeamDC.Size());
+	const size_t N=openbeamDC.Size();
 	complex<float> *pOpenBeamDC = openbeamDC.GetDataPtr();
 	complex<float> *pSampleDC   = sampleDC.GetDataPtr();
 
