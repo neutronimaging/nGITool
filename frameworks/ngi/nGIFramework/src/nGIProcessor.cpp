@@ -293,7 +293,7 @@ void DpcProcessor::ComputeResultImages()
 	float *pPhaseContrast=phasecontrast.GetDataPtr();
 	float *pDarkField=darkfield.GetDataPtr();
 	#pragma omp parallel for
-    for (ptrdiff_t i=0; i<N; i++)
+    for (ptrdiff_t i=0; i<static_cast<ptrdiff_t>(N); i++)
     {
 		pTransmision[i]=abs(pSampleDC[i])/abs(pOpenBeamDC[i]);
 		if (mConfig.process.bUseAmplLimits) {
