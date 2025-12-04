@@ -110,8 +110,8 @@ include_directories(
     ../imagingsuite/GUI/qt/QtModuleConfigure
     ../imagingsuite/core/modules/ReaderGUI
 
-    link_directories("${IMGSUITE_BUILD_DIR}/lib")
 )
+link_directories("${IMGSUITE_BUILD_DIR}/lib")
 
 
 execute_process(
