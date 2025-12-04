@@ -112,7 +112,7 @@ include_directories(
 
     link_directories("${IMGSUITE_BUILD_DIR}/lib")
 )
-
+include(CTest)
 
 execute_process(
   COMMAND git describe --tag
@@ -125,22 +125,11 @@ execute_process(
 if(${HAVE_GIT_VERSION_INFO} EQUAL 0)
   message(STATUS "Got version from Git: ${GIT_VERSION_INFO}")
   add_definitions(-DVERSION="${GIT_VERSION_INFO}")
+  add_definitions(-DIMGSUITE_VERSION="${GIT_VERSION_INFO}")
 else()
   set(GIT_VERSION_INFO "${PROJECT_VERSION}")
   message(WARNING "Could not get version from Git, using project version: ${GIT_VERSION_INFO}")
   add_definitions(-DVERSION="${GIT_VERSION_INFO}")
-endif()
-
-include(CTest)
-
-execute_process(
-  COMMAND git describe --tag
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  RESULT_VARIABLE HAVE_GIT_VERSION_INFO
-  OUTPUT_VARIABLE GIT_VERSION_INFO OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-if(${HAVE_GIT_VERSION_INFO} EQUAL 0)
-  message(STATUS "Got version from Git: ${GIT_VERSION_INFO}")
   add_definitions(-DIMGSUITE_VERSION="${GIT_VERSION_INFO}")
 endif()
 
